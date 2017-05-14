@@ -1,4 +1,8 @@
+use strict;
 use Irssi 20011210.0000 ();
+
+use vars qw/$VERSION %IRSSI/;
+
 $VERSION = "1.12";
 %IRSSI = (
     authors     => 'David Leadbeater',
@@ -9,7 +13,6 @@ $VERSION = "1.12";
     url         => 'http://irssi.dgl.cx/',
 );
 
-use strict;
 my %on;
 
 =head1 on.pl
@@ -138,6 +141,7 @@ sub signal_handler {
    my($item, @stuff) = @_;
    my $signal = Irssi::signal_get_emitted();
 
+
    if(exists $on{$signal}) {
       for(@{$on{$signal}}) {
 		 next if $_->{chatnet} ne 'all' and $_->{chatnet} ne $item->{chatnet};
@@ -161,7 +165,9 @@ sub event_handle {
    }else{
 	  $cmd =~ s!\$\$(\d)!(split / /,$stuff[0])[$1]!ge;
 	  $cmd =~ s/\$(\d)/$stuff[$1]/g;
-      $item->command($cmd);
+	  $item->command($cmd);
+	  #Irssi::command($cmd);
+	  print "on: $cmd";
    }
 
    Irssi::signal_stop() if $settings{stop};
