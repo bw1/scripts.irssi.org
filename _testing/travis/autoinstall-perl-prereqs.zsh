@@ -52,4 +52,7 @@ for mod ($cpan_mods) {
         }
     }
 }
+
+find /home/travis/.cpanm/work/ -name "*.log" -exec cat '{}' ';'
+
 exit 0
