@@ -48,7 +48,7 @@ for mod ($cpan_mods) {
         } \
         else {
             echo Auto-installing $mod
-            sudo cpanm -q --skip-satisfied $skip_test $mod
+            sudo cpanm -q -f --skip-satisfied $skip_test $mod
         }
     }
 }
