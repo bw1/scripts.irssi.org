@@ -48,8 +48,11 @@ for mod ($cpan_mods) {
         } \
         else {
             echo Auto-installing $mod
-            sudo cpanm -q --skip-satisfied $skip_test $mod
+            sudo cpanm  --force --skip-satisfied $skip_test $mod
         }
     }
 }
+
+find /home/travis/.cpanm/work/ -name "*.log" -exec cat '{}' ';'
+
 exit 0
