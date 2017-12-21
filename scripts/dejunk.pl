@@ -388,8 +388,8 @@ Irssi::settings_add_bool('dejunk', 'dejunk_joinpart_show_unknown', 1);
 Irssi::settings_add_bool('dejunk', 'dejunk_debug', 0);
 
 Irssi::signal_add({
-    'server connected'              => \&event_connected,
-    'server disconnected'           => \&event_disconnected,
+    #'server connected'              => \&event_connected,
+    #'server disconnected'           => \&event_disconnected,
     'message join'                  => \&event_join,
     'message part'                  => \&event_part,
     'message quit'                  => \&event_quit,
