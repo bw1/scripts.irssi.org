@@ -6,6 +6,8 @@ use Irssi::Irc;
 
 use Data::Dumper;
 
+#use Devel::NYTProf qw/wordmatch/;
+
 our $VERSION = '1.0';
 our %IRSSI = (
     authors     => 'Joost Vunderink (Garion)',
@@ -24,6 +26,10 @@ my $activity_filename = 'dejunk.activity.data';
 #     last_msg => time(),
 # }
 my %activity;
+
+# $ignorlist{$server/$channel}
+my %ignorlist;
+
 
 sub cmd_dejunk {
     my ($args, $server, $item) = @_;
@@ -69,7 +75,7 @@ sub event_join {
     # Don't handle my own JOINs.
     return if ($nick eq $server->{nick});
 
-    return if channel_size_below_joinpart_minimum($server, $channel);
+    return if is_ignor_channel($server,$channel);
 
     my $status = get_client_status($server->{tag}, $host, $nick);
     my $show_unknown = Irssi::settings_get_bool('dejunk_joinpart_show_unknown');
@@ -95,7 +101,7 @@ sub event_part {
     # Don't handle my own JOINs.
     return if ($nick eq $server->{nick});
 
-    return if channel_size_below_joinpart_minimum($server, $channel);
+    return if is_ignor_channel($server,$channel);
     
     my $status = get_client_status($server->{tag}, $host, $nick);
     my $show_unknown = Irssi::settings_get_bool('dejunk_joinpart_show_unknown');
@@ -121,13 +127,7 @@ sub event_quit {
     # Don't handle my own QUITs.
     return if ($nick eq $server->{nick});
 
-    my $channel = get_smallest_channel($server, $nick);
-    if (!$channel) {
-        warning("QUIT: Could not get smallest channel for nick '%s' on network '%s'!",
-            $nick, $server->{tag});
-        return;
-    }
-    return if channel_size_below_joinpart_minimum($server, $channel);
+    return if is_ignor_nick($server,$nick);
 
     debug("QUIT: nick=$nick host=$host tag=%s", $server->{tag});
 
@@ -159,13 +159,7 @@ sub event_nick {
         }
     }
 
-    my $channel = get_smallest_channel($server, $newnick);
-    if (!$channel) {
-        warning("NICK: Could not get smallest channel for nick '%s' on network '%s'!",
-            $newnick, $server->{tag});
-        return;
-    }
-    return if channel_size_below_joinpart_minimum($server, $channel);
+    return if is_ignor_nick($server,$newnick);
     
     my $status = get_client_status($server->{tag}, $hostmask, $oldnick);
     my $show_unknown = Irssi::settings_get_bool('dejunk_joinpart_show_unknown');
@@ -225,37 +219,68 @@ sub get_client_status {
     return $STATUS_UNKNOWN;
 }
 
-sub channel_size_below_joinpart_minimum {
-    my ($server, $channel) = @_;
-    my $chan_obj = $server->channel_find($channel);
-    if (!$chan_obj) {
-        warning("Minsize check: could not find channel '%s' on network '%s'!",
-            $channel, $server->{tag});
-        return 1;
+sub get_ignorlist {
+    foreach (sort keys %ignorlist) {
+        print $_," ",$ignorlist{$_};
     }
-    my @nicks = $chan_obj->nicks();
-    if (scalar @nicks < Irssi::settings_get_int('dejunk_joinpart_min_size')) {
-        return 1;
-    }
-    return 0;
+
+    #my @sl=Irssi::servers();
+    #foreach (@sl) {
+    #   print "Server: ", $_->{"tag"};
+    #   print Dumper($_);
+    #}
 }
 
-sub get_smallest_channel {
-    my ($server, $nick) = @_;
+sub get_channel_str {
+    my $channel=$_[0];
+    my $cn=$channel->{'server'}->{'tag'}."/".$channel->{'name'};
+    #print $cn;
+    return $cn;
+}
+sub list_channels {
+    my @cl = Irssi::channels;
+    foreach (@cl) {
+        my @nicks= $_->nicks();
+        my $cn=get_channel_str($_);
+        #print $cn," ",$#nicks," ",$_->{"_irssi"};
 
-    my $count = 999999999;
-    my $found_channel;
-    for my $channel ($server->channels()) {
+        if (!exists($ignorlist{$cn})) {
+            $ignorlist{$cn}=0;
+        }
+        if ($#nicks > Irssi::settings_get_int('dejunk_joinpart_min_size')) {
+            $ignorlist{$cn}=1;
+        }
+    }
+}
+
+sub is_ignor_channel {
+    (my $server, my $channel)=@_;
+    my $cn=$server->{"tag"}."/".$channel;
+    my $ci=1;
+    if (exists($ignorlist{$cn})) {
+        if ($ignorlist{$cn} >0) {
+            $ci=0;
+        }
+    }
+    #print "is_ignor_channel: ",$cn," ",$ci;
+    return $ci;
+}
+
+sub is_ignor_nick {
+    (my $server, my $nick)=@_;
+    my $res=1;
+    foreach my $channel ($server->channels()) {
         if ($channel->nick_find($nick)) {
-            my @nicks = $channel->nicks();
-            if (scalar @nicks < $count) {
-                $count = scalar @nicks;
-                $found_channel = $channel;
+            my $cn=get_channel_str($channel);
+            if (exists($ignorlist{$cn})) {
+                if ($ignorlist{$cn} >0) {
+                    $res=0;
+                }
             }
         }
     }
-
-    return $found_channel->{name};
+    #print "is_ignor_nick: $server->{'tag'} $nick $res";
+    return $res;
 }
 
 sub load_data {
@@ -350,6 +375,7 @@ sub report_status {
 sub UNLOAD {
     message("Dejunk is being unloaded - saving data.");
     save_data();
+    #DB::finish_profile();
 }
 
 sub debug {
@@ -412,6 +438,10 @@ Irssi::theme_register(
      '{line_start}{hilight Dejunk:} [DEBUG] $0',
     ],
 );
+
+Irssi::command_bind('dejunk-test','get_ignorlist');
+my $time_tag=Irssi::timeout_add(60*1000,'list_channels',0);
+list_channels();
 
 load_data();
 report_status();
