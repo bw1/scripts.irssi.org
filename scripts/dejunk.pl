@@ -8,7 +8,7 @@ use Data::Dumper;
 
 #use Devel::NYTProf qw/wordmatch/;
 
-our $VERSION = '1.0';
+our $VERSION = '1.2';
 our %IRSSI = (
     authors     => 'Joost Vunderink (Garion)',
     contact     => 'joost@vunderink.net',
@@ -16,7 +16,7 @@ our %IRSSI = (
     description => 'Prevents all kinds of junk from showing up',
     license     => 'Public Domain',
     url         => 'http://www.garion.org/irssi/',
-    changed     => '29 September 2012 10:15:10',
+    changed     => '2018-01-04',
 );
 
 my ($STATUS_ACTIVE, $STATUS_INACTIVE, $STATUS_UNKNOWN) = (1, 2, 3);
