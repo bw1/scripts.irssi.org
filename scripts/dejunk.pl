@@ -6,7 +6,7 @@ use Irssi::Irc;
 
 use Data::Dumper;
 
-#use Devel::NYTProf qw/wordmatch/;
+#use Devel::NYTProf;
 
 our $VERSION = '1.2';
 our %IRSSI = (
@@ -30,6 +30,9 @@ my %activity;
 # $ignorlist{$server/$channel}
 my %ignorlist;
 
+# marker for the refresh
+my $time_tag_ignorlist;
+my $time_tag_clean;
 
 sub cmd_dejunk {
     my ($args, $server, $item) = @_;
@@ -375,7 +378,7 @@ sub report_status {
 sub UNLOAD {
     message("Dejunk is being unloaded - saving data.");
     save_data();
-    #DB::finish_profile();
+#    DB::finish_profile();
 }
 
 sub debug {
@@ -402,6 +405,22 @@ sub _log {
     Irssi::printformat(MSGLEVEL_CLIENTCRAP, "dejunk_$level", $str);
 }
 
+sub setup_change {
+    if ($time_tag_ignorlist) {
+        Irssi::timeout_remove($time_tag_ignorlist)
+    }
+    $time_tag_ignorlist=
+        Irssi::timeout_add(Irssi::settings_get_int('dejunk_update_ignorlist_time')
+            *1000,'list_channels',0);
+
+    if ($time_tag_clean) {
+        Irssi::timeout_remove($time_tag_clean)
+    }
+    $time_tag_clean=
+        Irssi::timeout_add(Irssi::settings_get_int('dejunk_clean_data_time')
+            *1000,'clean_activity_data',0);
+}
+
 Irssi::command_bind('dejunk',        'cmd_dejunk');
 Irssi::command_bind('dejunk help',   'cmd_dejunk_help');
 Irssi::command_bind('dejunk status', 'cmd_dejunk_status');
@@ -410,6 +429,8 @@ Irssi::command_bind('dejunk save',   'cmd_dejunk_save');
 Irssi::settings_add_bool('dejunk', 'dejunk_joinpart_enabled', 1);
 Irssi::settings_add_int( 'dejunk', 'dejunk_joinpart_min_size', 40);
 Irssi::settings_add_int( 'dejunk', 'dejunk_joinpart_idle_time', 15);
+Irssi::settings_add_int( 'dejunk', 'dejunk_update_ignorlist_time', 60);
+Irssi::settings_add_int( 'dejunk', 'dejunk_clean_data_time', 60*10);
 Irssi::settings_add_bool('dejunk', 'dejunk_joinpart_show_unknown', 1);
 Irssi::settings_add_bool('dejunk', 'dejunk_debug', 0);
 
@@ -422,6 +443,7 @@ Irssi::signal_add({
     'message nick'                  => \&event_nick,
 });
 Irssi::signal_add_last('message public', \&event_public);
+Irssi::signal_add('setup changed', 'setup_change');
 
 Irssi::theme_register(
     [
@@ -440,7 +462,8 @@ Irssi::theme_register(
 );
 
 Irssi::command_bind('dejunk-test','get_ignorlist');
-my $time_tag=Irssi::timeout_add(60*1000,'list_channels',0);
+
+setup_change();
 list_channels();
 
 load_data();
