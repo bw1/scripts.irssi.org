@@ -45,22 +45,44 @@ sub cmd_dejunk {
 
 sub cmd_dejunk_help {
     message("Dejunk is a script that prevents some clutter from showing up.");
-    message("In large and/or busy channels, joins, parts, nickchanges and quits can take up a large part of the activity. ".
-        "Using dejunk, all these events on large channels are hidden if the user doing ".
-        "them has not said anything for a while.");
+    message("In large and/or busy channels, joins, parts, nickchanges and");
+    message("quits can take up a large part of the activity. ");
+    message("Using dejunk, all these events on large channels are hidden");
+    message("if the user doing them has not said anything for a while.");
     message("This way, you only see such activity when it matters.");
     message("");
+    message("Dejunk will save its data when it unloads, so when you upgrade");
+    message("it, or restart irssi quickly, it will remember ");
+    message("which nicks were active recently on which networks.");
+    message("");
     message("Commands:");
-    message("/dejunk save - Force saving of data immediately.");
+    message(" /dejunk status");
+    message("   Show which activity dejunk has seen recently.");
+    message(" /dejunk save");
+    message("   Force saving of data immediately.");
+    message("   Should not be needed at all.");
     message("");
     message("Settings:");
-    message("dejunk_joinpart_enabled - Hide all non-relevant joins, parts, quits and nickchanges.");
-    message("dejunk_joinpart_idle_time - The amount of minutes of inactivity after which a user will be hidden.");
-    message("dejunk_joinpart_min_size - Activity on channels with fewer users than this is not hidden.");
-    message("dejunk_joinpart_show_unknown - If it's unknown whether the user has been active recently, ".
-        "show them if this setting is true. ".
-        "This is only relevant if the script has just been loaded for the first time.");
-    message("dejunk_debug - set to ON to see debug messages.");
+    message(" dejunk_joinpart_enabled");
+    message("   Hide all non-relevant joins, parts, quits and nickchanges.");
+    message(" dejunk_joinpart_idle_time");
+    message("   The amount of minutes of inactivity after which a user");
+    message("   will be hidden.");
+    message(" dejunk_joinpart_min_size");
+    message("   Activity on channels with fewer users than this");
+    message("   is not hidden.");
+    message(" dejunk_joinpart_show_unknown");
+    message("   If it's unknown whether the user has been active recently, ");
+    message("   show them if this setting is true. This is only relevant");
+    message("   if the script has just been loaded for the first time.");
+    message(" dejunk_debug");
+    message("   set to ON to see debug messages.");
+    message("");
+    message("You can see the current values of all dejunk settings via");
+    message("the following command:");
+    message("    /set dejunk");
+    message("You can change a setting via commands like this one:");
+    message("    /set dejunk_joinpart_min_size 100");
 }
 
 sub cmd_dejunk_status {
