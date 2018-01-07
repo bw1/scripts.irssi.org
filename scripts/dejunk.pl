@@ -16,7 +16,7 @@ our %IRSSI = (
     description => 'Prevents all kinds of junk from showing up',
     license     => 'Public Domain',
     url         => 'http://www.garion.org/irssi/',
-    changed     => '2018-01-04',
+    changed     => '2018-01-07',
 );
 
 my ($STATUS_ACTIVE, $STATUS_INACTIVE, $STATUS_UNKNOWN) = (1, 2, 3);
@@ -77,6 +77,11 @@ sub cmd_dejunk_help {
     message("   if the script has just been loaded for the first time.");
     message(" dejunk_debug");
     message("   set to ON to see debug messages.");
+    message("dejunk_update_ignorlist_time");
+    message("   set the update time in seconds for the ignorlist");
+    message("dejunk_clean_data_time");
+    message("   set the repeat time in seconds for the shrinking function");
+    message("   clean_activity_data");
     message("");
     message("You can see the current values of all dejunk settings via");
     message("the following command:");
@@ -242,18 +247,6 @@ sub get_client_status {
     }
 
     return $STATUS_UNKNOWN;
-}
-
-sub get_ignorlist {
-    foreach (sort keys %ignorlist) {
-        print $_," ",$ignorlist{$_};
-    }
-
-    #my @sl=Irssi::servers();
-    #foreach (@sl) {
-    #   print "Server: ", $_->{"tag"};
-    #   print Dumper($_);
-    #}
 }
 
 sub get_channel_str {
@@ -482,8 +475,6 @@ Irssi::theme_register(
      '{line_start}{hilight Dejunk:} [DEBUG] $0',
     ],
 );
-
-Irssi::command_bind('dejunk-test','get_ignorlist');
 
 setup_change();
 list_channels();
