@@ -30,6 +30,8 @@ use Data::Dumper;
 use POSIX;
 use vars qw($forked $timer $timer2 $index %downloads $nresults $seen $credits $noul %edlinks $expected);
 
+my $forked=0;
+
 # - - - - - - - - - -
 # debug help by bw1
 # - - - - - - - - - -
@@ -40,13 +42,12 @@ $|=1;
 select $oldfa;
 
 sub bw1dump {
-    (my $p) =@_;
-    print $debugfa Dumper($p);
+    print $debugfa Dumper(@_);
     print $debugfa "\n";
 }
 sub bw1print {
     my @in=@_;
-    chop $in[$#in];
+    chomp $in[$#in];
     print $debugfa @in;
     print $debugfa "\n";
 }
@@ -143,22 +144,28 @@ sub draw_box ($$$$) {
 sub array2table {
     my (@array) = @_;
     my @width;
+    my $width=0;
     foreach my $line (@array) {
         for (0..scalar(@$line)-1) {
-	    my $l = $line->[$_];
-	    $l =~ s/%[^%]//g;
-	    $l =~ s/%%/%/g;
-            $width[$_] = length($l) if $width[$_]<length($l);
+            if (scalar $line->[$_]) {
+                my $l = $line->[$_];
+                $l =~ s/%[^%]//g;
+                $l =~ s/%%/%/g;
+                $width[$_] =0 if (!exists $width[$_]);
+                $width[$_] = length($l) if $width[$_]<length($l);
+            }
         }
-    }   
+    }
     my $text;
     foreach my $line (@array) {
         for (0..scalar(@$line)-1) {
-	    my $l = $line->[$_];
-            $text .= $line->[$_];
-	    $l =~ s/%[^%]//g;
-	    $l =~ s/%%/%/g;
-            $text .= " "x($width[$_]-length($l)+1) unless ($_ == scalar(@$line)-1);
+            if (scalar $line->[$_]) {
+                my $l = $line->[$_];
+                $text .= $line->[$_];
+                $l =~ s/%[^%]//g;
+                $l =~ s/%%/%/g;
+                $text .= " "x($width[$_]-length($l)+1) unless ($_ == scalar(@$line)-1);
+            }
         }
         $text .= "\n";
     }
@@ -174,7 +181,6 @@ sub donkey_connect {
                                      PeerPort => $port,
                                      Proto    => 'tcp');
     return 0 unless $sock;
-    my $password = Irssi::settings_get_str('idonkey_password');
     while ($_ = $sock->getline()) {
 	s/\e.*?m//g;
 	if (/Use \? for help/) {
@@ -836,6 +842,7 @@ sub get_best_name ($) {
 
 sub downloads2text ($$) {
     my ($downloads, $regexp) = @_;
+    bw1dump($downloads);
     my $length = Irssi::settings_get_int('idonkey_max_filename_length');
     my $text;
     my @table;
@@ -884,12 +891,13 @@ sub downloads2text ($$) {
 	}
 	#push @line, ' ['.$downloads->{$_}{sources}.'/'.$downloads->{$_}{onlist}.' @'.$downloads->{$_}{net}.']' if (defined $downloads->{$_}{sources});
 	my $netload = '[';
-	$netload .= $downloads->{$_}{sources}."@";
+	$netload .= $downloads->{$_}{sources}."@" if (exists $downloads->{$_}{sources});
 	$netload .= $downloads->{$_}{net}.']';
 	push @line, $netload;
-	push @line, .$downloads->{$_}{tag};
+	push @line, $downloads->{$_}{tag};
 	#$text .= "\n";
-	if (1 || $downloads->{$_}{chunks}) {
+        #if (1 || $downloads->{$_}{chunks}) {
+	if (exists $downloads->{$_}{chunks}) {
 	    if (ref $downloads->{$_}{chunks} && @{$downloads->{$_}{chunks}} > 1) {
 		my $chunk;
 		$chunk .= '[';
