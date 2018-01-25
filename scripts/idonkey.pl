@@ -4,6 +4,7 @@
 #
 
 use strict;
+use warnings;
 
 use vars qw($VERSION %IRSSI);
 $VERSION = "2004051601";
@@ -28,6 +29,28 @@ use HTML::Entities;
 use Data::Dumper;
 use POSIX;
 use vars qw($forked $timer $timer2 $index %downloads $nresults $seen $credits $noul %edlinks $expected);
+
+# - - - - - - - - - -
+# debug help by bw1
+# - - - - - - - - - -
+my $debugfa;
+open $debugfa,'>>',"debug.log";
+my $oldfa=select $debugfa;
+$|=1;
+select $oldfa;
+
+sub bw1dump {
+    (my $p) =@_;
+    print $debugfa Dumper($p);
+    print $debugfa "\n";
+}
+sub bw1print {
+    my @in=@_;
+    chop $in[$#in];
+    print $debugfa @in;
+    print $debugfa "\n";
+}
+# - - - - - - - - - -
 
 sub show_help() {
     my $help = $IRSSI{name}." $VERSION
@@ -95,20 +118,27 @@ sub show_help() {
     print CLIENTCRAP &draw_box($IRSSI{name}, $text, "help", 1);
 }
 
-
+# make a box string
+#
+# ,--[iDonkey]
+# |
+# `--<Downloads>->
+#
 sub draw_box ($$$$) {
-    my ($title, $text, $footer, $colour) = @_;
-    my $box = ''; 
+    (my $title, my $text, my $footer, my $colour) = @_;
+    my $box = '';
     $box .= '%R,--[%n%9%U'.$title.'%U%9%R]%n'."\n";
-    foreach (split(/\n/, $text)) {
-    	$box .= '%R|%n '.$_."\n";
+    if (defined $text) {
+        foreach (split(/\n/, $text)) {
+            $box .= '%R|%n '.$_."\n";
+        }
     }
     $box .= '%R`--<%n'.$footer.'%R>->%n';
     unless ($colour) {
-	$box =~ s/%(.)/$1 eq '%'?$1:''/eg;
+        $box =~ s/%(.)/$1 eq '%'?$1:''/eg;
     }
     return $box;
-}   
+}
 
 sub array2table {
     my (@array) = @_;
@@ -138,6 +168,7 @@ sub array2table {
 sub donkey_connect {
     my $host = Irssi::settings_get_str('idonkey_host');
     my $port = Irssi::settings_get_int('idonkey_port');
+    my $user = Irssi::settings_get_str('idonkey_user');
     my $password = Irssi::settings_get_str('idonkey_password');
     my $sock = IO::Socket::INET->new(PeerAddr => $host,
                                      PeerPort => $port,
@@ -147,14 +178,16 @@ sub donkey_connect {
     while ($_ = $sock->getline()) {
 	s/\e.*?m//g;
 	if (/Use \? for help/) {
-	    $sock->print("auth ".$password."\n");
+	    #$sock->print("auth ".$password."\n");
+		$sock->print("auth $user ".'"'.$password.'"'."\n");
 	} elsif (/Full access enabled/) {
-	    $sock->print("ansi false\n");
+            #$sock->print("ansi false\n");
 	    foreach (1..3) {
 		$sock->getline();
 	    }
 	    return $sock;
 	} elsif (/Bad login\/password/) {
+	    print "idonkey: Error wrong password!";
 	    $sock->close();
 	    return 0;
 	}
@@ -172,7 +205,8 @@ sub bg_do ($) {
         close $wh;
         Irssi::pidwait_add($pid);
         my $pipetag;
-        my @args = ($rh, \$pipetag);                                                    $pipetag = Irssi::input_add(fileno($rh), INPUT_READ, \&pipe_input, \@args); 
+        my @args = ($rh, \$pipetag);
+        $pipetag = Irssi::input_add(fileno($rh), INPUT_READ, \&pipe_input, \@args);
     } else {
 	eval {
 	    my $result;
@@ -464,28 +498,58 @@ sub get_client_stats {
     return \%stats;
 }
 
+# isotodec("20kb") -> 20000
+sub isotodec {
+    (my $in) =@_;
+    my $out = $in;
+
+    if ($in =~ m/k/) {
+        $out = $in *10**3;
+    } elsif ($in =~ m/m/) {
+        $out = $in *10**6;
+    } elsif ($in =~ m/g/) {
+        $out = $in *10**9;
+    }
+
+    return $out;
+}
+
+# get_downloads()
+#
+# open mldonkey
+# ml < "vd"
+# ml >
+# Down: 46.9 KB/s ( 0 + 48075 ) | Up: 0.0 KB/s ( 0 + 49 ) | Shared: 4/895.1M | Downloaded: 651.4M | Uploaded: 0
+###                                                       6                               7     9        10     11      12   13     14   15
+#   Num   Rele Comm User   Group                          File                            %     Done     Size   lSeen   Old  Active Rate Prio 
+#   [D   1] -       0 admin mldonkey alternativlos-36.mp3                                96.0   96.0mb  100.0mb   0:35    0:0  1/1     -      0
+#   [B   5] -       0 admin mldonkey 34c3-8998-deu-spa-eng-Die_goettliche_Inform....mp4  69.9  555.4mb  795.1mb  4:06:09  0:0  2/2    47.2    0
+#   Downloaded 1 files
+#      [ Num ]              File             Size                 MD4
+#      [FileTP 6    ] cr234-homesweethome.ogg 88678196 00000000000000000000000000000000
+#      Use 'commit' to move downloaded files to the incoming directory
+#
+#      MLdonkey command-line:
+#      >
+#
+# close mldonkey
+#
+# return \%downloads
 sub get_downloads {
+    print CRAP "bw1 get_downloads 0:";
     my %downloads;
     my $sock = donkey_connect();
     return \%downloads unless $sock;
     $sock->print("vd\n");
-    my $ready;
-    my $nfiles;
-    my @files;
-    my $sent;
     while ($_ = $sock->getline()) {
-	my $line = $_;
-	#print $line foreach (1..100);
-	if (/^Downloaded (\d+)\/(\d+) files/) {
-	    $nfiles = $1+$2;
-	#} elsif (/^\[(.*?) *(\d+) *?\] +(?:.*?) +([-0-9.]+) +(?:-?\d+) +(?:\d+) +[\d-]+:([\d-]+) +([0-9.-]+|Paused|Queued)/) {
-	} elsif (/^\[(.*?) *(\d+) *?\] +(?:.*?) +([-0-9.]+) +(?:-?\d+) +(?:\d+) +(?:\d+) +[\d-]+:([\d-]+) +\d+\/\d+ +([0-9.-]+|Paused|Queued)/) {
-	    #print $_;
-	    my $id = $2;
-	    $downloads{$id}{percent} = $3;
-	    $downloads{$id}{available} = ($4 == 0) ? 1 : 0;
-	    $downloads{$id}{rate} = $5;
-	    push @files, $id;
+
+        chomp $_;
+        $_ =~ s/\e.*?m//g;
+
+        #begin Downloaded
+        if (/^Downloaded (\d+) files/ ) {
+
+        # download completed
 	} elsif (/^ *\[(.*?) *(\d+) *?\] +(.*?) +(\d+) +[0-9A-Z]{32}/) {
 	    my $id = $2;
 	    $downloads{$id}{net} = $1;
@@ -494,46 +558,53 @@ sub get_downloads {
 	    $downloads{$id}{size} = $4;
 	    $downloads{$id}{downloaded} = $4;
 	    push @{ $downloads{$id}{names} }, $3;
-	    #$sock->print("vd ".$id."\n");
-	    push @files, $id;
-	} elsif (/\[(.*?) *(\d+) *?\] +(.*?) +(\d+) +(\d+)$/) {
-	    $downloads{$sent}{net} = $1;
-	    $downloads{$sent}{size} = $4;
-	    $downloads{$sent}{downloaded} = $5;
-	    push @{ $downloads{$sent}{names} }, $3;
-	} elsif (/^    \((.*?)\)$/) {
-	    push @{ $downloads{$sent}{names} }, $1;
-	} elsif (/^(\d+) sources:/) {
-	    $downloads{$sent}{sources} = $1;
-	    $sent = undef;
-	    #$downloads{$processing}{onlist} = 0;
-	} elsif (/^Chunks: \[(\d+)\]/ && not $downloads{$sent}{net} eq 'BitTorrent') {
-	    foreach (split(//, $1)) {
-		push @{ $downloads{$sent}{chunks} }, $_;
-		#print $processing if $processing eq '3';
-	    }
-	}
-	$ready = 1 if (@files == $nfiles);
-	#} elsif (/^ *(?:.*?) \(last_ok <(?:.*?)> lasttry <(?:.*?)> nexttry <(?:.*?)> onlist (true|false)\)$/) {
-	#    $downloads{$processing}{onlist}++ if $1 eq 'true';
-	#}
-	if (($nfiles == 0) || defined @files && @files == 0 && not defined $sent) {
-	    $sock->close();
-	    return \%downloads;
-	} else {
-	    if ($ready && not defined $sent) {
-		$sent = pop @files;
-		if (1) {
-		    $sock->close();
-		    $sock = donkey_connect();
-		    #$sock->print("id\n");
-		    $sock->print('vd '.$sent."\n");
-		    # What a hack :) FIXME in mldonkey
-		} else {
-		    $sent = undef;
-		}
-	    }
-	}
+
+        # spool
+        } elsif (/\[(.*?)\s*(\d+)\]/) {
+            my @f;
+            my $s=$_;
+            for (my $c=0;$c <6;$c++) {
+                if ($s =~ m/(.*?)[\s\]]+/p) {
+                    $f[$c]=$1;
+                    $s =${^POSTMATCH};
+                }
+            }
+            $f[0]=~ s/\[//;
+
+            if ($s =~ m/(.*?)\s+(\d+\.\d+)/p) {
+                $f[6]=$1;
+                $f[7]=$2;
+                $s =${^POSTMATCH};
+            }
+
+            for (my $c=8;$c <15;$c++) {
+                if ($s =~ m/(.*?)\s+/p) {
+                    $f[$c]=$1;
+                    $s =${^POSTMATCH};
+                }
+            }
+
+            for (my $c=9;$c <11;$c++) {
+                $f[$c] =isotodec($f[$c]);
+            }
+
+            my $id=$f[1];
+            $downloads{$id}{net} = $f[0];
+            $downloads{$id}{percent} = $f[7];
+            $downloads{$id}{rate} = $f[14];
+            $downloads{$id}{size} = $f[10];
+            $downloads{$id}{downloaded} = $f[9];
+            if ($f[13] =~ m/^(\d+)/) {
+                $downloads{$id}{available} = $1;
+            }
+            push @{ $downloads{$id}{names} }, $f[6];
+
+        # end of output
+        } elsif (/command-line/) {
+            $sock->print('q');
+            $sock->close();
+            return \%downloads;
+        }
     }
 }
 
@@ -839,13 +910,15 @@ sub downloads2text ($$) {
 	}
 	push @table, \@line;
     }
-    foreach (split /\n/, array2table(@table)) {
-	$text .= (shift @names)."\n";
-	$text .= "     ".$_."\n";
-	if (Irssi::settings_get_bool('idonkey_show_chunks')) {
-	    my $chunk = shift @chunks;
-	    $text .= "   ".$chunk."\n" if $chunk;
-	}
+    if ($#table != -1) {
+        foreach (split /\n/, array2table(@table)) {
+            $text .= (shift @names)."\n";
+            $text .= "     ".$_."\n";
+            if (Irssi::settings_get_bool('idonkey_show_chunks')) {
+                my $chunk = shift @chunks;
+                $text .= "   ".$chunk."\n" if $chunk;
+            }
+        }
     }
     my $percent = $size > 0 ? ($downloaded / $size)*100 : 0; 
     $percent = $1 if ($percent =~ /(\d+\.\d{1}).*?/);
@@ -1384,6 +1457,7 @@ Irssi::signal_add_first('complete word', \&sig_complete_word);
 Irssi::settings_add_str($IRSSI{name}, 'idonkey_password', '');
 Irssi::settings_add_str($IRSSI{name}, 'idonkey_host', 'localhost');
 Irssi::settings_add_int($IRSSI{name}, 'idonkey_port', 4000);
+Irssi::settings_add_str($IRSSI{name}, 'idonkey_user', 'admin');
 Irssi::settings_add_int($IRSSI{name}, 'idonkey_max_filename_length', 65);
 # sources, filename, id, size
 Irssi::settings_add_str($IRSSI{name}, 'idonkey_sort_results_by', "id");
@@ -1406,3 +1480,5 @@ Irssi::statusbar_item_register('idonkey', 0, "sb_idonkey");
 install_timer();
 
 print CLIENTCRAP '%B>>%n '.$IRSSI{name}.' '.$VERSION.' loaded, /idonkey help';
+
+# vim:set syntax=perl list listchars=tab\:>-,trail\:- ts=8 sw=4 expandtab smarttab:
