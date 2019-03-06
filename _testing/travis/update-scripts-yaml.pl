@@ -60,6 +60,10 @@ for my $file (<scripts/*.pl>) {
     else {
 	print "MISSING META FOR $base\n";
     }
+    # tags from oldmeta
+    if ( !exists $newmeta{tags} && exists $oldmeta{tags} ) {
+	$newmeta{tags}=$oldmeta{tags};
+    }
 }
 my @newdoc = map {
     my $v = $newmeta{$_};
@@ -111,3 +115,5 @@ if [ "\$(git log -1 --format=%an)" != "\$(git config user.name)" -a \\
 fi
 ];
 }
+
+# vim:set ts=8 sw=4:
