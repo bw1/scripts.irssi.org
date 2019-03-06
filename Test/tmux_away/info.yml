@@ -1,0 +1,9 @@
+---
+-
+  authors: cdidier
+  default_package: tmux_away
+  description: 'set (un)away if tmux session is attached/detached'
+  license: 'GPL v2'
+  name: tmux_away
+  url: http://cybione.org
+  version: '2.1'

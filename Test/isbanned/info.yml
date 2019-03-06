@@ -1,0 +1,15 @@
+---
+-
+  authors: mniip
+  commands:
+    - isbanned
+    - islisted
+    - ismuted
+    - isreset
+  contact: 'mniip @ freenode'
+  default_package: isbanned
+  description: 'freenode-specific script that checks whether someone is banned on some channel'
+  license: 'Public domain'
+  modified: 2015-09-14
+  name: isbanned
+  version: 0.7.0

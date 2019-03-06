@@ -1,0 +1,10 @@
+---
+-
+  authors: 'Thomas Graf'
+  contact: irssi@reeler.org
+  default_package: redirect
+  description: 'handle 005 and 010 server messages and reconnect to that server'
+  license: 'GNU GPLv2 or later'
+  name: redirect
+  url: http://irssi.reeler.org/
+  version: '0.1'

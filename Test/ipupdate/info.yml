@@ -1,0 +1,15 @@
+---
+-
+  authors: 'xlony, Axel Gembe'
+  changed: 2017-11-08
+  commands:
+    - ipupdate
+  contact: anderfdez@yahoo.es
+  default_package: ipupdate
+  description: 'Auto "/set dcc_own_ip IP" on connect.'
+  license: GPL
+  modules:
+    - HTTP::Request::Common
+    - LWP::UserAgent
+  name: IPupdate
+  version: '1.3'

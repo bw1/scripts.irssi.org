@@ -1,0 +1,18 @@
+---
+-
+  authors: bcattaneo
+  commands:
+    - dbnext
+    - dbpause
+    - dbplay
+    - dbprev
+    - dbrandom
+    - dbstop
+    - np
+  contact: c@ttaneo.uy
+  default_package: deadbeef
+  description: 'deadbeef control and now playing script'
+  license: 'Public Domain'
+  name: deadbeef
+  url: http://github.com/bcattaneo
+  version: 1.0.0

@@ -1,0 +1,9 @@
+---
+-
+  authors: 'Lars Djerf, Nei, Phoenix616'
+  contact: 'lars.djerf@gmail.com, Nei @ anti@conference.jabber.teamidiot.de, Phoenix616 @ mail@moep.tv'
+  default_package: colon_emoji
+  description: 'Replace words between :...: in messages according to a text file. Was intended for Unicode Emoji on certain proprietary platforms.'
+  license: GPLv3
+  name: colon_emoji
+  version: '0.3'

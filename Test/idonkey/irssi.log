@@ -1,0 +1,4 @@
+* "my" variable $password masks earlier declaration in same scope at idonkey.pl line 146.
+* 
+* -!- Irssi: Error in script idonkey:
+* Can't use 'defined(@array)' (Maybe you should just omit the defined()?) at idonkey.pl line 520.

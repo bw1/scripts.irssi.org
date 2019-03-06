@@ -1,0 +1,11 @@
+---
+-
+  authors: 'Ilya Cassina'
+  commands:
+    - elist
+  contact: icassina@gmail.com
+  default_package: elist
+  description: 'This script allow advanced parametrization of the /list command. Accepted parameters are -minusers <#users> and -maxusers <#users>. '
+  license: GPLv2
+  name: 'Enanched LIST'
+  version: '1.0'

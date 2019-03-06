@@ -1,0 +1,10 @@
+---
+-
+  authors: Nei
+  contact: 'Nei @ anti@conference.jabber.teamidiot.de'
+  default_package: complete_at
+  description: 'Complete nicks after @ (twitter-style)'
+  license: ISC
+  name: complete_at
+  url: http://anti.teamidiot.de/
+  version: '0.2'

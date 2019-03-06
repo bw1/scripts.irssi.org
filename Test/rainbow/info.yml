@@ -1,0 +1,16 @@
+---
+-
+  authors: 'Jakub Jankowski'
+  commands:
+    - rkick
+    - rknockout
+    - rme
+    - rsay
+    - rtopic
+  contact: shasta@atn.pl
+  default_package: rainbow
+  description: 'Prints colored text. Rather simple than sophisticated.'
+  license: 'GNU GPLv2 or later'
+  name: rainbow
+  url: http://irssi.atn.pl/
+  version: '1.6'

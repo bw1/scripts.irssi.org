@@ -1,0 +1,10 @@
+---
+-
+  authors: 'Jean-Yves Lefort'
+  changed: '$Date: 2017/03/06 $ '
+  contact: jylefort\@brutele.be
+  default_package: pager
+  description: 'Notifies people if they send you a private message or a DCC chat offer while you are away; runs a shell command configurable via /set if they page you'
+  license: BSD
+  name: pager
+  version: '1.2'

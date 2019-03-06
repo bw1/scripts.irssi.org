@@ -1,0 +1,17 @@
+---
+-
+  authors: 'David "Legooolas" Gardner'
+  commands:
+    - mailcheck_imap
+    - mailcheck_imap_help
+    - mailcheck_imap_stop
+  contact: irssi@icmfp.com
+  default_package: mailcheck_imap
+  description: 'Staturbar item which indicates how many new emails you have in the specified IMAP[S] mailbox'
+  license: 'GNU GPLv2'
+  modules:
+    - IO::Socket::SSL
+  name: mailcheck_imap
+  sbitems: mailcheck_imap
+  url: http://icmfp.com/irssi
+  version: '0.5'

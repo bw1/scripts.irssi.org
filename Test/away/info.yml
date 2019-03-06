@@ -1,0 +1,10 @@
+---
+-
+  authors: 'Jean-Yves Lefort, Larry "Vizzie" Daffner, Kees Cook'
+  changed: '$Date: 2003/02/25 08:48:56 $ '
+  contact: 'jylefort@brutele.be, vizzie@airmail.net, kc@outflux.net'
+  default_package: away
+  description: 'Away with reason, unaway, and autoaway'
+  license: BSD
+  name: away
+  version: '0.23'

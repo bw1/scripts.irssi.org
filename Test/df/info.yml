@@ -1,0 +1,13 @@
+---
+-
+  authors: 'Jochem Meyers'
+  commands:
+    - dfupdate
+  contact: jochem.meyers@gmail.com
+  default_package: df
+  description: 'Adds an item which displays the current disk usage.'
+  license: 'GPL v2 or later'
+  name: df
+  sbitems: df
+  url: http://kaede.kicks-ass.net/irssi.html
+  version: 0.1.0

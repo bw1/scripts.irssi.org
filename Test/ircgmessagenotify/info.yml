@@ -1,0 +1,17 @@
+---
+-
+  authors: BCOW
+  changed: '21.01.2004 23:55:00 EET'
+  commands:
+    - ircgcomments
+  contact: bcow@iki.fi
+  default_package: ircgmessagenotify
+  description: 'Tarkistelee irc-galleria.net:iä ja sanoo kun sinulle on uusia viestejä.'
+  license: GPLv2
+  modules:
+    - HTTP::Cookies
+    - LWP::UserAgent
+  name: ircgmessagenotify
+  sbitems: ircgcomments
+  url: http://www.verkonpaino.net/
+  version: 0.1b

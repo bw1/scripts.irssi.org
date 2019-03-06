@@ -1,0 +1,12 @@
+---
+-
+  authors: 'Ilkka Pale'
+  commands:
+    - emo
+    - emolist
+  contact: ilkka.pale@gmail.com
+  default_package: emo
+  description: 'Outputs various unicode emoticons'
+  license: 'Public Domain'
+  name: emo
+  version: 0.0.1

@@ -1,0 +1,12 @@
+---
+-
+  authors: legion
+  changed: 'Sat Dec  6 12:28:04 CET 2003'
+  commands:
+    - randname
+  contact: a.lepore(at)email.it
+  default_package: randname
+  description: 'Random "/set real_name" taken from a file.'
+  license: 'Public Domain'
+  name: RandName
+  version: '1.0'

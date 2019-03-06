@@ -1,0 +1,12 @@
+---
+-
+  authors: 'David Leadbeater'
+  commands:
+    - sysinfo
+  contact: dgl@dgl.cx
+  default_package: sysinfo_dg
+  description: 'Adds a /sysinfo command which prints system information (linux only).'
+  license: 'GNU GPLv2 or later'
+  name: sysinfo-dg
+  url: http://irssi.dgl.cx/
+  version: '1.3'

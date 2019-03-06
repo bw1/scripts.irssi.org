@@ -1,0 +1,12 @@
+---
+-
+  authors: 'Thomas Graf'
+  commands:
+    - page
+  contact: irssi@reeler.org
+  default_package: page_reeler
+  description: 'display and send CTCP PAGE'
+  license: 'GNU GPLv2 or later'
+  name: page
+  url: http://irssi.reeler.org/
+  version: '0.2'

@@ -1,0 +1,14 @@
+---
+-
+  authors: ThEbUtChE
+  bugs: ninguno
+  changed: 'viernes, 17 de enero de 2003, 03:19:15 CET'
+  commands:
+    - watch
+  contact: thebutche@interec.org
+  default_package: watch
+  description: 'Uso del comando watch para irssi.'
+  license: BSD
+  name: 'Watch script'
+  url: http://www.nebulosa.org
+  version: '1.0'

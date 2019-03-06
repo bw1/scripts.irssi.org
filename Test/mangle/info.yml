@@ -1,0 +1,22 @@
+---
+-
+  authors: 'Szymon Sokol'
+  changed: '2017031701'
+  commands:
+    - mangle
+    - 'mangle add'
+    - 'mangle del'
+    - 'mangle list'
+    - 'mangle load'
+    - 'mangle save'
+    - 'mangle say'
+    - 'mangle show'
+  contact: szymon@hell.pl
+  default_package: mangle
+  description: 'translates your messages into Morse code, rot13 and other sillinesses.'
+  license: GPLv2
+  modules: Data::Dumper
+  name: mangle
+  sbitems: mangle_sb
+  url: http://irssi.org/scripts/
+  version: '2017031701'

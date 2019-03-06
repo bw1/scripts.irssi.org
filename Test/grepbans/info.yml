@@ -1,0 +1,11 @@
+---
+-
+  authors: 'Nathan Handler'
+  commands:
+    - grepbans
+  contact: nathan.handler@gmail.com
+  default_package: grepbans
+  description: 'Greps the ban list for the specified pattern'
+  license: GPLv3+
+  name: grepbans
+  version: '1.0'

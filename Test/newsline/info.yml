@@ -1,0 +1,30 @@
+---
+-
+  authors: "Stefan 'tommie' Tomanek"
+  changed: '2017040101'
+  commands:
+    - newsline
+    - 'newsline add'
+    - 'newsline delete'
+    - 'newsline description'
+    - 'newsline fetch'
+    - 'newsline help'
+    - 'newsline limit'
+    - 'newsline list'
+    - 'newsline paste'
+    - 'newsline paste description'
+    - 'newsline reload'
+    - 'newsline save'
+    - 'newsline toggle'
+  contact: stefan@pico.ruhr.de
+  default_package: newsline
+  depends: openurl
+  description: 'brings various newstickers to Irssi (Slashdot, Freshmeat, Heise etc.)'
+  license: GPLv2
+  modules:
+    - LWP::UserAgent
+    - Unicode::String
+    - XML::RSS
+  name: Newsline
+  sbitems: newsline_ticker
+  version: '2017040101'

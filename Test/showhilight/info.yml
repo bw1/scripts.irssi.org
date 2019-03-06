@@ -1,0 +1,10 @@
+---
+-
+  authors: "Paweł 'Styx' Chuchmała"
+  changed: 'Fri Jun 28 11:09:42 CET 2002'
+  contact: styx@irc.pl
+  default_package: showhilight
+  description: 'Show hilight messages in active window'
+  license: 'GNU GPLv2'
+  name: showhilight
+  version: '0.2'

@@ -1,0 +1,11 @@
+---
+-
+  authors: 'jwz, irssified by Mikachu'
+  commands:
+    - scrmable
+  contact: 'Mikachu @ freenode'
+  default_package: scrmable
+  description: 'wtires lkie tihs'
+  license: 'as is'
+  name: scrmable
+  version: '1.01'

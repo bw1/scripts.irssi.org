@@ -1,0 +1,9 @@
+---
+-
+  authors: 'unknown, Nei'
+  contact: 'Nei @ anti@conference.jabber.teamidiot.de'
+  default_package: execcmd
+  description: 'Permit to use /EXEC with arbitrary irssi commands.'
+  name: execcmd
+  url: http://anti.teamidiot.de/
+  version: '0.1'

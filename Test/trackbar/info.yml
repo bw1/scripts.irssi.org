@@ -1,0 +1,24 @@
+---
+-
+  authors: "Peter 'kinlo' Leurs, Uwe Dudenhoeffer, Michiel Holtkamp, Nico R. Wohlgemuth, Geert Hauwaerts"
+  commands:
+    - mark
+    - trackbar
+    - 'trackbar goto'
+    - 'trackbar keep'
+    - 'trackbar mark'
+    - 'trackbar markall'
+    - 'trackbar markvisible'
+    - 'trackbar redraw'
+    - 'trackbar remove'
+    - 'trackbar removeall'
+  contact: peter@pfoe.be
+  default_package: trackbar
+  description: 'Shows a bar where you have last read a window.'
+  license: 'GNU General Public License'
+  modules:
+    - Text::CharWidth
+  name: trackbar
+  patchers: 'Johan Kiviniemi (UTF-8), Uwe Dudenhoeffer (on-upgrade-remove-line)'
+  url: http://www.pfoe.be/~peter/trackbar/
+  version: '2.6'

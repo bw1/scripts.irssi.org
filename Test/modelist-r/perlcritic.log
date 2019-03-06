@@ -1,0 +1,9 @@
+Having more than one /x regexp modifier is deprecated at /home/travis/build/bw1/scripts.irssi.org/extlib/lib/perl5/Perl/Critic/Policy/ValuesAndExpressions/RequireInterpolationOfMetachars.pm line 110.
+Code before warnings are enabled at line 46, column 11.  See page 431 of PBP.  (Severity: 4)
+Mismatched operator at line 200, column 29.  Numeric/string operators and operands should match.  (Severity: 3)
+Mismatched operator at line 204, column 32.  Numeric/string operators and operands should match.  (Severity: 3)
+String delimiter used with "split" at line 248, column 22.  Express it as a regex instead.  (Severity: 2)
+Comma used to separate statements at line 249, column 5.  See pages 68,71 of PBP.  (Severity: 4)
+Comma used to separate statements at line 250, column 41.  See pages 68,71 of PBP.  (Severity: 4)
+Mismatched operator at line 252, column 56.  Numeric/string operators and operands should match.  (Severity: 3)
+Mismatched operator at line 252, column 101.  Numeric/string operators and operands should match.  (Severity: 3)

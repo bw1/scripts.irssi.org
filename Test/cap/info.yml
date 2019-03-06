@@ -1,0 +1,10 @@
+---
+-
+  authors: dwfreed
+  contact: dwfreed@mtu.edu
+  default_package: cap
+  description: 'Prints caps; derived from cap_sasl.pl by Michael Tharp (gxti), Jilles Tjoelker (jilles), and Mantas Mikulėnas (grawity)'
+  license: GPLv2
+  name: cap
+  url: 'none yet'
+  version: '1.0'

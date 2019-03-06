@@ -1,0 +1,9 @@
+---
+-
+  authors: 'Doug Freed'
+  contact: dwfreed!#irssi@freenode
+  default_package: qchallengeauth
+  description: "Authenticates you to QuakeNet's Q immediately on connect using CHALLENGEAUTH"
+  license: GPLv3+
+  name: qchallengeauth.pl
+  version: '1.0'

@@ -1,0 +1,12 @@
+---
+-
+  authors: Nei
+  commands:
+    - dumplines
+  contact: 'Nei @ anti@conference.jabber.teamidiot.de'
+  default_package: linebuffer
+  description: 'dump the linebuffer content'
+  license: 'GNU GPLv2 or later'
+  name: linebuffer
+  url: http://anti.teamidiot.de/
+  version: '0.3'

@@ -1,0 +1,11 @@
+---
+-
+  authors: lasers
+  commands:
+    - 'script save'
+  contact: 'lasers on freenode'
+  default_package: scriptsave
+  description: 'Loads scripts from file instead of autorun directory'
+  license: WTFPL
+  name: scriptsave
+  version: '0.2'

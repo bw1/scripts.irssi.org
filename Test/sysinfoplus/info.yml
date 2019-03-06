@@ -1,0 +1,13 @@
+---
+-
+  authors: 'Juerd, Tronic'
+  changed: 2017-04-02
+  commands:
+    - sysinfo
+  contact: trn@iki.fi
+  default_package: sysinfoplus
+  description: 'Linux system information (with vPenis and other stuff)'
+  license: 'Public Domain'
+  name: SysinfoPlus
+  url: http://juerd.nl/irssi/
+  version: '2.21'

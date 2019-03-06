@@ -1,0 +1,14 @@
+---
+-
+  authors: 'Wouter Coekaerts'
+  changed: 29/07/07
+  commands:
+    - ws
+  contact: coekie@irssi.org
+  default_package: window_switcher
+  description: 'makes switching windows easy'
+  license: 'GPLv2 or later'
+  name: window_switcher
+  sbitems: window_switcher
+  url: http://wouter.coekaerts.be/irssi/
+  version: '1.0'

@@ -1,0 +1,12 @@
+---
+-
+  authors: 'Valentin Batz, Nico R. Wohlgemuth'
+  commands:
+    - banaffects
+  contact: 'senneth@irssi.org, nico@lifeisabug.com'
+  default_package: banaffects
+  description: 'Shows affected nicks by a ban on a new ban and defends yourself because IRC is serious.'
+  licence: GPLv2
+  name: banaffects_sd
+  url: http://nico.lifeisabug.com/irssi/scripts/
+  version: '1.2'

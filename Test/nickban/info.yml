@@ -1,0 +1,9 @@
+---
+-
+  authors: "Roeland 'Trancer' Nieuwenhuis"
+  contact: irssi@trancer.nl
+  default_package: nickban
+  description: 'A simple nick banner. If it encounters a nick it bans its host'
+  license: 'Public Domain'
+  name: nickban
+  version: '1.1'

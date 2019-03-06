@@ -1,0 +1,5 @@
+* "my" variable $server masks earlier declaration in same scope at connectcmd.pl line 90.
+* 
+* readline() on closed filehandle $fi at connectcmd.pl line 25.
+* 
+* -!- Irssi: Loaded script connectcmd

@@ -1,0 +1,12 @@
+---
+-
+  authors: 'Piotr Krukowiecki'
+  commands:
+    - fleech
+  contact: 'piotr //at// krukowiecki //dot// net'
+  default_package: fleech
+  description: 'fserve leecher - helps you download files from file servers'
+  license: 'GNU GPL v2'
+  name: fleech
+  url: http://www.krukowiecki.net/code/irssi/
+  version: 0.0.2i

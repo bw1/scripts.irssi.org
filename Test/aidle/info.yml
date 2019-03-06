@@ -1,0 +1,10 @@
+---
+-
+  authors: "Maciek 'fahren' Freudenheim"
+  changed: 'Thu Jan  2 02:58:34 CET 2003'
+  contact: fahren@bochnia.pl
+  default_package: aidle
+  description: 'Antyidler with random time'
+  license: 'GNU GPLv2 or later'
+  name: Antyidler
+  version: 1.1b

@@ -1,0 +1,10 @@
+---
+-
+  authors: Demonen
+  contact: demmydemon@gmail.com
+  default_package: scroller
+  description: 'Scrolls specified text on the status bar'
+  license: 'Public Domain'
+  name: scroller
+  sbitems: scroller
+  version: '0.02'

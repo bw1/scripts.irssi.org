@@ -1,0 +1,10 @@
+---
+-
+  authors: 'Veli Mankinen'
+  contact: veli@piipiip.net
+  default_package: hlbot
+  description: 'Floods the channel about things that are hapening in your hl -server. Also enables you to send rcon commands to the server from channel.'
+  license: GPLv2
+  name: 'HL-log/rcon -bot'
+  url: http://piipiip.net/
+  version: '1.0'

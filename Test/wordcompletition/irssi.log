@@ -1,0 +1,3 @@
+* Useless use of a constant ("\n") in void context at wordcompletition.pl line 58.
+* 
+* -!- Irssi: Loaded script wordcompletition

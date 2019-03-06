@@ -1,0 +1,15 @@
+---
+-
+  authors: 'Johan "Ion" Kiviniemi'
+  changed: 2018-03-11
+  commands:
+    - kernel_version
+  contact: 'ion at hassers.org'
+  default_package: kernel
+  description: 'Fetches the version(s) of the latest Linux kernel(s).'
+  license: 'Public Domain'
+  modules:
+    - LWP::Simple
+  name: Kernel
+  url: http://scripts.irssi.org/
+  version: '0.10'

@@ -1,0 +1,11 @@
+---
+-
+  authors: 'Christian Brassat, Niall Bunting, Walter Hop and Frantisek Sumsal'
+  changed: 2015-12-28
+  contact: irssi-smartfilter@spam.lifeforms.nl
+  default_package: smartfilter
+  description: 'Improved smart filter for join, part, quit, nick messages'
+  license: BSD
+  name: smartfilter.pl
+  url: https://github.com/lifeforms/irssi-smartfilter
+  version: '0.4'

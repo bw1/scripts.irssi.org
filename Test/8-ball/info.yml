@@ -1,0 +1,9 @@
+---
+-
+  authors: 'Patrik Akerfeldt'
+  contact: patrik.akerfeldt@gmail.com
+  default_package: 8_ball
+  description: 'Dont like to take decisions? Have the 8-ball do it for you instead.'
+  license: GPL
+  name: 8-ball
+  version: '0.22'

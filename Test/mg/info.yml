@@ -1,0 +1,14 @@
+---
+-
+  authors: 'Kaveh Moini'
+  changed: '20090813'
+  commands:
+    - mg
+    - mg_cancel
+    - mg_reset
+  contact: campanastra@gmail.com
+  default_package: mg
+  description: 'DCC MultiGet, for fetching from XDCC bots'
+  license: 'ccBSD, http://creativecommons.org/licenses/BSD/'
+  name: mg
+  version: '20090813'

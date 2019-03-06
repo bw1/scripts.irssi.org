@@ -1,0 +1,14 @@
+---
+-
+  authors: "Timo 'cras' Sirainen"
+  changed: 2019-02-13
+  commands:
+    - chanshare
+  contact: tss@iki.fi
+  default_package: chanshare
+  description: '/CHANSHARE - display people who are in more than one channel with you'
+  license: 'Public Domain'
+  modified: '2019-02-13 21:13:53'
+  name: 'chan share'
+  url: http://irssi.org/
+  version: '0.4'

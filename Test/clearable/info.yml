@@ -1,0 +1,11 @@
+---
+-
+  commands:
+    - clearable
+  contact: 'Nei @ anti@conference.jabber.teamidiot.de'
+  default_package: clearable
+  description: 'make some command output clearable'
+  license: ISC
+  name: clearable
+  url: http://anti.teamidiot.de/
+  version: '0.1'

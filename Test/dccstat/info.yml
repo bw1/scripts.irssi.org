@@ -1,0 +1,14 @@
+---
+-
+  authors: "Matti 'qvr' Hiljanen"
+  commands:
+    - dccstat
+  contact: matti\@hiljanen.com
+  contributors: 'stefan@pico.ruhr.de, dieck@gmx.de, peder@ifi.uio.no'
+  default_package: dccstat
+  description: 'Shows verbose or short information of dcc send/gets on statusbar (speed, size, eta etc.)'
+  license: 'GPL, Version 2'
+  name: dccstat
+  sbitems: dccstat
+  url: http://matin.maapallo.org/softa/irssi
+  version: '1.52'

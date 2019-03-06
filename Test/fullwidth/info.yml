@@ -1,0 +1,12 @@
+---
+-
+  authors: prussian
+  commands:
+    - fullwidth
+  contact: genunrest@gmail.com
+  default_package: fullwidth
+  description: 'talk like some vaporwave cool kid'
+  license: 'Apache 2.0'
+  name: fullwidth
+  url: http://github.com/GeneralUnRest/
+  version: 1.2.0

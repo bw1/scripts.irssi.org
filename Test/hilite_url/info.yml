@@ -1,0 +1,10 @@
+---
+-
+  authors: 'Stefan Heinemann'
+  contact: stefan.heinemann@codedump.ch
+  default_package: hilite_url
+  description: 'Simple script that highlights links'
+  license: GPL
+  name: HiliteUrl
+  url: http://senseless.codedump.ch
+  version: '0.2'

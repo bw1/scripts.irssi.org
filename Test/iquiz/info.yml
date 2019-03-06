@@ -1,0 +1,29 @@
+---
+-
+  authors: wilk
+  changed: 2017-08-19
+  changes: 'see http://www.quizpl.net/viewtopic.php?f=3&t=404'
+  commands:
+    - qdelay
+    - qhint
+    - qignore
+    - qinit
+    - qoff
+    - qon
+    - qpause
+    - qreload
+    - qremind
+    - qskip
+    - qstats
+    - qteams
+    - qtime
+    - qtype
+    - quiz
+  contact: http://mail.quizpl.net
+  default_package: iquiz
+  description: 'irssi quiz script'
+  license: 'GNU GPL v3 or any later version'
+  name: iQuiz
+  url: http://iquiz.quizpl.net
+  usage: 'see http://www.quizpl.net/viewtopic.php?f=3&t=587'
+  version: '170819'

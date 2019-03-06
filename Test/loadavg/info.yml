@@ -1,0 +1,10 @@
+---
+-
+  authors: aki
+  contact: aki@evilbsd.info
+  default_package: loadavg
+  description: 'display a loadavg statusbar item using vm.loadavg mib or /proc/loadavg'
+  license: 'public domain'
+  name: loadavg
+  sbitems: loadavg
+  version: '0.4'

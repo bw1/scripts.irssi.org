@@ -1,0 +1,13 @@
+---
+-
+  authors: 'Thomas B. Ruecker'
+  commands:
+    - mqtt-notify
+    - mqtt-test
+  contact: 'thomas@ruecker.fi, tbr on irc.freenode.net'
+  default_package: mqtt_notify
+  description: 'Sends out notifications via MQTT'
+  license: BSD-3-Clause
+  name: MQTT-notify
+  url: http://github.com/dm8tbr/irssi-mqtt-notify/
+  version: '1.0'

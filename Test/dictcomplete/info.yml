@@ -1,0 +1,12 @@
+---
+-
+  authors: 'Juerd (first version: Timo Sirainen)'
+  changed: 'Fri Dec 6 11:12 CET 2002'
+  changes: 'Removed a silly mistake'
+  contact: juerd@juerd.nl
+  default_package: dictcomplete
+  description: 'Caching dictionary based tab completion'
+  license: 'Public Domain'
+  name: 'Dictionary complete'
+  url: http://juerd.nl/irssi/
+  version: '1.31'

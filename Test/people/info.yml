@@ -1,0 +1,25 @@
+---
+-
+  authors: "Marcin 'Qrczak' Kowalczyk, Johan 'ion' Kiviniemi"
+  commands:
+    - find
+    - flag
+    - mask
+    - 'mask add'
+    - 'mask remove'
+    - trust
+    - user
+    - 'user add'
+    - 'user list'
+    - 'user remove'
+    - 'user rename'
+  contact: qrczak@knm.org.pl
+  default_package: people
+  description: 'Userlist with autoopping, autokicking etc.'
+  license: 'GNU GPL'
+  modules:
+    - Crypt::PasswdMD5
+  name: People
+  url: http://qrnik.knm.org.pl/~qrczak/irc/people.pl
+  url_ion: http://johan.kiviniemi.name/stuff/irssi/people.pl
+  version: '1.8'

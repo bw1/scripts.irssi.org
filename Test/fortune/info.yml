@@ -1,0 +1,11 @@
+---
+-
+  authors: 'Ivo Marino'
+  commands:
+    - fortune
+  contact: eim@cpan.rg
+  default_package: fortune
+  description: 'Send a random fortune cookie to an user in channel.'
+  license: 'Public Domain'
+  name: fortune
+  version: '1.3'

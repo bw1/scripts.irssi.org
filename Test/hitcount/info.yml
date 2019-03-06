@@ -1,0 +1,11 @@
+---
+-
+  authors: 'Riku "Shrike" Lindblad'
+  changed: '$Date: 2017/03/07 $ '
+  contact: 'shrike\@addiktit.net, Shrike on IRCNet/QNet/EFNet/DALNet'
+  default_package: hitcount
+  description: 'Add a apache page hitcounter to statusbar'
+  license: Free
+  name: hitcount
+  sbitems: hitcount
+  version: '1.4'

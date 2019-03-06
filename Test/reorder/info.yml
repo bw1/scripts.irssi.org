@@ -1,0 +1,12 @@
+---
+-
+  authors: 'Isaac Good'
+  commands:
+    - layout_load
+    - layout_save
+  contact: irssi@isaacgood.com
+  default_package: reorder
+  description: 'Reordering windows based on a textfile.'
+  license: GPL
+  name: reorder
+  version: '1.0'

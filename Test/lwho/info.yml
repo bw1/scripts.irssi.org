@@ -1,0 +1,14 @@
+---
+-
+  authors: Mika
+  bugs: none?
+  changed: none
+  commands:
+    - lwho
+  contact: '[Mika] @ IRCnet'
+  default_package: lwho
+  description: 'Displays users logged on system in current window, simple one'
+  license: '-'
+  name: 'Local who'
+  url: '-'
+  version: 0.01a

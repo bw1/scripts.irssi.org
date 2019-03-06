@@ -1,0 +1,11 @@
+---
+-
+  authors: fprintf
+  commands:
+    - pango
+  contact: fprintf@github.com
+  default_package: pangotext
+  description: 'Render text with various color modifications using HTML tag syntax.'
+  license: 'GNU GPLv2 or later'
+  name: pangotext
+  version: '1.1'

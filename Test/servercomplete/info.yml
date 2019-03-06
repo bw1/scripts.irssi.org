@@ -1,0 +1,10 @@
+---
+-
+  authors: 'David Leadbeater'
+  contact: dgl@dgl.cx
+  default_package: servercomplete
+  description: 'Tab complete servers and userhosts (irc. -> irc server, user@ -> user@host). Useful for lazy ircops for /squit and so on :)'
+  license: 'GNU GPLv2 or later'
+  name: servercomplete
+  url: http://irssi.dgl.cx/
+  version: '2'

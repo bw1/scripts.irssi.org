@@ -1,0 +1,11 @@
+---
+-
+  authors: 'Gabor Nyeki'
+  changed: 2017-03-07
+  contact: bigmac@vim.hu
+  default_package: colorkick
+  description: 'kicking users for using colors or blinks'
+  license: 'public domain'
+  name: colorkick
+  version: '0.1'
+  written: 'Thu Dec 26 00:22:54 CET 2002'

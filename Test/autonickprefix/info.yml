@@ -1,0 +1,9 @@
+---
+-
+  authors: Juerd
+  contact: '#####@juerd.nl'
+  default_package: autonickprefix
+  description: "Change 'nick: ' prefix if the nick is changed while you're still editing."
+  license: 'Any OSI'
+  name: autonickprefix
+  version: '1.00'

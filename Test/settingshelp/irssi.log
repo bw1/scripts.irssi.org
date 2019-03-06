@@ -1,0 +1,5 @@
+* Irssi Settings documentation licence
+*  CC BY-SA 2.5, http://creativecommons.org/licenses/by-sa/2.5/
+* 
+* You can now read help for settings with /HELP SET settingname
+* -!- Irssi: Loaded script settingshelp

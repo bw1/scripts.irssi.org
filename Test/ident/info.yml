@@ -1,0 +1,9 @@
+---
+-
+  authors: 'Isaac Good'
+  contact: 'irssi@isaacgood.com; irc.freenode.net/yitz'
+  default_package: ident
+  description: 'Automatically IDENTIFY when prompted'
+  license: MIT
+  name: ident
+  version: '1.0'

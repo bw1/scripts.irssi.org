@@ -1,0 +1,14 @@
+---
+-
+  authors: Wohmatak
+  changed: Wed
+  commands:
+    - np
+    - npinfo
+  contact: wohmatak@iglu.cz
+  default_package: orphamp
+  description: 'Displays the song played by orpheus'
+  license: GPL
+  name: orphamp
+  url: http://irssi.org/
+  version: '0.9'

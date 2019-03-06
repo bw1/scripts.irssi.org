@@ -1,0 +1,11 @@
+---
+-
+  authors: ''
+  commands:
+    - ownage
+  contact: ''
+  default_package: ownage
+  description: "shows how many channels you're joined and how many in them you're op, and\r\nhow many nicks are in those channels"
+  license: ''
+  name: ownage
+  version: '20180715'

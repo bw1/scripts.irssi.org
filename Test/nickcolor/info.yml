@@ -1,0 +1,13 @@
+---
+-
+  authors: 'Timo Sirainen, Ian Peters, David Leadbeater, Bruno Cattáneo'
+  changed: 'Mon 08 Jan 21:28:53 BST 2018'
+  commands:
+    - color
+  contact: tss@iki.fi
+  default_package: nickcolor
+  description: 'assign a different color for each nick'
+  license: 'Public Domain'
+  name: 'Nick Color'
+  url: http://irssi.org/
+  version: '2.1'

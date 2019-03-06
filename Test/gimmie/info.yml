@@ -1,0 +1,10 @@
+---
+-
+  authors: PrincessLeia2
+  contact: 'lyz\@princessleia.com '
+  default_package: gimmie
+  description: 'a bot script, using ! followed by anything the script will say (as an action): gets nickname anything'
+  license: 'GNU GPL v2 or later'
+  name: gimmie
+  url: http://www.princessleia.com/
+  version: '1.0'

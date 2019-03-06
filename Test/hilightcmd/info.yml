@@ -1,0 +1,13 @@
+---
+-
+  authors: 'Guillaume Gelin'
+  contact: contact@ramnes.eu
+  default_package: hilightcmd
+  description: 'Call a system command when receiving a hilight'
+  license: 'GNU GPLv3'
+  modules:
+    - String::ShellQuote
+    - Text::Sprintf::Named
+  name: hilightcmd
+  url: https://github.com/ramnes/hilightcmd
+  version: '0.1'

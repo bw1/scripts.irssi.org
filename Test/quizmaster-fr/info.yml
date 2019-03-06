@@ -1,0 +1,25 @@
+---
+-
+  authors: "Stefan 'tommie' Tomanek"
+  changed: 20170403+fr
+  commands:
+    - quizmaster
+    - 'quizmaster help'
+    - 'quizmaster hint'
+    - 'quizmaster import'
+    - 'quizmaster list'
+    - 'quizmaster load'
+    - 'quizmaster next'
+    - 'quizmaster save'
+    - 'quizmaster score'
+    - 'quizmaster start'
+    - 'quizmaster stop'
+  contact: stefan@pico.ruhr.de
+  default_package: quizmaster_fr
+  description: 'Un script de quiz pour irssi'
+  license: GPLv2
+  modules: Data::Dumper
+  name: quizmaster
+  traduction: pec
+  url: 'http://irssi.org/scripts/ http://pierre.carlot.free.fr/tux/'
+  version: 20170403+fr

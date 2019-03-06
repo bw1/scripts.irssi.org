@@ -1,0 +1,10 @@
+---
+-
+  authors: 'Peder Stray'
+  contact: peder@ninja.no
+  default_package: dccmove
+  description: 'Move completed dcc gets to the subfolder done'
+  license: GPL
+  name: dccmove
+  url: http://ninja.no/irssi/dccmove.pl
+  version: '1.4'

@@ -1,0 +1,11 @@
+---
+-
+  authors: 'David Leadbeater'
+  commands:
+    - dccself
+  contact: dgl@dgl.cx
+  default_package: dccself
+  description: "/dccself ip port, starts a dcc chat with yourself on that \n\t                host/port, best used with /set dcc_autochat_masks."
+  license: GPL
+  name: dccself
+  version: '0.1'

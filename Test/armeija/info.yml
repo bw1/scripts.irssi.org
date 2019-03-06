@@ -1,0 +1,13 @@
+---
+-
+  authors: 'Erkki Seppälä'
+  changed: 'Tue Mar  5 00:06:35 EET 2002'
+  commands:
+    - armeija
+  contact: flux@inside.org
+  default_package: armeija
+  description: 'Ignores people bringin up boring/repeated subjects, plus replies.'
+  license: 'Public Domain'
+  name: 'Armeija Ignore'
+  url: http://xulfad.inside.org/~flux/software/irssi/
+  version: '0.4'

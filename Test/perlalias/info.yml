@@ -1,0 +1,12 @@
+---
+-
+  authors: aquanight
+  commands:
+    - perlalias
+    - perlunalias
+  contact: aquanight@gmail.com
+  default_package: perlalias
+  description: 'Quickly create commands from short perl blocks'
+  license: 'public domain'
+  name: perlalias
+  version: '1.2'

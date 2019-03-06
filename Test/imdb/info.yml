@@ -1,0 +1,14 @@
+---
+-
+  authors: 'Eric Jansen'
+  changed: 2018-06-14
+  contact: chaos@sorcery.net
+  default_package: imdb
+  description: 'Automatically lookup IMDB-numbers in nicknames'
+  license: GPL
+  modules:
+    - HTML::Entities
+    - LWP::UserAgent
+  name: imdb
+  url: http://xyrion.org/irssi/
+  version: '1.02'

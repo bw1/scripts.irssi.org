@@ -1,0 +1,10 @@
+---
+-
+  authors: FoxMaSk
+  contact: 'foxmask@phpfr.org '
+  default_package: doc
+  description: 'manage tips ; url ; help in a doc file in the keyword=definition form'
+  license: 'GNU GPL'
+  name: doc
+  url: http://team.gcu-squad.org/~odemah/
+  version: 0.0.4

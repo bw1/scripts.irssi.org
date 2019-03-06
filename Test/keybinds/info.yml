@@ -1,0 +1,14 @@
+---
+-
+  authors: 'Geert Hauwaerts'
+  changed: 2018-02-19
+  commands:
+    - azerty
+    - qwerty
+  contact: geert@irssi.org
+  default_package: keybinds
+  description: 'This script will set the proper keybindings on /AZERTY and /QWERTY.'
+  license: 'Public Domain'
+  name: keybindings.pl
+  url: http://irssi.hauwaerts.be/keybindings.pl
+  version: '0.02'

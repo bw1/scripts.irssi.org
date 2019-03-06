@@ -1,0 +1,18 @@
+---
+-
+  authors: 'Toni Salomäki'
+  commands:
+    - autoop_add
+    - autoop_check
+    - autoop_del
+    - autoop_dynamic
+    - autoop_load
+    - autoop_save
+    - autoop_show
+  contact: Toni@IRCNet
+  default_package: autoopper
+  description: 'Auto-op script with dynamic address support and random delay'
+  license: 'GNU GPLv2 or later'
+  name: autoopper
+  url: http://vinku.dyndns.org/irssi_scripts/
+  version: '3.7'

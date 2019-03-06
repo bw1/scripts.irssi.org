@@ -1,0 +1,18 @@
+---
+-
+  authors: 'Thomas Graf'
+  commands:
+    - head
+    - url
+  contact: irssi@reeler.org
+  default_package: url_log
+  description: 'logs urls to textfile or/and database, able to list, quote, open or `http head` saved urls.'
+  license: 'GNU GPLv2 or later'
+  modules:
+    - DBI
+    - HTTP::Status
+    - LWP
+    - LWP::UserAgent
+  name: url_log
+  url: http://irssi.reeler.org/url/
+  version: '0.2'

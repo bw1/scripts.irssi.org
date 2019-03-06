@@ -1,0 +1,10 @@
+---
+-
+  authors: 'Georg Lukas'
+  contact: georg@op-co.de
+  default_package: beep_beep
+  description: 'runs arbitrary command instead of system beep, includes flood protection'
+  license: 'Public Domain'
+  name: beep_beep
+  url: http://op-co.de/irssi/
+  version: '0.10'

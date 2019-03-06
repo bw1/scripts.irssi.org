@@ -1,0 +1,15 @@
+---
+-
+  authors: Atoms
+  commands:
+    - tinyurl
+  contact: atoms@tups.lv
+  default_package: tinyurl
+  description: 'create a tinyurl from a long one'
+  license: GPL
+  modules:
+    - WWW::Shorten
+    - WWW::Shorten::TinyURL
+  name: tinyurl
+  patch: spowers@dimins.com
+  version: '1.1'

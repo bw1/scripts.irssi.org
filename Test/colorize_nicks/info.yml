@@ -1,0 +1,10 @@
+---
+-
+  authors: Nei
+  contact: 'Nei @ anti@conference.jabber.teamidiot.de'
+  default_package: colorize_nicks
+  description: 'Colourise mention of nicks in the message body.'
+  license: 'GNU GPLv2 or later'
+  name: colorize_nicks
+  url: http://anti.teamidiot.de/
+  version: 0.3.7

@@ -1,0 +1,11 @@
+---
+-
+  authors: 'Geert Hauwaerts'
+  changed: 2018-07-27
+  contact: geert@hauwaerts.be
+  default_package: active_notice
+  description: 'This script shows incoming notices into the active channel.'
+  license: 'GNU General Public License'
+  name: active_notice.pl
+  url: https://github.com/GeertHauwaerts/irssi-scripts/blob/master/src/active_notice.pl
+  version: 18.01.01

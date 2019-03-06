@@ -1,0 +1,9 @@
+---
+-
+  authors: dreg
+  contact: dreg@fine.lv
+  default_package: translit
+  description: translitiratar
+  license: GPL
+  name: translit
+  version: '0.1'

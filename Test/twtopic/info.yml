@@ -1,0 +1,12 @@
+---
+-
+  authors: 'John Engelbrecht'
+  changed: 2018-09-08
+  contact: jengelbr@yahoo.com
+  default_package: twtopic
+  description: 'Animated Topic bar.'
+  license: 'Public Domain'
+  name: twtopic.pl
+  sbitems: twtopic
+  url: "http://irssi.darktalker.net\n"
+  version: '1.02'

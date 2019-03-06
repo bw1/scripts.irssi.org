@@ -1,0 +1,14 @@
+---
+-
+  authors: 'Jakub Jankowski'
+  commands:
+    - vme
+    - vsay
+    - vtopic
+  contact: shasta@atn.pl
+  default_package: vowels
+  description: 'Silly script, removes vowels, idea taken from #linuxnews ;-)'
+  license: 'GNU GPLv2 or later'
+  name: vowels
+  url: http://irssi.atn.pl/
+  version: '1.0'

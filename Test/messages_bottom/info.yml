@@ -1,0 +1,10 @@
+---
+-
+  authors: 'Wouter Coekaerts'
+  contact: coekie@irssi.org
+  default_package: messages_bottom
+  description: 'makes all window text start at the bottom of windows'
+  license: "send-me-beer-or-i'll-sue-you-if-you-use-it license"
+  name: messages_bottom
+  url: http://bugs.irssi.org/index.php?do=details&id=290
+  version: '1.0'

@@ -1,0 +1,12 @@
+---
+-
+  authors: 'Aaron Bieber'
+  contact: deftly@gmail.com
+  default_package: irssi_logger
+  description: 'Logs chats to a PostgreSQL database.'
+  license: BSD
+  modules:
+    - DBI
+  name: irssi_logger
+  url: https://github.com/qbit/irssi_logger
+  version: '1.0'

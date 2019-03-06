@@ -1,0 +1,10 @@
+---
+-
+  authors: 'Svante Kvarnström'
+  contact: sjk@ankeborg.nu
+  default_package: whocount
+  description: 'Counts the number of matches in /who lists'
+  license: GPL
+  name: whocount.pl
+  url: http://sjk.ankeborg.nu
+  version: 0.0.2
