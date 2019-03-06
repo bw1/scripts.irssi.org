@@ -8,6 +8,8 @@
   modified: '2015-09-15 19:05:29'
   name: 8-ball
   version: '0.22'
+  tags:
+    - 'game'
 -
   authors: 'Dani Soufi (compengi)'
   commands: 'audacious mocp'
@@ -19,6 +21,9 @@
   name: 'Consolidate Irssi Player'
   url: http://bazaar.launchpad.net/~compengi/%2Bjunk/Cirssi/annotate/head%3A/Cirssi.pl
   version: 2.0.0
+  tags:
+    - 'audio'
+    - desktop
 -
   authors: 'Doncho N. Gunchev'
   commands: id
@@ -30,6 +35,8 @@
   name: UNIBG-autoident
   url: http://not.available.yet/
   version: '0.2'
+  tags:
+    - 'identify'
 -
   authors: 'Tamas SZERB'
   contact: toma@rulez.org
@@ -128,6 +135,8 @@
   name: adv_windowlist
   url: http://anti.teamidiot.de/
   version: '1.7'
+  tags:
+    - 'window'
 -
   authors: BC-bd
   commands: ai
@@ -181,6 +190,8 @@
   name: 'amaroK (via ssh)'
   url: http://www.codeeye.de/irssi/
   version: '1.0'
+  tags:
+    - 'audio'
 -
   authors: 'Tuukka Lukkala'
   contact: 'ragdim at mbnet dot fi'
@@ -191,6 +202,8 @@
   name: amaroknp
   url: http://koti.mbnet.fi/ragdim/amaroknp/
   version: '0.10'
+  tags:
+    - 'audio'
 -
   authors: 'Matt "f0rked" Sparks, Miklos Vajna'
   commands: anames
@@ -212,6 +225,8 @@
   modified: '2008-05-17 17:39:11'
   name: anotherway
   version: '2003010201'
+  tags:
+    - 'away'
 -
   authors: 'Grigori Goronzy'
   contact: greg@chown.ath.cx
@@ -5279,6 +5294,9 @@
   name: 'IRC Completion with mysql-database'
   url: http://midgard.liu.se/~n02jesli/perl/
   version: '0.2'
+  tags:
+    - completition
+    - db
 -
   authors: 'Koenraad Heijlen'
   contact: vipie@ulyssis.org

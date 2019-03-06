@@ -34,7 +34,7 @@ for my $file (<scripts/*.pl>) {
     }
     if (@cdoc) {
 	$newmeta{$filename} = $cdoc[0][0];
-	for my $copykey (qw(modified version)) {
+	for my $copykey (qw(modified version tags)) {
 	    unless (defined $newmeta{$filename}{$copykey}) {
 		$newmeta{$filename}{$copykey}
 		    = $oldmeta{$filename}{$copykey}
@@ -59,10 +59,6 @@ for my $file (<scripts/*.pl>) {
     }
     else {
 	print "MISSING META FOR $base\n";
-    }
-    # tags from oldmeta
-    if ( !exists $newmeta{tags} && exists $oldmeta{tags} ) {
-	$newmeta{tags}=$oldmeta{tags};
     }
 }
 my @newdoc = map {
