@@ -401,7 +401,7 @@ See [the testing read-me](../master/_testing/) for details.
 [                          romaji ](Test/romaji/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   
 [                           rot13 ](Test/rot13/)|  ✔   |  ✔   |  ✔   |  5   |  ✔   
 [                         rotator ](Test/rotator/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   
-[                      rud_emotes ](Test/rud_emotes/)|  ✔   |  ✔   |  ✔   |  0   |  ✔   
+[                      rud_emotes ](Test/rud_emotes/)|  ✔   |  ✔   |  ✔   |  2   |  ✔   
 [                        sana_cmd ](Test/sana_cmd/)|  ✔   |  ✔   |  ✔   |  0   |  ✔   
 [                     savecmdhist ](Test/savecmdhist/)|  ✔   |  ✔   |  ✔   |  1   |  ✔   
 [                    sbclearmatch ](Test/sbclearmatch/)|  ✔   |  ✔   |  ✔   |  0   |  ✔   
@@ -529,4 +529,4 @@ See [the testing read-me](../master/_testing/) for details.
 [                             xqf ](Test/xqf/)|  ✔   |  ✔   |  ✔   |  6   |  ✔   
 [                            ziew ](Test/ziew/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   
 
-ad8ddf85b7d868b5303b0b3e9f9f7356cda2ce46 | 42
+2af4fd371b952eb8bc5e5d040bb5d381b8430a51 | 49
