@@ -1,6 +1,11 @@
 use strict; use warnings;
 use YAML::Tiny 1.59;
+use JSON::PP;
+use POSIX;
+use Digest::SHA;
+use Digest::file qw(digest_file_hex);
 
+# read config.yml
 my $config = YAML::Tiny::LoadFile('_testing/config.yml');
 my @yaml_keys;
 if ($config) {
@@ -8,16 +13,19 @@ if ($config) {
 }
 die "no keys defined in config.yaml\n" unless @yaml_keys;
 
+# read scripts.yaml
 my @docs;
 { open my $ef, '<:utf8', '_data/scripts.yaml' or die $!;
   @docs = Load(do { local $/; <$ef> });
 }
 
+# index old scripts.yaml
 my %oldmeta;
 for (@{$docs[0]//[]}) {
     $oldmeta{$_->{filename}} = $_;
 }
 
+# read in test results
 my %newmeta;
 for my $file (<scripts/*.pl>) {
     my ($filename, $base) =
@@ -32,6 +40,7 @@ for my $file (<scripts/*.pl>) {
 	    @cdoc=();
 	}
     }
+
     if (@cdoc) {
 	$newmeta{$filename} = $cdoc[0][0];
 	for my $copykey (qw(modified version)) {
@@ -51,7 +60,12 @@ for my $file (<scripts/*.pl>) {
 		if 'ARRAY' eq ref $commands;
 	$newmeta{$filename}{commands} = "@commands"
 	    if @commands;
+	# calculate digest
+	$newmeta{$filename}{sha}= digest_file_hex($file, "SHA");
+	$newmeta{$filename}{size}= -s $file;
     }
+
+    # recycle the old infos
     elsif (exists $oldmeta{$filename}) {
 	print "META-INF FOR $base NOT FOUND\n";
 	system "ls 'Test/$base/'*";
@@ -61,6 +75,8 @@ for my $file (<scripts/*.pl>) {
 	print "MISSING META FOR $base\n";
     }
 }
+
+# remove index and write scripts.yaml
 my @newdoc = map {
     my $v = $newmeta{$_};
     +{
@@ -73,6 +89,22 @@ my @newdoc = map {
 } sort keys %newmeta;
 YAML::Tiny::DumpFile('_data/scripts.yaml', \@newdoc);
 
+#json
+my $fa;
+my %json;
+$json{scripts}=\@newdoc;
+$json{date}= POSIX::strftime('%G-%m-%d %R:%S',gmtime(time()));
+my $gitref= `git rev-parse HEAD`;
+chomp $gitref;
+$json{git}= $gitref;
+open $fa, '>', 'scripts.json';
+print $fa encode_json(\%json);
+close $fa;
+open $fa, '>', 'scripts.sha';
+print $fa digest_file_hex('scripts.json', "SHA");
+close $fa;
+
+# write config.yml
 if ($config && @{$config->{whitelist}//[]}) {
     my $changed;
     my @wl;
@@ -90,6 +122,7 @@ if ($config && @{$config->{whitelist}//[]}) {
     }
 }
 
+# commit to repo
 if (exists $ENV{REPO_LOGIN_TOKEN} && exists $ENV{TRAVIS_REPO_SLUG}) {
     { open my $cred, '>', "$ENV{HOME}/.git-credentials" or die $!;
       print $cred "https://$ENV{REPO_LOGIN_TOKEN}:x-oauth-basic\@github.com\n";
@@ -111,3 +144,5 @@ if [ "\$(git log -1 --format=%an)" != "\$(git config user.name)" -a \\
 fi
 ];
 }
+
+# vim:set ts=8 sw=4:
