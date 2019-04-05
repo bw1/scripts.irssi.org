@@ -5,7 +5,8 @@
 
 use strict;
 
-our $VERSION = '2003020806';
+#our $VERSION = '2003020806';
+our $VERSION = '2019040500';
 our %IRSSI = (
     authors     => 'Stefan \'tommie\' Tomanek',
     contact     => 'stefan@pico.ruhr.de',
@@ -17,13 +18,23 @@ our %IRSSI = (
     commands	=> "scriptassist"
 );
 
+# TODO our?
 our ($forked, %remote_db, $have_gpg, @complist);
 
 use Irssi 20020324;
 use Data::Dumper;
-use LWP::UserAgent;
+use JSON::PP;
+use Digest::SHA qw/sha1_hex/;
+#use LWP::UserAgent;
+use File::Fetch;
 use POSIX;
+use lib '/home/robert/versuche/script-irssi/scripts';
+use debug;
 
+# old datas (sha, ...)
+my %old_data;
+
+# TODO
 # GnuPG is not always needed
 $have_gpg = 0;
 eval "use GnuPG qw(:algo :trust);";
@@ -116,7 +127,7 @@ sub bg_do {
         my @args = ($rh, \$pipetag, $func);
         $pipetag = Irssi::input_add(fileno($rh), INPUT_READ, \&pipe_input, \@args);
     } else {
-	eval {
+	eval { 
 	    my @items = split(/ /, $func);
 	    my %result;
 	    my $ts1 = $remote_db{timestamp};
@@ -125,6 +136,9 @@ sub bg_do {
 	    if (not($ts1 eq $ts2) && Irssi::settings_get_bool('scriptassist_cache_sources')) {
 		$result{db} = $remote_db{db};
 		$result{timestamp} = $remote_db{timestamp};
+	    }
+	    if (exists $remote_db{info}) {
+		$result{info} = $remote_db{info};
 	    }
 	    if ($items[0] eq 'check') {
 		$result{data}{check} = check_scripts($xml);
@@ -141,7 +155,7 @@ sub bg_do {
 		$result{data}{install} = install_scripts(\@items, $xml);
 	    } elsif ($items[0] eq 'debug') {
 		shift(@items);
-		$result{data}{debug} = debug_scripts(\@items);
+		$result{data}{debug} = debug_scripts(\@items, $xml);
 	    } elsif ($items[0] eq 'ratings') {
 		shift(@items);
 		@items = @{ loaded_scripts() } if $items[0] eq "all";
@@ -154,7 +168,7 @@ sub bg_do {
 		$result{data}{rate}{$items[1]} = rate_script($items[1], $items[2]);
 	    } elsif ($items[0] eq 'info') {
 		shift(@items);
-		$result{data}{info} = script_info(\@items);
+		$result{data}{info} = script_info(\@items, $xml);
 	    } elsif ($items[0] eq 'echo') {
 		$result{data}{echo} = 1;
 	    } elsif ($items[0] eq 'top') {
@@ -164,20 +178,23 @@ sub bg_do {
                     $result{data}{rating}{$_}{votes} = $ratings{$_}->[1];
                 }
 	    } elsif ($items[0] eq 'new') {
-		my $new = get_new($items[1]);
+		my $new = get_new($items[1], $xml);
 		$result{data}{new} = $new;
 	    } elsif ($items[0] eq 'unknown') {
 		my $cmd = $items[1];
 		$result{data}{unknown}{$cmd} = get_unknown($cmd, $xml);
 	    }
-	    my $dumper = Data::Dumper->new([\%result]);
-	    $dumper->Purity(1)->Deepcopy(1)->Indent(0);
-	    my $data = $dumper->Dump;
+	    #my $dumper = Data::Dumper->new([\%result]);
+	    #$dumper->Purity(1)->Deepcopy(1)->Indent(0);
+	    #my $data = $dumper->Dump;
+	    my $data = encode_json(\%result);
 	    print($wh $data);
 	};
-	if ($@) {
-	    print($wh Data::Dumper->new([+{data=>+{error=>$@}}])
-		      ->Purity(1)->Deepcopy(1)->Indent(0)->Dump);
+	if ($@) { # TODO check function
+		#print($wh Data::Dumper->new([+{data=>+{error=>$@}}])
+		#      ->Purity(1)->Deepcopy(1)->Indent(0)->Dump);
+		debugf "Error: bg_do $@";
+		print($wh encode_json({data=>{error=>$@}}));
 	}
 	close($wh);
 	POSIX::_exit(1);
@@ -231,12 +248,12 @@ sub get_names {
 }
 
 sub script_info {
-    my ($scripts) = @_;
+    my ($scripts, $xml) = @_;
     my %result;
-    my $xml = get_scripts();
     foreach (@{$scripts}) {
 	my ($sname, $plname, $pname) = get_names($_, $xml);
-	next unless (defined $xml->{$plname} || ( exists $Irssi::Script::{$pname} && exists $Irssi::Script::{$pname}{IRSSI} ));
+	next unless (defined $xml->{$plname} || ( exists $Irssi::Script::{$pname} 
+		&& exists $Irssi::Script::{$pname}{IRSSI} ));
 	$result{$sname}{version} = get_remote_version($sname, $xml);
 	my @headers = ('authors', 'contact', 'description', 'license', 'source');
 	foreach my $entry (@headers) {
@@ -275,6 +292,7 @@ sub script_info {
     return \%result;
 }
 
+# TODO
 sub rate_script {
     my ($script, $stars) = @_;
     my $ua = LWP::UserAgent->new(env_proxy=>1, keep_alive=>1, timeout=>30);
@@ -288,6 +306,7 @@ sub rate_script {
     }
 }
 
+# TODO
 sub get_ratings {
     my ($scripts, $limit) = @_;
     my $ua = LWP::UserAgent->new(env_proxy=>1, keep_alive=>1, timeout=>30);
@@ -310,10 +329,9 @@ sub get_ratings {
 }
 
 sub get_new {
-    my ($num) = @_;
+    my ($num, $xml) = @_;
     my $result;
-    my $xml = get_scripts();
-    foreach (sort {$xml->{$b}{last_modified} cmp $xml->{$a}{last_modified}} keys %$xml) {
+    foreach (sort {$xml->{$b}{modified} cmp $xml->{$a}{modified}} keys %$xml) {
 	my %entry = %{ $xml->{$_} };
 	next if $entry{HIDDEN};
 	$result->{$_} = \%entry;
@@ -322,6 +340,7 @@ sub get_new {
     }
     return $result;
 }
+
 sub module_exist {
     my ($module) = @_;
     $module =~ s/::/\//g;
@@ -332,9 +351,9 @@ sub module_exist {
 }
 
 sub debug_scripts {
-    my ($scripts) = @_;
+    my ($scripts, $xml) = @_;
     my %result;
-    my $xml = get_scripts();
+    #my $xml = get_scripts();
     foreach (@{$scripts}) {
 	my ($sname, $plname) = get_names($_, $xml);
 	if (defined $xml->{$plname}{modules}) {
@@ -417,6 +436,28 @@ sub search_scripts {
     return \%result;
 }
 
+=head1 pipe stream
+
+=head2 stream
+
+bg_do() -> pipe_input()
+
+format json(\%hash)
+
+=head2 script database
+
+$hash{db}
+
+=head2 unixtimestamp of last download
+
+$hash{timestamp}
+
+=head2 command
+
+$hash{data}
+
+=cut
+
 sub pipe_input {
     my ($rh, $pipetag) = @{$_[0]};
     my $text = do { local $/; <$rh>; };
@@ -427,11 +468,21 @@ sub pipe_input {
 	print CLIENTCRAP "%R<<%n Something weird happend (no text)";
 	return();
     }
-    local our $VAR1;
-    my $incoming = eval($text);
+    #local our $VAR1;
+    #my $incoming = eval($text);
+    my $incoming = decode_json($text);
     if ($incoming->{db} && $incoming->{timestamp}) {
     	$remote_db{db} = $incoming->{db};
+    	$remote_db{info} = $incoming->{info};
     	$remote_db{timestamp} = $incoming->{timestamp};
+	%old_data= %{$incoming};
+    }
+    if ($incoming->{info}->{error} >0 ) {
+	$incoming->{info}->{error}= 0;
+	foreach (@{$incoming->{info}->{error_texts}}) {
+	    print CLIENTCRAP $_;
+	}
+	$incoming->{info}->{error_texts}=[];
     }
     unless (defined $incoming->{data}) {
 	print CLIENTCRAP "%R<<%n Something weird happend (no data)";
@@ -594,6 +645,7 @@ sub print_info {
     print CLIENTCRAP draw_box('ScriptAssist', $line, 'info', 1) ;
 }
 
+# TODO
 sub print_rate {
     my (%data) = @_;
     my $line;
@@ -607,6 +659,7 @@ sub print_rate {
     print CLIENTCRAP draw_box('ScriptAssist', $line, 'rating', 1) ;
 }
 
+# TODO
 sub print_ratings {
     my (%data) = @_;
     my @table;
@@ -628,7 +681,7 @@ sub print_ratings {
 sub print_new {
     my ($list) = @_;
     my @table;
-    foreach (sort {$list->{$b}{last_modified} cmp $list->{$a}{last_modified}} keys %$list) {
+    foreach (sort {$list->{$b}{modified} cmp $list->{$a}{modified}} keys %$list) {
 	my @line;
 	my ($name) = get_names($_);
         if (get_local_version($name)) {
@@ -637,7 +690,7 @@ sub print_new {
             push @line, "%yo%n";
         }
 	push @line, "%9".$name."%9";
-	push @line, $list->{$_}{last_modified};
+	push @line, $list->{$_}{modified};
 	push @table, \@line;
     }
     print CLIENTCRAP draw_box('ScriptAssist', array2table(@table), 'new scripts', 1) ;
@@ -820,57 +873,99 @@ sub contact_author {
     }
 }
 
+sub get_file {
+    my ($url) =@_;
+    $File::Fetch::USER_AGENT='ScriptAssist/'.$VERSION;
+    $File::Fetch::WARN=0;
+    my $ff= File::Fetch->new(uri=> $url);
+    my $cont;
+    my $w = $ff->fetch(to=>\$cont);
+    #if (!$w) {
+    #    print "Error: Fetch file '$url'";
+    #}
+    return $cont;
+}
+
+# put the error strings in the remote_db
+sub put_bg_error {
+    my ($error) =@_;
+    if (!exists $remote_db{info}->{error_texts} ) {
+	$remote_db{info}->{error_texts} = [];
+    }
+    push @{$remote_db{info}->{error_texts}}, $error;
+    $remote_db{info}->{error}++;
+}
+
 sub get_scripts {
-    my $ua = LWP::UserAgent->new(env_proxy=>1, keep_alive=>1, timeout=>30);
-    $ua->agent('ScriptAssist/'.2003020803);
-    $ua->env_proxy();
+    #my $ua = LWP::UserAgent->new(env_proxy=>1, keep_alive=>1, timeout=>30);
+    #$ua->agent('ScriptAssist/'.2003020803);
+    #$ua->env_proxy();
     my @mirrors = split(/ /, Irssi::settings_get_str('scriptassist_script_sources'));
     my %sites_db;
-    my $not_modified = 0;
+    my $not_modified = 1;
     my $fetched = 0;
     my @sources;
     my $error;
     foreach my $site (@mirrors) {
-	my $request = HTTP::Request->new('GET', $site);
-	if ($remote_db{timestamp}) {
-	    $request->if_modified_since($remote_db{timestamp});
-	}
-	my $response = $ua->request($request);
-	if ($response->code == 304) { # HTTP_NOT_MODIFIED
-	    $not_modified = 1;
-	    next;
-	}
-	unless ($response->is_success) {
-	    $error = join "\n", $response->status_line(), (grep / at .* line \d+/, split "\n", $response->content()), '';
-	    next;
-	}
-	$fetched = 1;
-	my $data = $response->content();
 	my ($src, $type);
 	if ($site =~ /(.*\/).+\.(.+)/) {
 	    $src = $1;
 	    $type = $2;
 	}
 	push @sources, $src;
-	#my @header = ('name', 'contact', 'authors', 'description', 'version', 'modules', 'last_modified');
-	if ($type eq 'dmp') {
-	    no strict 'vars';
-	    my $new_db = eval "$data";
-	    foreach (keys %$new_db) {
-		if (defined $sites_db{script}{$_}) {
-		    my $old = $sites_db{$_}{version};
-		    my $new = $new_db->{$_}{version};
-		    next if (compare_versions($old, $new) eq 'newer');
-		}
-		#foreach my $key (@header) {
-		foreach my $key (keys %{ $new_db->{$_} }) {
-		    next unless defined $new_db->{$_}{$key};
-		    $sites_db{$_}{$key} = $new_db->{$_}{$key};
-		}
-		$sites_db{$_}{source} = $src;
-	    }
+	#
+	$site =~ m/^(.*)\..*?$/;
+	my $site_sum= $1.'.sha';
+	my $site_json= $1.'.json';
+	my $old_sum;
+	if (exists $remote_db{info}->{$src}) {
+	    $old_sum=$remote_db{info}->{$src}->{sha};
+	}
+	my $new_sum= get_file($site_sum);
+	if (!defined $new_sum) {
+	    put_bg_error("Error: fetch file '$site_sum'");
 	} else {
-	    die("Unknown script database type ($type).\n");
+	    my $new_json;
+	    if ( $new_sum ne $old_sum ) {
+		debugf "new file";
+		$new_json= get_file($site_json);
+		if (!defined $new_json) {
+		    put_bg_error("Error: fetch file '$site_json'");
+		} else {
+		    if (sha1_hex($new_json) ne $new_sum) {
+			put_bg_error("Error: Checksum sha1_hex($site_json) ne $site_sum");
+			debugf "Error: Checksum sha1_hex($site_json) ne $site_sum";
+			#die("Unknown script database type ($type).\n");
+		    } else {
+#my @header = ('name', 'contact', 'authors', 'description', 'version', 'modules', 'modified');
+			$fetched = 1;
+			$remote_db{info}->{$src}->{sha}=$new_sum; #TODO bg task
+			debugf "Load: ",length($new_json),"Bytes";
+			my $new_jdb =decode_json($new_json);
+			$remote_db{info}->{$src}->{date}= $new_jdb->{date};
+			$remote_db{info}->{$src}->{git}= $new_jdb->{git};
+			# make index
+			my $new_db;
+			foreach (@{$new_jdb->{scripts}}) {
+			    $new_db->{$_->{filename}}=$_;
+			}
+			#
+			foreach (keys %$new_db) {
+			    if (defined $sites_db{script}{$_}) {
+				my $old = $sites_db{$_}{version};
+				my $new = $new_db->{$_}{version};
+				next if (compare_versions($old, $new) eq 'newer');
+			    }
+			    #foreach my $key (@header) {
+			    foreach my $key (keys %{ $new_db->{$_} }) {
+				next unless defined $new_db->{$_}{$key};
+				$sites_db{$_}{$key} = $new_db->{$_}{$key};
+			    }
+			    $sites_db{$_}{source} = $src;
+			}
+		    }
+		}
+	    }
 	}
     }
     if ($fetched) {
@@ -885,13 +980,15 @@ sub get_scripts {
 	}
 	$remote_db{db}{$_} = $sites_db{$_} foreach (keys %sites_db);
 	$remote_db{timestamp} = time();
-    } elsif ($not_modified) {
-	# nothing to do
-    } else {
-	die("No script database sources defined in /set scriptassist_script_sources\n") unless @mirrors;
-	die("Fetching script database failed: $error") if $error;
-	die("Unknown error while fetching script database\n");
     }
+    #} elsif ($not_modified) {
+    #    # nothing to do
+    #} else {
+    #    # TODO
+    #    die("No script database sources defined in /set scriptassist_script_sources\n") unless @mirrors;
+    #    die("Fetching script database failed: $error") if $error;
+    #    die("Unknown error while fetching script database\n");
+    #}
     return $remote_db{db};
 }
 
@@ -1175,6 +1272,30 @@ sub sig_complete {
     Irssi::signal_stop();
 }
 
+sub get_old_data {
+    my $fn= Irssi::get_irssi_dir()."/scriptassist.json";
+    if ( -e $fn ) {
+	%old_data= %{decode_json( get_file('file://'.$fn))};
+	$remote_db{db}=$old_data{db};
+	$remote_db{info}=$old_data{info};
+    }
+}
+
+sub write_old_data {
+    my $fn= Irssi::get_irssi_dir()."/scriptassist.json";
+    my $fh;
+    my $json = JSON::PP->new;
+
+    open( $fh, '> :utf8', $fn);
+    print $fh JSON::PP->new->pretty->encode(\%old_data);
+    close( $fh );
+}
+
+sub UNLOAD {
+    write_old_data();
+}
+
+get_old_data();
 
 Irssi::settings_add_str($IRSSI{name}, 'scriptassist_script_sources', 'https://scripts.irssi.org/scripts.dmp');
 Irssi::settings_add_bool($IRSSI{name}, 'scriptassist_cache_sources', 1);
@@ -1227,3 +1348,5 @@ foreach my $cmd ( ( 'check',
 }
 
 print CLIENTCRAP '%B>>%n '.$IRSSI{name}.' '.$VERSION.' loaded: /scriptassist help for help';
+
+# vim:set ts=8 sw=4:
