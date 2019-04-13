@@ -152,7 +152,7 @@ See [the testing read-me](../master/_testing/) for details.
 [                        efnetorg ](Test/efnetorg/)|  ✔   |  ✔   |  ✔   |  5   |  ✔   
 [                           elist ](Test/elist/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   
 [                           eliza ](Test/eliza/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   
-[                      emaildb1.0 ](Test/emaildb1.0/)|  ✔   |  ✔   |  ✔   |  5   |  ✔   
+[                         emaildb ](Test/emaildb/)|  ✔   |  ✔   |  ✔   |  9   |  ✔   
 [                      email_msgs ](Test/email_msgs/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   
 [                  email_privmsgs ](Test/email_privmsgs/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   
 [                             emo ](Test/emo/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   
@@ -163,7 +163,7 @@ See [the testing read-me](../master/_testing/) for details.
 [                        fakectcp ](Test/fakectcp/)|  ✔   |  ✔   |  ✔   | 10   |  ✔   
 [                        fcountry ](Test/fcountry/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   
 [                          figlet ](Test/figlet/)|  ✔   |  ✔   |  ✔   |  4   |  ✔   
-[                            file ](Test/file/)|  ✔   |  ✔   |  ✔   | 16   |  ✔   
+[                            file ](Test/file/)|  ✔   |  ✔   |  ✔   |  4   |  ✔   
 [                         findbot ](Test/findbot/)|  ✔   |  ✔   |  ✔   | 17   |  ✔   
 [                            find ](Test/find/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   
 [                    fix_slackirc ](Test/fix_slackirc/)|  ✔   |  ✔   |  ✔   |  1   |  ✔   
@@ -342,7 +342,7 @@ See [the testing read-me](../master/_testing/) for details.
 [                            null ](Test/null/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   
 [                          ogg123 ](Test/ogg123/)|  ✔   |  ✔   |  ✔   |  4   |  ✔   
 [                         oidenty ](Test/oidenty/)|  ✔   |  ✔   |  ✔   |  6   |  ✔   
-[                              on ](Test/on/)|  ✔   |  ✔   |  ✘   | 20   |  ☡   
+[                              on ](Test/on/)|  ✔   |  ✔   |  ✔   |  7   |  ✔   
 [                            ontv ](Test/ontv/)|  ✔   |  ✔   |  ✔   |  9   |  ✔   
 [                          oopsie ](Test/oopsie/)|  ✔   |  ✔   |  ✔   |  0   |  ✔   
 [                            oops ](Test/oops/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   
@@ -529,4 +529,4 @@ See [the testing read-me](../master/_testing/) for details.
 [                             xqf ](Test/xqf/)|  ✔   |  ✔   |  ✔   |  6   |  ✔   
 [                            ziew ](Test/ziew/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   
 
-2af4fd371b952eb8bc5e5d040bb5d381b8430a51 | 49
+37f3ed1127343bbeaa9d4e754ddb81425eb2f2fb | 50
