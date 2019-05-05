@@ -4,9 +4,9 @@ if [[ $TRAVIS_PULL_REQUEST != false ]] {
     OIFS=$IFS; IFS=$'\n'
     scriptfiles=($(git diff --numstat --no-renames $TRAVIS_BRANCH|cut -f3|grep '^scripts/.*\.pl'))
     IFS=$OIFS
-    if [[ $#scriptfiles -gt 0 ]] {
+    #if [[ $#scriptfiles -gt 0 ]] {
 	filelist=($scriptfiles)
-    }
+    #}
 } \
 elif [[ $USE_ARTEFACTS_CACHE = yes ]] {
     local -a cache_allowed
