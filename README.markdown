@@ -94,7 +94,7 @@ See [the testing read-me](../master/_testing/) for details.
 [                  chanfull_duden ](Test/chanfull_duden/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   
 [                        chanfull ](Test/chanfull/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   
 [                        chanpeak ](Test/chanpeak/)|  ✔   |  ✔   |  ✔   |  6   |  ✔   
-[                      chansearch ](Test/chansearch/)|  ✔   |  ✔   |  ✔   | 10   |  ✔   
+[                      chansearch ](Test/chansearch/)|  ✔   |  ✔   |  ✔   | 24   |  ✔   
 [                       chanshare ](Test/chanshare/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   
 [           chansort_configurable ](Test/chansort_configurable/)|  ✔   |  ✔   |  ✔   |  0   |  ✔   
 [                        chansort ](Test/chansort/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   
@@ -134,7 +134,6 @@ See [the testing read-me](../master/_testing/) for details.
 [                        deadbeef ](Test/deadbeef/)|  ✔   |  ✔   |  ✔   |  7   |  ✔   
 [                 defaultchanmode ](Test/defaultchanmode/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   
 [                          dejunk ](Test/dejunk/)|  ✔   |  ✔   |  ✔   | 10   |  ✔   
-[                    deliciousurl ](Test/deliciousurl/)|  ✔   |  ✔   |  ✔   |  5   |  ✔   
 [                  desktop-notify ](Test/desktop-notify/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   
 [                              df ](Test/df/)|  ✔   |  ✔   |  ✔   |  6   |  ✔   
 [                    dice_concise ](Test/dice_concise/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   
@@ -228,7 +227,7 @@ See [the testing read-me](../master/_testing/) for details.
 [                        ipupdate ](Test/ipupdate/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   
 [                           iquiz ](Test/iquiz/)|  ✔   |  ✔   |  ✔   |104   |  ✔   
 [                        iraident ](Test/iraident/)|  ✔   |  ✔   |  ✔   |  7   |  ✔   
-[                       irc_chess ](Test/irc_chess/)|  ✘   |  ✔   |  ✔   |  8   |  ☡   
+[                       irc_chess ](Test/irc_chess/)|  ✔   |  ✔   |  ✔   |  4   |  ✔   
 [                     irccomplete ](Test/irccomplete/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   
 [                      ircgallery ](Test/ircgallery/)|  ✘   |  ✔   |  ✔   |  7   |  ☡   
 [               ircgmessagenotify ](Test/ircgmessagenotify/)|  ✔   |  ✔   |  ✔   |  5   |  ✔   
@@ -259,7 +258,7 @@ See [the testing read-me](../master/_testing/) for details.
 [                          lastfm ](Test/lastfm/)|  ✔   |  ✔   |  ✔   |  9   |  ✔   
 [                       lastspoke ](Test/lastspoke/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   
 [                             len ](Test/len/)|  ✔   |  ✔   |  ✔   |  0   |  ✔   
-[                         leodict ](Test/leodict/)|  ✔   |  ✔   |  ✔   | 10   |  ✔   
+[                         leodict ](Test/leodict/)|  ✔   |  ✔   |  ✔   |  6   |  ✔   
 [                      levelclear ](Test/levelclear/)|  ✔   |  ✔   |  ✔   |  0   |  ✔   
 [                            licq ](Test/licq/)|  ✔   |  ✔   |  ✔   |  5   |  ✔   
 [                      linebuffer ](Test/linebuffer/)|  ✔   |  ✔   |  ✔   |  2   |  ✔   
@@ -529,4 +528,4 @@ See [the testing read-me](../master/_testing/) for details.
 [                             xqf ](Test/xqf/)|  ✔   |  ✔   |  ✔   |  6   |  ✔   
 [                            ziew ](Test/ziew/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   
 
-752e84dff2613e2efce3a31a9d0c9876cbfef68b | 55
+d4c734537c50126f21ef6bf98a668723cf5b9f15 | 70
