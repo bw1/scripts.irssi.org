@@ -33,7 +33,19 @@ my $help = << "END";
   see man xterm /disallowedWindowOps
 %9See also%9
   https://www.freecodecamp.org/news/tmux-in-practice-integration-with-system-clipboard-bcd72c62ff7b/
+  http://anti.teamidiot.de/static/nei/*/Code/urxvt/
 END
+
+# TODO
+#
+# by dive
+# /tmp/screen-exchange
+#
+# by nei
+# http://anti.teamidiot.de/static/nei/*/Code/urxvt/
+#
+# by vague
+# line buffer
 
 sub cmd_copy {
 	my ($args, $server, $witem)=@_;
@@ -52,9 +64,44 @@ sub cmd_copy {
 		}
 	} 
 	my $str=$line->get_text(0);
+	paste($str,'0');
+}
+
+sub paste {
+	my ($str,$par)=@_;
 	my $b64=encode_base64($str,'');
 	#print STDERR "\033]52;cpqs01234;".$b64."\007";
-	print STDERR "\033]52;;".$b64."\007";
+	my $pstr="\033]52;".$par.";".$b64."\007";
+	if ($ENV{TERM} =~ m/^xterm/) {
+		print STDERR  $pstr;
+	} elsif ($ENV{TERM} eq 'screen') {
+		# tmux
+		if (defined $ENV{TMUX}) {
+			my $tc = `tmux list-clients`;
+			$ENV{TMUX} =~ m/,(\d+)$/;
+			my $tcn =$1;
+			my $pty;
+			foreach (split /\n/,$tc) {
+				$_ =~ m/^(.*?): (\d+)/;
+				if ($tcn == $2) {
+					$pty = $1;
+					last();
+				}
+			}
+			my $fa;
+			open $fa,'>',$pty;
+			print $fa $pstr;
+			close $fa;
+		# screen
+		} elsif (defined $ENV{STY}) {
+			$ENV{STY} =~ m/\..*?-(\d+)\./;
+			my $pty = "/dev/pts/$1";
+			my $fa;
+			open $fa,'>',$pty;
+			print $fa $pstr;
+			close $fa;
+		}
+	}
 }
 
 sub cmd_help {
