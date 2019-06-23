@@ -6,7 +6,7 @@ use Irssi::UI;
 use Irssi::TextUI;
 use MIME::Base64;
 
-$VERSION = '0.01';
+$VERSION = '0.02';
 %IRSSI = (
     authors	=> 'vague,bw1',
     contact	=> 'bw1@aol.at',
@@ -14,7 +14,7 @@ $VERSION = '0.01';
     description	=> 'copy a line in a paste buffer of a terminal',
     license	=> 'Public Domain',
     url		=> 'https://scripts.irssi.org/',
-    changed	=> '2019-06-21',
+    changed	=> '2019-06-23',
     modules => 'MIME::Base64',
     commands=> 'copy',
 );
@@ -29,11 +29,22 @@ my $help = << "END";
 %9Description%9
   $IRSSI{description}
 
-  Tested with xterm and ssh
+  Tested with xterm, tmux, screen and ssh
   see man xterm /disallowedWindowOps
+%9Settings%9
+  $IRSSI{name}_selection
+    c   clipboard
+    p   primary
+    q   secondary
+    s   select
+    0-7 cut buffers
+  $IRSSI{name}_method
+    xterm
+	xclip
 %9See also%9
   https://www.freecodecamp.org/news/tmux-in-practice-integration-with-system-clipboard-bcd72c62ff7b/
   http://anti.teamidiot.de/static/nei/*/Code/urxvt/
+  https://invisible-island.net/xterm/ctlseqs/ctlseqs.html#h2-Operating-System-Commands
 END
 
 # TODO
@@ -46,6 +57,8 @@ END
 #
 # by vague
 # line buffer
+
+my ($copy_selection, $copy_method);
 
 sub cmd_copy {
 	my ($args, $server, $witem)=@_;
@@ -64,7 +77,29 @@ sub cmd_copy {
 		}
 	} 
 	my $str=$line->get_text(0);
-	paste($str,'0');
+    if ( $copy_method eq 'xterm' ) {
+        paste($str, $copy_selection);
+    } elsif ( $copy_method eq 'xclip' ) {
+        paste_xclip($str, $copy_selection);
+    }
+}
+
+sub paste_xclip {
+    my ($str, $par)= @_;
+    my %ma= (
+        0=>'buffer-cut',
+        p=>'primary',
+        q=>'secondary',
+        c=>'clipboard',
+    );
+    my $sel= $ma{substr($par,0,1)};
+    if (defined $sel) {
+        $sel= "-selection $sel";
+    }
+    my $cmd="xclip -i $sel";
+    open my $fa, "|-", $cmd;
+    print $fa $str;
+    close $fa;
 }
 
 sub paste {
@@ -113,5 +148,32 @@ sub cmd_help {
 	}
 }
 
+sub sig_setup_changed {
+	my $cs= Irssi::settings_get_str($IRSSI{name}.'_selection');
+	if ($cs =~ m/^[cpqs0-7]*$/ ) {
+		$copy_selection=$cs;
+	} else {
+		$cs =~ s/[^cpqs0-7]//g;
+		$copy_selection=$cs;
+		Irssi::settings_set_str($IRSSI{name}.'_selection', $cs);
+	}
+    my $cm= Irssi::settings_get_str($IRSSI{name}.'_method');
+	my %md=(xterm=>1, xclip=>1);
+	if (exists $md{$cm} ) {
+		$copy_method= $cm;
+	} else {
+		$cm= 'xterm';
+		Irssi::settings_set_str($IRSSI{name}.'_method', $cm);
+		$copy_method= $cm;
+	}
+}
+
+Irssi::signal_add('setup changed', \&sig_setup_changed);
+
+Irssi::settings_add_str($IRSSI{name} ,$IRSSI{name}.'_selection', '');
+Irssi::settings_add_str($IRSSI{name} ,$IRSSI{name}.'_method', 'xterm');
+
 Irssi::command_bind($IRSSI{name}, \&cmd_copy);
 Irssi::command_bind('help', \&cmd_help);
+
+sig_setup_changed();
