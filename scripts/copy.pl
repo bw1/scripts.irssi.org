@@ -11,7 +11,7 @@ $VERSION = '0.02';
     authors	=> 'vague,bw1',
     contact	=> 'bw1@aol.at',
     name	=> 'copy',
-    description	=> 'copy a line in a paste buffer of a terminal',
+    description	=> 'copy a line in a paste buffer',
     license	=> 'Public Domain',
     url		=> 'https://scripts.irssi.org/',
     changed	=> '2019-06-23',
@@ -40,24 +40,23 @@ my $help = << "END";
     0-7 cut buffers
   $IRSSI{name}_method
     xterm
-	xclip
-	xsel
+    xclip
+    xsel
+    screen
 %9See also%9
   https://www.freecodecamp.org/news/tmux-in-practice-integration-with-system-clipboard-bcd72c62ff7b/
   http://anti.teamidiot.de/static/nei/*/Code/urxvt/
   https://invisible-island.net/xterm/ctlseqs/ctlseqs.html#h2-Operating-System-Commands
 END
 
-# TODO
+# Thanks
 #
-# by dive
-# /tmp/screen-exchange
-#
-# by nei
-# http://anti.teamidiot.de/static/nei/*/Code/urxvt/
-#
-# by vague
-# line buffer
+# dive
+#   /tmp/screen-exchange
+# nei
+#   http://anti.teamidiot.de/static/nei/*/Code/urxvt/
+# vague
+#   line buffer
 
 my ($copy_selection, $copy_method);
 
@@ -84,7 +83,17 @@ sub cmd_copy {
         paste_xclip($str, $copy_selection);
     } elsif ( $copy_method eq 'xsel' ) {
         paste_xsel($str, $copy_selection);
+    } elsif ( $copy_method eq 'screen' ) {
+        paste_screen($str, $copy_selection);
     }
+}
+
+sub paste_screen {
+    my ($str, $par)= @_;
+	my $fn= '/tmp/screen-exchange';
+    open my $fa, ">", $fn;
+    print $fa $str;
+    close $fa;
 }
 
 sub paste_xclip {
@@ -175,13 +184,12 @@ sub sig_setup_changed {
 		Irssi::settings_set_str($IRSSI{name}.'_selection', $cs);
 	}
     my $cm= Irssi::settings_get_str($IRSSI{name}.'_method');
-	my %md=(xterm=>1, xclip=>1, xsel=>1);
+	my %md=(xterm=>1, xclip=>1, xsel=>1, screen=>1);
 	if (exists $md{$cm} ) {
 		$copy_method= $cm;
 	} else {
-		$cm= 'xterm';
+		$cm= $copy_method;
 		Irssi::settings_set_str($IRSSI{name}.'_method', $cm);
-		$copy_method= $cm;
 	}
 }
 
