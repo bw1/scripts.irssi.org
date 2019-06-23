@@ -41,6 +41,7 @@ my $help = << "END";
   $IRSSI{name}_method
     xterm
 	xclip
+	xsel
 %9See also%9
   https://www.freecodecamp.org/news/tmux-in-practice-integration-with-system-clipboard-bcd72c62ff7b/
   http://anti.teamidiot.de/static/nei/*/Code/urxvt/
@@ -81,6 +82,8 @@ sub cmd_copy {
         paste($str, $copy_selection);
     } elsif ( $copy_method eq 'xclip' ) {
         paste_xclip($str, $copy_selection);
+    } elsif ( $copy_method eq 'xsel' ) {
+        paste_xsel($str, $copy_selection);
     }
 }
 
@@ -97,6 +100,20 @@ sub paste_xclip {
         $sel= "-selection $sel";
     }
     my $cmd="xclip -i $sel";
+    open my $fa, "|-", $cmd;
+    print $fa $str;
+    close $fa;
+}
+
+sub paste_xsel {
+    my ($str, $par)= @_;
+    my %ma= (
+        p=>'--primary',
+        q=>'--secondary',
+        c=>'--clipboard',
+    );
+    my $sel= $ma{substr($par,0,1)};
+    my $cmd="xsel -i $sel";
     open my $fa, "|-", $cmd;
     print $fa $str;
     close $fa;
@@ -158,7 +175,7 @@ sub sig_setup_changed {
 		Irssi::settings_set_str($IRSSI{name}.'_selection', $cs);
 	}
     my $cm= Irssi::settings_get_str($IRSSI{name}.'_method');
-	my %md=(xterm=>1, xclip=>1);
+	my %md=(xterm=>1, xclip=>1, xsel=>1);
 	if (exists $md{$cm} ) {
 		$copy_method= $cm;
 	} else {
