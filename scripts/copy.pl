@@ -6,7 +6,7 @@ use Irssi::UI;
 use Irssi::TextUI;
 use MIME::Base64;
 
-$VERSION = '0.02';
+$VERSION = '0.03';
 %IRSSI = (
 	authors	=> 'vague,bw1',
 	contact	=> 'bw1@aol.at',
@@ -14,7 +14,7 @@ $VERSION = '0.02';
 	description	=> 'copy a line in a paste buffer',
 	license	=> 'Public Domain',
 	url		=> 'https://scripts.irssi.org/',
-	changed	=> '2019-06-23',
+	changed	=> '2019-06-25',
 	modules => 'MIME::Base64',
 	commands=> 'copy',
 );
