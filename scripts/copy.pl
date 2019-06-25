@@ -8,15 +8,15 @@ use MIME::Base64;
 
 $VERSION = '0.02';
 %IRSSI = (
-    authors	=> 'vague,bw1',
-    contact	=> 'bw1@aol.at',
-    name	=> 'copy',
-    description	=> 'copy a line in a paste buffer',
-    license	=> 'Public Domain',
-    url		=> 'https://scripts.irssi.org/',
-    changed	=> '2019-06-23',
-    modules => 'MIME::Base64',
-    commands=> 'copy',
+	authors	=> 'vague,bw1',
+	contact	=> 'bw1@aol.at',
+	name	=> 'copy',
+	description	=> 'copy a line in a paste buffer',
+	license	=> 'Public Domain',
+	url		=> 'https://scripts.irssi.org/',
+	changed	=> '2019-06-23',
+	modules => 'MIME::Base64',
+	commands=> 'copy',
 );
 
 my $help = << "END";
@@ -26,6 +26,7 @@ my $help = << "END";
   $VERSION
 %9Synopsis%9
   /copy [number]
+  /copy <-f word>
 %9Description%9
   $IRSSI{description}
 
@@ -43,6 +44,7 @@ my $help = << "END";
     xclip
     xsel
     screen
+    print
 %9See also%9
   https://www.freecodecamp.org/news/tmux-in-practice-integration-with-system-clipboard-bcd72c62ff7b/
   http://anti.teamidiot.de/static/nei/*/Code/urxvt/
@@ -60,75 +62,116 @@ END
 
 my ($copy_selection, $copy_method);
 
+
 sub cmd_copy {
 	my ($args, $server, $witem)=@_;
-	$args = $args-1;
-	my $line=Irssi::active_win->view->{buffer}{cur_line}; 
+	my ($opt, $arg) = Irssi::command_parse_options('copy', $args);
+	if (exists $opt->{f}) {
+		cmd_find($opt->{f}, $server, $witem);
+	} else {
+		cmd_num($args, $server, $witem);
+	}
+}
+
+sub cmd_find {
+	my ($args, $server, $witem)=@_;
+	my $line=Irssi::active_win->view->{startline};
+	my $str;
+	while ( defined $line ) {
+		my $s= $line->get_text(0);
+		if ( $s =~ /$args/ ) {
+			$str =$s;
+			last;
+		}
+		$line= $line->next();
+	}
+	if (defined $str) {
+		paste ($str);
+	}
+}
+
+sub cmd_num {
+	my ($args, $server, $witem)=@_;
+	my $line=Irssi::active_win->view->{buffer}{cur_line};
+	$args=1 if ($args==0);
+	$args=$args-1;
 	unless (defined $line) {
 		Irssi::print('No Copy!', MSGLEVEL_CLIENTCRAP);
 		return();
 	}
-	for(1..$args) { 
-		my $l=$line->prev; 
+	for(1..$args) {
+		my $l=$line->prev;
 		if (defined $l) {
 			$line= $l;
 		} else {
 			last;
 		}
-	} 
+	}
 	my $str=$line->get_text(0);
-    if ( $copy_method eq 'xterm' ) {
-        paste($str, $copy_selection);
-    } elsif ( $copy_method eq 'xclip' ) {
-        paste_xclip($str, $copy_selection);
-    } elsif ( $copy_method eq 'xsel' ) {
-        paste_xsel($str, $copy_selection);
-    } elsif ( $copy_method eq 'screen' ) {
-        paste_screen($str, $copy_selection);
-    }
-}
-
-sub paste_screen {
-    my ($str, $par)= @_;
-	my $fn= '/tmp/screen-exchange';
-    open my $fa, ">", $fn;
-    print $fa $str;
-    close $fa;
-}
-
-sub paste_xclip {
-    my ($str, $par)= @_;
-    my %ma= (
-        0=>'buffer-cut',
-        p=>'primary',
-        q=>'secondary',
-        c=>'clipboard',
-    );
-    my $sel= $ma{substr($par,0,1)};
-    if (defined $sel) {
-        $sel= "-selection $sel";
-    }
-    my $cmd="xclip -i $sel";
-    open my $fa, "|-", $cmd;
-    print $fa $str;
-    close $fa;
-}
-
-sub paste_xsel {
-    my ($str, $par)= @_;
-    my %ma= (
-        p=>'--primary',
-        q=>'--secondary',
-        c=>'--clipboard',
-    );
-    my $sel= $ma{substr($par,0,1)};
-    my $cmd="xsel -i $sel";
-    open my $fa, "|-", $cmd;
-    print $fa $str;
-    close $fa;
+	paste ($str);
 }
 
 sub paste {
+	my ($str)= @_;
+	if ( $copy_method eq 'xterm' ) {
+		paste_xterm($str, $copy_selection);
+	} elsif ( $copy_method eq 'xclip' ) {
+		paste_xclip($str, $copy_selection);
+	} elsif ( $copy_method eq 'xsel' ) {
+		paste_xsel($str, $copy_selection);
+	} elsif ( $copy_method eq 'screen' ) {
+		paste_screen($str, $copy_selection);
+	} elsif ( $copy_method eq 'print' ) {
+		paste_print($str, $copy_selection);
+	}
+}
+
+sub paste_print {
+	my ($str, $par)= @_;
+	Irssi::print($str, MSGLEVEL_CLIENTCRAP);
+}
+
+sub paste_screen {
+	my ($str, $par)= @_;
+	my $fn= '/tmp/screen-exchange';
+	open my $fa, ">", $fn;
+	print $fa $str;
+	close $fa;
+}
+
+sub paste_xclip {
+	my ($str, $par)= @_;
+	my %ma= (
+		0=>'buffer-cut',
+		p=>'primary',
+		q=>'secondary',
+		c=>'clipboard',
+	);
+	my $sel= $ma{substr($par,0,1)};
+	if (defined $sel) {
+		$sel= "-selection $sel";
+	}
+	my $cmd="xclip -i $sel";
+	open my $fa, "|-", $cmd;
+	print $fa $str;
+	close $fa;
+}
+
+sub paste_xsel {
+	my ($str, $par)= @_;
+	my %ma= (
+		p=>'--primary',
+		q=>'--secondary',
+		c=>'--clipboard',
+	);
+	my $sel= $ma{substr($par,0,1)};
+	my $cmd="xsel -i $sel";
+	open my $fa, "|-", $cmd;
+	print $fa $str;
+	close $fa;
+}
+
+sub paste_xterm {
 	my ($str,$par)=@_;
 	my $b64=encode_base64($str,'');
 	#print STDERR "\033]52;cpqs01234;".$b64."\007";
@@ -143,11 +186,11 @@ sub paste {
 			my $tcn =$1;
 			my $pty;
 			foreach (split /\n/,$tc) {
-				$_ =~ m/^(.*?): (\d+)/;
-				if ($tcn == $2) {
-					$pty = $1;
-					last();
-				}
+	$_ =~ m/^(.*?): (\d+)/;
+	if ($tcn == $2) {
+		$pty = $1;
+		last();
+	}
 			}
 			my $fa;
 			open $fa,'>',$pty;
@@ -183,8 +226,8 @@ sub sig_setup_changed {
 		$copy_selection=$cs;
 		Irssi::settings_set_str($IRSSI{name}.'_selection', $cs);
 	}
-    my $cm= Irssi::settings_get_str($IRSSI{name}.'_method');
-	my %md=(xterm=>1, xclip=>1, xsel=>1, screen=>1);
+	my $cm= Irssi::settings_get_str($IRSSI{name}.'_method');
+	my %md=(xterm=>1, xclip=>1, xsel=>1, screen=>1, print=>1 );
 	if (exists $md{$cm} ) {
 		$copy_method= $cm;
 	} else {
@@ -200,5 +243,7 @@ Irssi::settings_add_str($IRSSI{name} ,$IRSSI{name}.'_method', 'xterm');
 
 Irssi::command_bind($IRSSI{name}, \&cmd_copy);
 Irssi::command_bind('help', \&cmd_help);
+
+Irssi::command_set_options('copy','+f');
 
 sig_setup_changed();
