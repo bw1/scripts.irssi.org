@@ -1,0 +1,16 @@
+---
+-
+  authors: bw1
+  changed: 2019-07-02
+  commands:
+    - theme
+  contact: bw1@aol.at
+  default_package: theme
+  description: 'activate, show or get theme'
+  license: 'Public Domain'
+  modified: '2019-08-05 16:29:34'
+  modules:
+    - YAML::XS
+  name: theme
+  url: https://scripts.irssi.org/
+  version: '0.03'
