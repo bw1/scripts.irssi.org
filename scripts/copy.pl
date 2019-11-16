@@ -6,7 +6,7 @@ use Irssi::UI;
 use Irssi::TextUI;
 use MIME::Base64;
 
-$VERSION = '0.03';
+$VERSION = '0.04';
 %IRSSI = (
 	authors	=> 'vague,bw1',
 	contact	=> 'bw1@aol.at',
@@ -14,7 +14,7 @@ $VERSION = '0.03';
 	description	=> 'copy a line in a paste buffer',
 	license	=> 'Public Domain',
 	url		=> 'https://scripts.irssi.org/',
-	changed	=> '2019-06-25',
+	changed	=> '2019-11-16',
 	modules => 'MIME::Base64',
 	commands=> 'copy',
 );
@@ -45,6 +45,7 @@ my $help = << "END";
     xsel
     screen
     print
+    (gpm)
 %9See also%9
   https://www.freecodecamp.org/news/tmux-in-practice-integration-with-system-clipboard-bcd72c62ff7b/
   http://anti.teamidiot.de/static/nei/*/Code/urxvt/
@@ -123,7 +124,17 @@ sub paste {
 		paste_screen($str, $copy_selection);
 	} elsif ( $copy_method eq 'print' ) {
 		paste_print($str, $copy_selection);
+	} elsif ( $copy_method eq 'gpm' ) {
+		paste_gpm($str, $copy_selection);
 	}
+}
+
+sub paste_gpm {
+	my ($str, $par)= @_;
+	my $fn= '/dev/gpmdata';
+	open my $fa, ">", $fn;
+	print $fa $str;
+	close $fa;
 }
 
 sub paste_print {
@@ -227,7 +238,7 @@ sub sig_setup_changed {
 		Irssi::settings_set_str($IRSSI{name}.'_selection', $cs);
 	}
 	my $cm= Irssi::settings_get_str($IRSSI{name}.'_method');
-	my %md=(xterm=>1, xclip=>1, xsel=>1, screen=>1, print=>1 );
+	my %md=(xterm=>1, xclip=>1, xsel=>1, screen=>1, print=>1, gpm=>1 );
 	if (exists $md{$cm} ) {
 		$copy_method= $cm;
 	} else {
