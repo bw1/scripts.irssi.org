@@ -202,6 +202,7 @@ sub maketags {
 	my ( $fn, $burl ) = @_;
 	my $fi;
 	if ( -e $fn ) {
+		Irssi::print("file exists", MSGLEVEL_CLIENTCRAP);
 		my $s;
 		my $t;
 		open($fi, '<', $fn)
@@ -209,6 +210,7 @@ sub maketags {
 		while ( my $r = <$fi> ) {
 			if ( $r =~ m/^#+(.*?)$/ ) {
 				if (defined $t && length($s) >2) {
+					Irssi::print("tag:$t", MSGLEVEL_CLIENTCRAP);
 					writetag($t, $s, $burl.$t);
 					$s='';
 				}
@@ -223,6 +225,7 @@ sub maketags {
 			}
 			if ( $r =~ m/^\{:(#.*?)\}/ ) {
 				if (defined $t) {
+					Irssi::print("tag:$t", MSGLEVEL_CLIENTCRAP);
 					writetag($t, $s, $burl.$t);
 					$s='';
 				}
@@ -231,6 +234,7 @@ sub maketags {
 			}
 			$s .=$r if (defined $t);
 		}
+		Irssi::print("tag:$t", MSGLEVEL_CLIENTCRAP);
 		writetag($t, $s, $burl.$t);
 		close $fi;
 	}
