@@ -252,6 +252,7 @@ sub init {
 		maketags( $path.$bn, $data->{links}->{$link}->{url} );
 	}
 	writeowntags();
+	Irssi::print("Tags:".scalar keys %{$data->{tags}} , MSGLEVEL_CLIENTCRAP);
 }
 
 sub do_complete {
