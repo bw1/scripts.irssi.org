@@ -249,6 +249,7 @@ sub init {
 			#debug $path.$bn;
 			getfile( $src );
 		}
+		Irssi::print("src:".$path.$bn, MSGLEVEL_CLIENTCRAP);
 		maketags( $path.$bn, $data->{links}->{$link}->{url} );
 	}
 	writeowntags();
