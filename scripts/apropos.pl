@@ -159,8 +159,9 @@ sub cmd_help {
 sub getfile {
 	my ( $fn ) = @_;
 	my $ff = File::Fetch->new( uri=>$fn );
+	local $File::Fetch::DEBUG=1;
 	my $w = $ff->fetch( to=>$path )
-		or printerror("getfile ($fn) ".$ff->error);
+		or printerror("getfile ($fn) ".$ff->error(1));
 }
 
 sub writetag {
