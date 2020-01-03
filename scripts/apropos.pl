@@ -161,9 +161,9 @@ sub cmd_help {
 sub getfile {
 	my ( $fn ) = @_;
 	my $ff = File::Fetch->new( uri=>$fn );
-	local $File::Fetch::DEBUG=0;
+	#local $File::Fetch::DEBUG=0;
 	local $File::Fetch::WARN=0;
-	local $File::Fetch::BLACKLIST=[qw/lwp httplite httptiny fetch iosock lynx curl/];
+	#local $File::Fetch::BLACKLIST=[qw/lwp httplite httptiny fetch iosock lynx curl/];
 	my $w = $ff->fetch( to=>$path )
 		or printerror("getfile ($fn) ".$ff->error(1));
 }
