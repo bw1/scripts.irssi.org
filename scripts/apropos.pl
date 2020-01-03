@@ -128,6 +128,11 @@ sub printtag {
 	}
 }
 
+sub printerror {
+	my ( $msg )=@_;
+	Irssi::printformat(MSGLEVEL_CLIENTCRAP, 'apropos_error', $msg);
+}
+
 sub cmd {
 	my ($args, $server, $witem)=@_;
 	$pcount=0;
@@ -155,7 +160,7 @@ sub getfile {
 	my ( $fn ) = @_;
 	my $ff = File::Fetch->new( uri=>$fn );
 	my $w = $ff->fetch( to=>$path )
-		or Irssi::print("Error: getfile ($fn)".$ff->error, MSGLEVEL_CLIENTCRAP);
+		or printerror("getfile ($fn) ".$ff->error);
 }
 
 sub writetag {
@@ -194,7 +199,8 @@ sub maketags {
 	if ( -e $fn ) {
 		my $s;
 		my $t;
-		open $fi, '<', $fn;
+		open($fi, '<', $fn)
+			or printerror("cannot open < $fn: $!");
 		while ( my $r = <$fi> ) {
 			if ( $r =~ m/^#+(.*?)$/ ) {
 				if (defined $t && length($s) >2) {
@@ -235,6 +241,7 @@ sub init {
 		my $src= $data->{links}->{$link}->{src};
 		my $bn = basename($src);
 		if (! -e $path.$bn) {
+			#debug $path.$bn;
 			getfile( $src );
 		}
 		maketags( $path.$bn, $data->{links}->{$link}->{url} );
@@ -268,6 +275,7 @@ sub sig_setup_changed {
 
 Irssi::theme_register([
 	'apropos_tag', '{hilight $0. $1}',
+	'apropos_error', '{error Error:} $0',
 ]);
 
 Irssi::signal_add('setup changed', \&sig_setup_changed);
