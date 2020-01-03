@@ -234,7 +234,7 @@ sub maketags {
 			}
 			$s .=$r if (defined $t);
 		}
-		Irssi::print("last:$!", MSGLEVEL_CLIENTCRAP);
+		Irssi::print("last:$!:$?:$^E:$@ line:$.", MSGLEVEL_CLIENTCRAP);
 		Irssi::print("tag:$t", MSGLEVEL_CLIENTCRAP);
 		writetag($t, $s, $burl.$t);
 		close $fi;
