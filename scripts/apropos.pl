@@ -163,7 +163,7 @@ sub getfile {
 	my $ff = File::Fetch->new( uri=>$fn );
 	#local $File::Fetch::DEBUG=0;
 	local $File::Fetch::WARN=0;
-	#local $File::Fetch::BLACKLIST=[qw/lwp httplite httptiny fetch iosock lynx curl/];
+	local $File::Fetch::BLACKLIST=[qw/lwp httplite httptiny fetch iosock/];
 	my $w = $ff->fetch( to=>$path )
 		or printerror("getfile ($fn) ".$ff->error(1));
 }
