@@ -154,7 +154,8 @@ sub cmd_help {
 sub getfile {
 	my ( $fn ) = @_;
 	my $ff = File::Fetch->new( uri=>$fn );
-	my $w = $ff->fetch( to=>$path );
+	my $w = $ff->fetch( to=>$path )
+		or Irssi::print($ff->error, MSGLEVEL_CLIENTCRAP);
 }
 
 sub writetag {
