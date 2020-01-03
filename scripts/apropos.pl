@@ -48,12 +48,14 @@ my $data;
 sub defaultdata {
 	$data->{links}->{settings}={
 		url  => 'https://irssi.org/documentation/settings/',
-		src  => 'https://github.com/irssi/irssi.github.io/raw/master/documentation/settings.markdown',
+		#src  => 'https://github.com/irssi/irssi.github.io/raw/master/documentation/settings.markdown',
+		src  => 'https://raw.githubusercontent.com/irssi/irssi.github.io/master/documentation/settings.markdown',
 		type => 'markdown',
 	};
 	$data->{links}->{faq}={
 		url  => 'https://irssi.org/documentation/faq/',
-		src  => 'https://github.com/irssi/irssi.github.io/raw/master/documentation/faq.markdown',
+		#src  => 'https://github.com/irssi/irssi.github.io/raw/master/documentation/faq.markdown',
+		src  => 'https://raw.githubusercontent.com/irssi/irssi.github.io/master/documentation/faq.markdown',
 		type => 'markdown',
 	};
 	$data->{own}->{startup}=[
