@@ -5,7 +5,8 @@ use Irssi;
 use File::Fetch;
 use File::Basename;
 use Text::Wrap;
-#use debug;
+use CPAN::Meta::YAML;
+use debug;
 
 $VERSION = '0.01';
 %IRSSI = (
@@ -41,6 +42,7 @@ my ($pcount, @pnodes);
 my $pmax=3;
 my $lmax=5;
 my @channels;
+my $fnconfig='config.yaml';
 my $data;
 # ->{links}
 # ->{own}
@@ -137,14 +139,21 @@ sub printerror {
 
 sub cmd {
 	my ($args, $server, $witem)=@_;
+	my ($opt, $arg) = Irssi::command_parse_options($IRSSI{'name'}, $args);
+	debug $arg;
 	$pcount=0;
 	@pnodes=();
-	$args=~s/\s+$//;
-	printtag( $args );
-	my @l = grep { /$args/ } keys %{ $data->{tags} };
-	foreach my $t ( @l ) {
-		if ( $t ne $args ) {
-			printtag($t);
+	$arg=~s/\s+$//;
+	if (exists $opt->{h} || length($arg)<2 ) {
+		Irssi::print($help, MSGLEVEL_CLIENTCRAP);
+	} elsif ( exists $opt->{d} ){
+	} else {
+		printtag( $arg );
+		my @l = grep { /$arg/ } keys %{ $data->{tags} };
+		foreach my $t ( @l ) {
+			if ( $t ne $arg ) {
+				printtag($t);
+			}
 		}
 	}
 }
@@ -166,6 +175,20 @@ sub getfile {
 	local $File::Fetch::BLACKLIST=[qw/lwp httplite httptiny fetch iosock/];
 	my $w = $ff->fetch( to=>$path )
 		or printerror("getfile ($fn) ".$ff->error(1));
+}
+
+sub getyamlfile {
+	my ( $fn )=@_;
+	if ( -e $fn ) {
+		my $y= CPAN::Meta::YAML->read($fn);
+		return $y->[0];
+	}
+}
+
+sub putyamlfile {
+	my ( $fn, $r )=@_;
+	my $y= CPAN::Meta::YAML->new($r);
+	$y->write( $fn );
 }
 
 sub writetag {
@@ -210,7 +233,7 @@ sub maketags {
 		while ( my $r = <$fi> ) {
 			if ( $r =~ m/^#+(.*?)$/ ) {
 				if (defined $t && length($s) >2) {
-					Irssi::print("tag:$t", MSGLEVEL_CLIENTCRAP);
+					#Irssi::print("tag:$t", MSGLEVEL_CLIENTCRAP);
 					writetag($t, $s, $burl.$t);
 					$s='';
 				}
@@ -225,7 +248,7 @@ sub maketags {
 			}
 			if ( $r =~ m/^\{:(#.*?)\}/ ) {
 				if (defined $t) {
-					Irssi::print("tag:$t", MSGLEVEL_CLIENTCRAP);
+					#Irssi::print("tag:$t", MSGLEVEL_CLIENTCRAP);
 					writetag($t, $s, $burl.$t);
 					$s='';
 				}
@@ -235,15 +258,20 @@ sub maketags {
 			$s .=$r if (defined $t);
 		}
 		Irssi::print("last:$!:$?:$^E:$@ line:$.", MSGLEVEL_CLIENTCRAP);
-		Irssi::print("tag:$t", MSGLEVEL_CLIENTCRAP);
+		#Irssi::print("tag:$t", MSGLEVEL_CLIENTCRAP);
 		writetag($t, $s, $burl.$t);
 		close $fi;
 	}
 }
 
 sub init {
-	defaultdata();
-	$path= Irssi::get_irssi_dir()."/info/";
+	$path= Irssi::get_irssi_dir()."/apropos/";
+	if ( -e $path.$fnconfig ) {
+		debug "read config";
+		$data=getyamlfile($path.$fnconfig);
+	} else {
+		defaultdata();
+	}
 	if (! -e $path) {
 		mkdir $path;
 	}
@@ -285,6 +313,11 @@ sub sig_setup_changed {
 	@channels= split(/\s+/,Irssi::settings_get_str($IRSSI{name}.'_channels'));
 }
 
+sub UNLOAD {
+	delete $data->{tags};
+	putyamlfile( $path.$fnconfig, $data);
+}
+
 Irssi::theme_register([
 	'apropos_tag', '{hilight $0. $1}',
 	'apropos_error', '{error Error:} $0',
@@ -300,6 +333,7 @@ Irssi::settings_add_str($IRSSI{name} ,$IRSSI{name}.'_channels', '#irssi');
 
 Irssi::command_bind($IRSSI{name}, \&cmd);
 Irssi::command_bind('help', \&cmd_help);
+Irssi::command_set_options($IRSSI{name},"h d");
 
 sig_setup_changed();
 init();
