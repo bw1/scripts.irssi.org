@@ -42,6 +42,7 @@ my ($pcount, @pnodes);
 my $pmax=3;
 my $lmax=5;
 my @channels;
+my $query;
 my $fnconfig='config.yaml';
 my $data;
 # ->{links}
@@ -307,10 +308,27 @@ sub sig_message_own_public {
 	Irssi::signal_continue($server, $msg, $target);
 }
 
+sub sig_message_own_private {
+	my ($server, $msg, $target, $orig_target)= @_;
+	for (my $c=0; $c <= $#pnodes; $c++) {
+		$msg=~s/(^|\s)#$c(\s|$)/\1$pnodes[$c]->{url}\2/g;
+	}
+	Irssi::signal_continue($server, $msg, $target);
+}
+
 sub sig_setup_changed {
 	$pmax= Irssi::settings_get_int($IRSSI{name}.'_pmax');
 	$lmax= Irssi::settings_get_int($IRSSI{name}.'_lmax');
 	@channels= split(/\s+/,Irssi::settings_get_str($IRSSI{name}.'_channels'));
+	my $qu=Irssi::settings_get_bool($IRSSI{name}.'_query');
+	if ( $qu && !$query ) {
+		Irssi::signal_add("message own_private", \&sig_message_own_private);
+		$query=1;
+	} 
+	if ( !$qu && $query ) {
+		Irssi::signal_remove("message own_private", \&sig_message_own_private);
+		$query=undef;
+	}
 }
 
 sub UNLOAD {
@@ -330,6 +348,7 @@ Irssi::signal_add("message own_public", \&sig_message_own_public);
 Irssi::settings_add_int($IRSSI{name} ,$IRSSI{name}.'_pmax', 3);
 Irssi::settings_add_int($IRSSI{name} ,$IRSSI{name}.'_lmax', 5);
 Irssi::settings_add_str($IRSSI{name} ,$IRSSI{name}.'_channels', '#irssi');
+Irssi::settings_add_bool($IRSSI{name} ,$IRSSI{name}.'_query', 0);
 
 Irssi::command_bind($IRSSI{name}, \&cmd);
 Irssi::command_bind('help', \&cmd_help);
