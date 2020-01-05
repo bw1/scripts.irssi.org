@@ -171,8 +171,8 @@ sub getfile {
 	my ( $fn ) = @_;
 	my $ff = File::Fetch->new( uri=>$fn );
 	#local $File::Fetch::DEBUG=0;
-	local $File::Fetch::WARN=0;
-	local $File::Fetch::BLACKLIST=[qw/lwp httplite httptiny fetch iosock/];
+	#local $File::Fetch::WARN=0;
+	#local $File::Fetch::BLACKLIST=[qw/lwp httplite httptiny fetch iosock/];
 	my $w = $ff->fetch( to=>$path )
 		or printerror("getfile ($fn) ".$ff->error(1));
 }
@@ -223,14 +223,14 @@ sub writeowntags {
 
 sub maketags {
 	my ( $fn, $burl ) = @_;
-	my $fi;
+	#my *fi;
 	if ( -e $fn ) {
 		Irssi::print("file exists", MSGLEVEL_CLIENTCRAP);
 		my $s;
 		my $t;
-		open($fi, '<', $fn)
+		open(*fi, '<', $fn)
 			or printerror("cannot open < $fn: $!");
-		while ( my $r = <$fi> ) {
+		while ( my $r = <*fi> ) {
 			if ( $r =~ m/^#+(.*?)$/ ) {
 				if (defined $t && length($s) >2) {
 					#Irssi::print("tag:$t", MSGLEVEL_CLIENTCRAP);
@@ -260,7 +260,7 @@ sub maketags {
 		Irssi::print("last:$!:$?:$^E:$@ line:$.", MSGLEVEL_CLIENTCRAP);
 		#Irssi::print("tag:$t", MSGLEVEL_CLIENTCRAP);
 		writetag($t, $s, $burl.$t);
-		close $fi;
+		close *fi;
 	}
 }
 
