@@ -17,7 +17,7 @@ $VERSION = '0.01';
     license	=> 'Public Domain',
     url		=> 'https://scripts.irssi.org/',
     changed	=> '2020-01-02',
-    modules => 'File::Fetch File::Basename Text::Wrap',
+    modules => 'File::Fetch File::Basename Text::Wrap CPAN::Meta::YAML',
     commands=> 'apropos',
 );
 
@@ -223,14 +223,14 @@ sub writeowntags {
 
 sub maketags {
 	my ( $fn, $burl ) = @_;
-	#my *fi;
+	my $fi;
 	if ( -e $fn ) {
 		Irssi::print("file exists", MSGLEVEL_CLIENTCRAP);
 		my $s;
 		my $t;
-		open(*fi, '< :utf8', $fn)
+		open($fi, '< :utf8', $fn)
 			or printerror("cannot open < $fn: $!");
-		while ( my $r = <*fi> ) {
+		while ( my $r = <$fi> ) {
 			if ( $r =~ m/^#+(.*?)$/ ) {
 				if (defined $t && length($s) >2) {
 					#Irssi::print("tag:$t", MSGLEVEL_CLIENTCRAP);
@@ -260,7 +260,7 @@ sub maketags {
 		Irssi::print("last:$!:$?:$^E:$@ line:$.", MSGLEVEL_CLIENTCRAP);
 		#Irssi::print("tag:$t", MSGLEVEL_CLIENTCRAP);
 		writetag($t, $s, $burl.$t);
-		close *fi;
+		close $fi;
 	}
 }
 
