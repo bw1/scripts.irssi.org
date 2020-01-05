@@ -6,7 +6,7 @@ use File::Fetch;
 use File::Basename;
 use Text::Wrap;
 use CPAN::Meta::YAML;
-use debug;
+#use debug;
 
 $VERSION = '0.01';
 %IRSSI = (
@@ -141,7 +141,6 @@ sub printerror {
 sub cmd {
 	my ($args, $server, $witem)=@_;
 	my ($opt, $arg) = Irssi::command_parse_options($IRSSI{'name'}, $args);
-	debug $arg;
 	$pcount=0;
 	@pnodes=();
 	$arg=~s/\s+$//;
@@ -268,7 +267,6 @@ sub maketags {
 sub init {
 	$path= Irssi::get_irssi_dir()."/apropos/";
 	if ( -e $path.$fnconfig ) {
-		debug "read config";
 		$data=getyamlfile($path.$fnconfig);
 	} else {
 		defaultdata();
@@ -280,7 +278,6 @@ sub init {
 		my $src= $data->{links}->{$link}->{src};
 		my $bn = basename($src);
 		if (! -e $path.$bn) {
-			#debug $path.$bn;
 			getfile( $src );
 		}
 		Irssi::print("src:".$path.$bn, MSGLEVEL_CLIENTCRAP);
