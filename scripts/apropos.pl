@@ -6,6 +6,7 @@ use File::Fetch;
 use File::Basename;
 use Text::Wrap;
 use CPAN::Meta::YAML;
+use Tie::File;
 #use debug;
 
 $VERSION = '0.01';
@@ -224,13 +225,16 @@ sub writeowntags {
 sub maketags {
 	my ( $fn, $burl ) = @_;
 	my $fi;
+	my @fl;
 	if ( -e $fn ) {
 		Irssi::print("file exists", MSGLEVEL_CLIENTCRAP);
 		my $s;
 		my $t;
-		open($fi, '-|', "cat $fn")
+		tie @fl, 'Tie::File', $fn
+		#open($fi, '-|', "cat $fn")
 			or printerror("cannot open < $fn: $!");
-		while ( my $r = <$fi> ) {
+		#while ( my $r = <$fi> ) {
+		foreach my $r ( @fl ) {
 			if ( $r =~ m/^#+(.*?)$/ ) {
 				if (defined $t && length($s) >2) {
 					#Irssi::print("tag:$t", MSGLEVEL_CLIENTCRAP);
@@ -260,7 +264,7 @@ sub maketags {
 		Irssi::print("last:$!:$?:$^E:$@ line:$.", MSGLEVEL_CLIENTCRAP);
 		#Irssi::print("tag:$t", MSGLEVEL_CLIENTCRAP);
 		writetag($t, $s, $burl.$t);
-		close $fi;
+		#close $fi;
 	}
 }
 
