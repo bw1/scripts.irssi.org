@@ -228,7 +228,7 @@ sub maketags {
 		Irssi::print("file exists", MSGLEVEL_CLIENTCRAP);
 		my $s;
 		my $t;
-		open($fi, '< :utf8', $fn)
+		open($fi, '| :utf8', "cat $fn")
 			or printerror("cannot open < $fn: $!");
 		while ( my $r = <$fi> ) {
 			if ( $r =~ m/^#+(.*?)$/ ) {
