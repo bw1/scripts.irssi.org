@@ -117,7 +117,7 @@ See [the testing read-me](../master/_testing/) for details.
 [                     complete_at ](Test/complete_at/)|  ✔   |  ✔   |  ✔   |  4   |  ✔   
 [              complete_lastspoke ](Test/complete_lastspoke/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   
 [                      connectcmd ](Test/connectcmd/)|  ✔   |  ✔   |  ✔   | 19   |  ✔   
-[                            copy ](Test/copy/)|  ✔   |  ✔   |  ✔   | 20   |  ✔   
+[                            copy ](Test/copy/)|  ✔   |  ✔   |  ✔   | 23   |  ✔   
 [                       countdown ](Test/countdown/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   
 [                         country ](Test/country/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   
 [                     cp1250_kick ](Test/cp1250_kick/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   
@@ -149,6 +149,7 @@ See [the testing read-me](../master/_testing/) for details.
 [                             doc ](Test/doc/)|  ✔   |  ✔   |  ✔   |  9   |  ✔   
 [                    doublefilter ](Test/doublefilter/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   
 [                          dr_who ](Test/dr_who/)|  ✔   |  ✔   |  ✔   |  5   |  ✔   
+[                      dtach_away ](Test/dtach_away/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   
 [                      duckduckgo ](Test/duckduckgo/)|  ✔   |  ✔   |  ✔   | 32   |  ✔   
 [                        efnetorg ](Test/efnetorg/)|  ✔   |  ✔   |  ✔   |  5   |  ✔   
 [                           elist ](Test/elist/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   
@@ -175,6 +176,7 @@ See [the testing read-me](../master/_testing/) for details.
 [                 format_identify ](Test/format_identify/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   
 [                         fortune ](Test/fortune/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   
 [                         forward ](Test/forward/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   
+[                          fpaste ](Test/fpaste/)|  ✔   |  ✔   |  ✔   |  6   |  ✔   
 [                   friends_peder ](Test/friends_peder/)|  ✔   |  ✔   |  ✔   |  9   |  ✔   
 [                  friends_shasta ](Test/friends_shasta/)|  ✔   |  ✔   |  ✔   |  7   |  ✔   
 [                    frm_outgmsgs ](Test/frm_outgmsgs/)|  ✔   |  ✔   |  ✔   |  0   |  ✔   
@@ -239,7 +241,6 @@ See [the testing read-me](../master/_testing/) for details.
 [                    irssiBlaster ](Test/irssiBlaster/)|  ✔   |  ✔   |  ✔   | 12   |  ✔   
 [                      irssi-feed ](Test/irssi-feed/)|  ✔   |  ✔   |  ✔   |  0   |  ✔   
 [                    irssi_logger ](Test/irssi_logger/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   
-[                          irssiq ](Test/irssiq/)|  ✘   |  ✔   |  ✘   | 50   |  ☡   
 [                        isbanned ](Test/isbanned/)|  ✔   |  ✔   |  ✔   |  9   |  ✔   
 [                            isdn ](Test/isdn/)|  ✘   |  ✔   |  ✘   | 10   |  ☡   
 [                           itime ](Test/itime/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   
@@ -283,6 +284,7 @@ See [the testing read-me](../master/_testing/) for details.
 [                          mangle ](Test/mangle/)|  ✔   |  ✔   |  ✔   | 15   |  ✔   
 [                             map ](Test/map/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   
 [            mass_hilight_blocker ](Test/mass_hilight_blocker/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   
+[                      matryoshka ](Test/matryoshka/)|  ✔   |  ✔   |  ✔   | 19   |  ✔   
 [                 messages_bottom ](Test/messages_bottom/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   
 [                              mg ](Test/mg/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   
 [                    mh_hold_mode ](Test/mh_hold_mode/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   
@@ -395,6 +397,7 @@ See [the testing read-me](../master/_testing/) for details.
 [                          repeat ](Test/repeat/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   
 [                         replace ](Test/replace/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   
 [                    resize_split ](Test/resize_split/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   
+[                         revolve ](Test/revolve/)|  ✔   |  ✔   |  ✔   |  6   |  ✔   
 [                       rhythmbox ](Test/rhythmbox/)|  ✔   |  ✔   |  ✔   |  6   |  ✔   
 [                              rk ](Test/rk/)|  ✔   |  ✔   |  ✔   | 14   |  ✔   
 [                      romajibind ](Test/romajibind/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   
@@ -455,6 +458,7 @@ See [the testing read-me](../master/_testing/) for details.
 [                         thankop ](Test/thankop/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   
 [                           theme ](Test/theme/)|  ✔   |  ✔   |  ✔   | 20   |  ✔   
 [                        thistory ](Test/thistory/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   
+[                       tictactoe ](Test/tictactoe/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   
 [                           timer ](Test/timer/)|  ✔   |  ✔   |  ✔   |  0   |  ✔   
 [                       timezones ](Test/timezones/)|  ✔   |  ✔   |  ✔   |  0   |  ✔   
 [                         tinyurl ](Test/tinyurl/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   
@@ -470,7 +474,7 @@ See [the testing read-me](../master/_testing/) for details.
 [                      trackbar22 ](Test/trackbar22/)|  ✘   |  ✘   |  ✔   |  5   |  ☡   
 [                        trackbar ](Test/trackbar/)|  ✔   |  ✔   |  ✔   |  6   |  ✔   
 [                       tracknick ](Test/tracknick/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   
-[                           track ](Test/track/)|  ✔   |  ✔   |  ✔   | 36   |  ✔   
+[                           track ](Test/track/)|  ✔   |  ✔   |  ✔   | 39   |  ✔   
 [                        translit ](Test/translit/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   
 [                         trigger ](Test/trigger/)|  ✔   |  ✔   |  ✔   | 16   |  ✔   
 [                        trustweb ](Test/trustweb/)|  ✔   |  ✔   |  ✔   | 20   |  ✔   
@@ -529,4 +533,4 @@ See [the testing read-me](../master/_testing/) for details.
 [                             xqf ](Test/xqf/)|  ✔   |  ✔   |  ✔   |  6   |  ✔   
 [                            ziew ](Test/ziew/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   
 
-4f4a1ba6c30a3c24b378c7d40fec57cf5d8f5533 | 81
+20adad31e485d1eae74ae7ba144d4b489f7eecf0 | 82
