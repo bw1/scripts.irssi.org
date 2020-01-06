@@ -225,16 +225,17 @@ sub writeowntags {
 sub maketags {
 	my ( $fn, $burl ) = @_;
 	my $fi;
-	my @fl;
+	#my @fl;
 	if ( -e $fn ) {
 		Irssi::print("file exists", MSGLEVEL_CLIENTCRAP);
 		my $s;
 		my $t;
-		tie @fl, 'Tie::File', $fn
-		#open($fi, '-|', "cat $fn")
+		#tie @fl, 'Tie::File', $fn
+		local $/="\n";
+		open($fi, '<', $fn)
 			or printerror("cannot open < $fn: $!");
-		#while ( my $r = <$fi> ) {
-		foreach my $r ( @fl ) {
+		while ( my $r = <$fi> ) {
+		#foreach my $r ( @fl ) {
 			if ( $r =~ m/^#+(.*?)$/ ) {
 				if (defined $t && length($s) >2) {
 					#Irssi::print("tag:$t", MSGLEVEL_CLIENTCRAP);
