@@ -6,7 +6,6 @@ use File::Fetch;
 use File::Basename;
 use Text::Wrap;
 use CPAN::Meta::YAML;
-use Tie::File;
 #use debug;
 
 $VERSION = '0.01';
@@ -78,6 +77,7 @@ sub defaultdata {
 	$data->{own}->{script}=[
 		{ url  => 'https://scripts.irssi.org/', },
 		{ url  => 'https://github.com/shabble/irssi-docs/wiki/Guide', },
+		{ url  => 'https://github.com/irssi/irssi/raw/master/docs/perl.txt', },
 	];
 	$data->{own}->{paste}=[
 		{ url  => 'http://fpaste.scsys.co.uk/irssi', },
@@ -124,7 +124,7 @@ sub printtag {
 			if (defined $s){
 				my $long=wrap('  ', '  ', $s);
 				my @l=split(/\n/,$long);
-				$long=join("\n", splice(@l, 0, $lmax));
+				$long=join(":\n", splice(@l, 0, $lmax));
 				Irssi::print($long ,MSGLEVEL_CLIENTCRAP) 
 			}
 			Irssi::print('%U'.$n->{url}.'%U',MSGLEVEL_CLIENTCRAP);
@@ -145,9 +145,10 @@ sub cmd {
 	$pcount=0;
 	@pnodes=();
 	$arg=~s/\s+$//;
-	if (exists $opt->{h} || length($arg)<2 ) {
+	if (exists $opt->{h}) {
 		Irssi::print($help, MSGLEVEL_CLIENTCRAP);
 	} elsif ( exists $opt->{d} ){
+		cmd_dump();
 	} else {
 		printtag( $arg );
 		my @l = grep { /$arg/ } keys %{ $data->{tags} };
@@ -157,6 +158,11 @@ sub cmd {
 			}
 		}
 	}
+}
+
+sub cmd_dump {
+	my $y= CPAN::Meta::YAML->new($data->{own});
+	Irssi::print($y->write_string, MSGLEVEL_CLIENTCRAP);
 }
 
 sub cmd_help {
@@ -171,9 +177,6 @@ sub cmd_help {
 sub getfile {
 	my ( $fn ) = @_;
 	my $ff = File::Fetch->new( uri=>$fn );
-	#local $File::Fetch::DEBUG=0;
-	#local $File::Fetch::WARN=0;
-	#local $File::Fetch::BLACKLIST=[qw/lwp httplite httptiny fetch iosock/];
 	my $w = $ff->fetch( to=>$path )
 		or printerror("getfile ($fn) ".$ff->error(1));
 }
@@ -225,22 +228,16 @@ sub writeowntags {
 sub maketags {
 	my ( $fn, $burl ) = @_;
 	my $fi;
-	#my @fl;
 	if ( -e $fn ) {
-		Irssi::print("file exists", MSGLEVEL_CLIENTCRAP);
 		my $s;
 		my $t;
-		#tie @fl, 'Tie::File', $fn
-		local $/="\n";
 		open($fi, '<', $fn)
 			or printerror("cannot open < $fn: $!");
 		while ( my $r = <$fi> ) {
-		#foreach my $r ( @fl ) {
 			if ( $r =~ m/^#+(.*?)$/ ) {
 				if (defined $t && length($s) >2) {
-					#Irssi::print("tag:$t", MSGLEVEL_CLIENTCRAP);
 					writetag($t, $s, $burl.$t);
-					$s='';
+					$s=undef;
 				}
 				$t=$1;
 				$t=~s/^\s+//;
@@ -252,20 +249,17 @@ sub maketags {
 				next;
 			}
 			if ( $r =~ m/^\{:(#.*?)\}/ ) {
-				if (defined $t) {
-					#Irssi::print("tag:$t", MSGLEVEL_CLIENTCRAP);
+				if (defined $t && length($s) >2) {
 					writetag($t, $s, $burl.$t);
-					$s='';
+					$s=undef;
 				}
 				$t=$1;
 				next;
 			}
 			$s .=$r if (defined $t);
 		}
-		Irssi::print("last:$!:$?:$^E:$@ line:$.", MSGLEVEL_CLIENTCRAP);
-		#Irssi::print("tag:$t", MSGLEVEL_CLIENTCRAP);
 		writetag($t, $s, $burl.$t);
-		#close $fi;
+		close $fi;
 	}
 }
 
@@ -285,7 +279,6 @@ sub init {
 		if (! -e $path.$bn) {
 			getfile( $src );
 		}
-		Irssi::print("src:".$path.$bn, MSGLEVEL_CLIENTCRAP);
 		maketags( $path.$bn, $data->{links}->{$link}->{url} );
 	}
 	writeowntags();
