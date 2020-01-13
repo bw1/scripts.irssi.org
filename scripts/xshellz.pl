@@ -4,6 +4,7 @@ use POSIX;
 
 use Irssi;
 use Irssi::TextUI;
+use CPAN::Meta::YAML;
 
 $VERSION = '0.01';
 %IRSSI = (
@@ -36,8 +37,27 @@ my $help = << "END";
 END
 
 my $test_str;
+my $data;
 
-my $last=time();
+my $data->{last}=time();
+
+sub load {
+	my $p= Irssi::get_irssi_dir();
+	my $f= '/xshellz.yml';
+	if ( -e $p.$f ) {
+		my $yml= CPAN::Meta::YAML->read($p.$f)
+			or Irssi::print(CPAN::Meta::YAML->errstr, MSGLEVEL_CLIENTCRAP);
+		$data=$yml->[0];
+	}
+}
+
+sub save {
+	my $p= Irssi::get_irssi_dir();
+	my $f= '/xshellz.yml';
+	my $yml= CPAN::Meta::YAML->new($data);
+	$yml->write($p.$f)
+		or Irssi::print(CPAN::Meta::YAML->errstr, MSGLEVEL_CLIENTCRAP);
+}
 
 sub out {
 	my ($witem, @str)= @_;
@@ -50,13 +70,16 @@ sub out {
 }
 
 sub rest {
-	my $n=$last + 2*7*24*60*60 - time();
+	my $n=$data->{last} + 2*7*24*60*60 - time();
 	my $sa=$n;
-	my $d=int($n/60/60/24);
-	$n -= $d*24*60*60;
-	my $h=int($n/60/60);
-	$n -= $h*60*60;
-	my $m=int($n/60);
+	$n= $n/60/60/24;
+	my $d=int($n);
+	$n -= $d;
+	$n= $n*24;
+	my $h=int($n);
+	$n -= $h;
+	$n= $n*60;
+	my $m=int($n);
 	return wantarray ? ($d, $h, $m) : $sa;
 }
 
@@ -68,11 +91,19 @@ sub cmd {
 	if ($a eq 'keep') {
 		$server->command('/^msg -Freenode xinfo !keep senn');
 		#$server->command('/echo xinfo !keep senn');
-		$last= time();
+		$data->{last}= time();
+		save();
 	}
 	if ($a eq 'stat') {
 		my ($d, $h, $m)= rest();
 		out( $witem, "Restzeit: ${d}d ${h}h ${m}m");
+	}
+	if ($a eq 'save') {
+		save();
+	}
+	if ($a eq 'start') {
+		$data->{last}= time();
+		save();
 	}
 }
 
@@ -113,10 +144,11 @@ Irssi::signal_add('setup changed', \&sig_setup_changed);
 Irssi::settings_add_str($IRSSI{name} ,$IRSSI{name}.'_test_str', 'hello world!');
 
 Irssi::command_bind($IRSSI{name}, \&cmd);
-foreach ( qw/keep stat/) {
+foreach ( qw/keep stat save start/) {
 	Irssi::command_bind($IRSSI{name}." ".$_, \&cmd);
 }
 
 Irssi::command_bind('help', \&cmd_help);
 
 sig_setup_changed();
+load();
