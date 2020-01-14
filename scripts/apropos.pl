@@ -236,6 +236,14 @@ sub maketags {
 		open($fi, '<', $fn)
 			or printerror("cannot open < $fn: $!");
 		while ( my $r = <$fi> ) {
+			if ( $r =~ m/^#+.*?{(.*?)}$/ ) {
+				if (defined $t && length($s) >2) {
+					writetag($t, $s, $burl.$t);
+					$s=undef;
+				}
+				$t=$1;
+				next;
+			}
 			if ( $r =~ m/^#+(.*?)$/ ) {
 				if (defined $t && length($s) >2) {
 					writetag($t, $s, $burl.$t);
