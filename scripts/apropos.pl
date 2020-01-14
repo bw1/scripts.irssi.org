@@ -149,6 +149,8 @@ sub cmd {
 		Irssi::print($help, MSGLEVEL_CLIENTCRAP);
 	} elsif ( exists $opt->{d} ){
 		cmd_dump();
+	} elsif ( exists $opt->{i} ){
+		init()
 	} else {
 		printtag( $arg );
 		my @l = grep { /$arg/ } keys %{ $data->{tags} };
@@ -347,7 +349,7 @@ Irssi::settings_add_bool($IRSSI{name} ,$IRSSI{name}.'_query', 0);
 
 Irssi::command_bind($IRSSI{name}, \&cmd);
 Irssi::command_bind('help', \&cmd_help);
-Irssi::command_set_options($IRSSI{name},"h d");
+Irssi::command_set_options($IRSSI{name},"h d i");
 
 sig_setup_changed();
 init();
