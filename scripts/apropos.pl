@@ -236,6 +236,7 @@ sub maketags {
 		open($fi, '<', $fn)
 			or printerror("cannot open < $fn: $!");
 		while ( my $r = <$fi> ) {
+			# section with mark
 			if ( $r =~ m/^#+.*?{(.*?)}$/ ) {
 				if (defined $t && length($s) >2) {
 					writetag($t, $s, $burl.$t);
@@ -244,6 +245,7 @@ sub maketags {
 				$t=$1;
 				next;
 			}
+			# section
 			if ( $r =~ m/^#+(.*?)$/ ) {
 				if (defined $t && length($s) >2) {
 					writetag($t, $s, $burl.$t);
@@ -253,11 +255,14 @@ sub maketags {
 				$t=~s/^\s+//;
 				$t=~s/\s+$//;
 				$t=~s/ /-/g;
+				$t=~s/,//g;
+				$t=~s#/##g;
 				$t=~s/[:?]//g;
 				$t= '#'.$t;
 				$t=lc($t);
 				next;
 			}
+			# mark only
 			if ( $r =~ m/^\{:(#.*?)\}/ ) {
 				if (defined $t && length($s) >2) {
 					writetag($t, $s, $burl.$t);
