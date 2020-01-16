@@ -7,7 +7,7 @@ use File::Basename;
 use Text::Wrap;
 use CPAN::Meta::YAML;
 use Storable qw/dclone/;
-use debug;
+#use debug;
 
 $VERSION = '0.01';
 %IRSSI = (
