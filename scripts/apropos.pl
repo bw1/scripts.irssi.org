@@ -38,12 +38,9 @@ my $help = << "END";
 END
 
 my $path;
-my ($pcount, @pnodes);
-my $pmax=3;
-my $lmax=5;
-my @channels;
-my $query;
+my ($pmax, $lmax, @channels, $query) ;
 my $fnconfig='config.yaml';
+my (@results, $resp);
 my $data;
 # ->{links}
 # ->{own}
@@ -113,24 +110,20 @@ sub defaultdata {
 };
 
 sub printtag {
-	my ($tag)=@_;
-	if (defined $data->{tags}->{$tag}) {
-		foreach my $n ( @{ $data->{tags}->{$tag} }) {
-			last if ($pcount > $pmax);
-			my $s=$n->{long};
-			my $c=Irssi::active_win()->{width}-10;
-			local $Text::Wrap::columns = $c;
-			Irssi::printformat(MSGLEVEL_CLIENTCRAP, 'apropos_tag', $pcount, $tag);
-			if (defined $s){
-				my $long=wrap('  ', '  ', $s);
-				my @l=split(/\n/,$long);
-				$long=join(":\n", splice(@l, 0, $lmax));
-				Irssi::print($long ,MSGLEVEL_CLIENTCRAP) 
-			}
-			Irssi::print('%U'.$n->{url}.'%U',MSGLEVEL_CLIENTCRAP);
-			push @pnodes, $n;
-			$pcount++;
+	my ($num, $n, $maxl)=@_;
+	$maxl= $lmax if (!defined $maxl);
+	if (defined $n) {
+		my $s=$n->{long};
+		my $c=Irssi::active_win()->{width}-10;
+		local $Text::Wrap::columns = $c;
+		Irssi::printformat(MSGLEVEL_CLIENTCRAP, 'apropos_tag', $num, $n->{tag});
+		if (defined $s){
+			my $long=wrap('  ', '  ', $s);
+			my @l=split(/\n/,$long);
+			$long=join("\n", splice(@l, 0, $maxl));
+			Irssi::print($long ,MSGLEVEL_CLIENTCRAP) 
 		}
+		Irssi::print('%U'.$n->{url}.'%U',MSGLEVEL_CLIENTCRAP);
 	}
 }
 
@@ -142,8 +135,6 @@ sub printerror {
 sub cmd {
 	my ($args, $server, $witem)=@_;
 	my ($opt, $arg) = Irssi::command_parse_options($IRSSI{'name'}, $args);
-	$pcount=0;
-	@pnodes=();
 	$arg=~s/\s+$//;
 	if (exists $opt->{h}) {
 		Irssi::print($help, MSGLEVEL_CLIENTCRAP);
@@ -151,14 +142,42 @@ sub cmd {
 		cmd_dump();
 	} elsif ( exists $opt->{i} ){
 		init()
+	} elsif ( exists $opt->{n} ){
+		cmd_next();
+	} elsif ( exists $opt->{p} ){
+		printtag($arg, $results[$arg], 70);
 	} else {
-		printtag( $arg );
-		my @l = grep { /$arg/ } keys %{ $data->{tags} };
-		foreach my $t ( @l ) {
-			if ( $t ne $arg ) {
-				printtag($t);
+		cmd_search( $arg )
+	}
+}
+
+sub cmd_search {
+	my ( $arg )= @_;
+	@results=();
+	foreach my $n (@{$data->{tags}->{$arg}}) {
+		push @results, $n;
+	}
+	my @l = sort grep { /$arg/ } keys %{ $data->{tags} };
+	foreach my $t ( @l ) {
+		if ( $t ne $arg ) {
+			foreach my $n (@{$data->{tags}->{$t}}) {
+				push @results, $n;
 			}
 		}
+	}
+	my $c=0;
+	$resp=0;
+	foreach my $n (@results) {
+		printtag($c, $n);
+		$c++;
+		last if ($c+1 > $pmax );
+	}
+}
+
+sub cmd_next {
+	$resp += $pmax;
+	for (my $c= $resp; $c < $resp + $pmax; $c++) {
+		printtag($c, $results[$c]);
 	}
 }
 
@@ -256,7 +275,7 @@ sub maketags {
 				$t=~s/\s+$//;
 				$t=~s/ /-/g;
 				$t=~s#/##g;
-				$t=~s/[:?,.]//g;
+				$t=~s/[:!?,.'`"\(\)]//g;
 				$t= '#'.$t;
 				$t=lc($t);
 				next;
@@ -310,8 +329,8 @@ sub do_complete {
 sub sig_message_own_public {
 	my ($server, $msg, $target)= @_;
 	if ( scalar( grep { $_ eq $target } @channels ) >0 && $msg !~ m/^\s/ ) {
-		for (my $c=0; $c <= $#pnodes; $c++) {
-			$msg=~s/(^|\s)#$c(\s|$)/\1$pnodes[$c]->{url}\2/g;
+		for (my $c=0; $c <= $#results; $c++) {
+			$msg=~s/(^|\s)#$c(\s|$)/\1$results[$c]->{url}\2/g;
 		}
 	}
 	Irssi::signal_continue($server, $msg, $target);
@@ -319,8 +338,8 @@ sub sig_message_own_public {
 
 sub sig_message_own_private {
 	my ($server, $msg, $target, $orig_target)= @_;
-	for (my $c=0; $c <= $#pnodes; $c++) {
-		$msg=~s/(^|\s)#$c(\s|$)/\1$pnodes[$c]->{url}\2/g;
+	for (my $c=0; $c <= $#results; $c++) {
+		$msg=~s/(^|\s)#$c(\s|$)/\1$results[$c]->{url}\2/g;
 	}
 	Irssi::signal_continue($server, $msg, $target);
 }
@@ -361,7 +380,7 @@ Irssi::settings_add_bool($IRSSI{name} ,$IRSSI{name}.'_query', 0);
 
 Irssi::command_bind($IRSSI{name}, \&cmd);
 Irssi::command_bind('help', \&cmd_help);
-Irssi::command_set_options($IRSSI{name},"h d i");
+Irssi::command_set_options($IRSSI{name},"h d i n p");
 
 sig_setup_changed();
 init();
