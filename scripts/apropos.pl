@@ -6,7 +6,8 @@ use File::Fetch;
 use File::Basename;
 use Text::Wrap;
 use CPAN::Meta::YAML;
-#use debug;
+use Storable qw/dclone/;
+use debug;
 
 $VERSION = '0.01';
 %IRSSI = (
@@ -28,8 +29,16 @@ my $help = << "END";
   $VERSION
 %9Synopsis%9
   /$IRSSI{name} <search word>
+  /$IRSSI{name} {-h|-d|-i|-n}
+  /$IRSSI{name} -p <num>
 %9description%9
   $IRSSI{description}
+%9options%9
+  -h    help
+  -d    dump
+  -i    init (reload config)
+  -n    next
+  -p    print (print out the node in long)
 %9example%9
   /apropos paste
   /msg #irssi nick: see #1
@@ -45,6 +54,8 @@ my $data;
 # ->{links}
 # ->{own}
 # ->{tags}
+# ->{last}
+
 sub defaultdata {
 	$data->{links}->{settings}={
 		url  => 'https://irssi.org/documentation/settings/',
@@ -154,16 +165,30 @@ sub cmd {
 sub cmd_search {
 	my ( $arg )= @_;
 	@results=();
+    my %def=();
+    # equal
 	foreach my $n (@{$data->{tags}->{$arg}}) {
 		push @results, $n;
+        $def{$n->{url}}=0;
 	}
-	my @l = sort grep { /$arg/ } keys %{ $data->{tags} };
+    # last match
+	my @l = sort grep { /$arg/ } keys %{ $data->{last} };
 	foreach my $t ( @l ) {
 		if ( $t ne $arg ) {
 			foreach my $n (@{$data->{tags}->{$t}}) {
 				push @results, $n;
+                $def{$n->{url}}=0;
 			}
 		}
+	}
+    # remaining
+	@l = sort grep { /$arg/ } keys %{ $data->{tags} };
+	foreach my $t ( @l ) {
+        foreach my $n (@{$data->{tags}->{$t}}) {
+            if ( !exists $def{$n->{url}} ) {
+                push @results, $n;
+            }
+        }
 	}
 	my $c=0;
 	$resp=0;
@@ -326,11 +351,26 @@ sub do_complete {
 	Irssi::signal_stop;
 }
 
+sub putlast {
+    my ($node)=@_;
+    my $n= dclone $node;
+    if (!exists $data->{last}->{$n->{tag}}) {
+        $data->{last}->{$n->{tag}}=[];
+    }
+    my $u= $n->{url};
+    foreach my $p (@{ $data->{last}->{$n->{tag}} }) {
+        return if ($u eq $p->{url});
+    }
+    push @{$data->{last}->{$n->{tag}}},$n;
+}
+
 sub sig_message_own_public {
 	my ($server, $msg, $target)= @_;
 	if ( scalar( grep { $_ eq $target } @channels ) >0 && $msg !~ m/^\s/ ) {
 		for (my $c=0; $c <= $#results; $c++) {
-			$msg=~s/(^|\s)#$c(\s|$)/\1$results[$c]->{url}\2/g;
+            if ( $msg=~s/(^|\s)#$c(\s|$)/\1$results[$c]->{url}\2/g ){
+                putlast($results[$c]);
+            }
 		}
 	}
 	Irssi::signal_continue($server, $msg, $target);
@@ -339,7 +379,9 @@ sub sig_message_own_public {
 sub sig_message_own_private {
 	my ($server, $msg, $target, $orig_target)= @_;
 	for (my $c=0; $c <= $#results; $c++) {
-		$msg=~s/(^|\s)#$c(\s|$)/\1$results[$c]->{url}\2/g;
+		if ($msg=~s/(^|\s)#$c(\s|$)/\1$results[$c]->{url}\2/g) {
+            putlast($results[$c]);
+        }
 	}
 	Irssi::signal_continue($server, $msg, $target);
 }
