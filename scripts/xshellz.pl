@@ -28,6 +28,7 @@ my $help = << "END";
   $IRSSI{description}
   add the statusbar item
     /STATUSBAR window ADD xshellz_credit
+    /STATUSBAR window ADD xshellz_credit_hour
 %9See also%9
   null.pl
   https://perldoc.perl.org/perl.html
@@ -131,7 +132,15 @@ sub sb_xshellz_credit {
 	$sb_item->default_handler($get_size_only, "{sb $sb}", '', 0);
 }
 
+sub sb_xshellz_credit_hour {
+	my ($sb_item, $get_size_only) = @_;
+	my ($d, $h, $m)= rest();
+	my $sb = "${d}d ${h}h";
+	$sb_item->default_handler($get_size_only, "{sb $sb}", '', 0);
+}
+
 Irssi::statusbar_item_register ('xshellz_credit', 0, 'sb_xshellz_credit');
+Irssi::statusbar_item_register ('xshellz_credit_hour', 0, 'sb_xshellz_credit_hour');
 
 my $time_tag= Irssi::timeout_add(1*60*1000, \&sig_update, '');
 
