@@ -365,41 +365,28 @@ sub putlast {
     push @{$data->{last}->{$n->{tag}}},$n;
 }
 
-sub sig_message_own_public {
-	my ($server, $msg, $target)= @_;
-	if ( scalar( grep { $_ eq $target } @channels ) >0 && $msg !~ m/^\s/ ) {
+sub sig_send_text {
+	my ($msg, $server, $witem) = @_;
+	my $omsg= $msg;
+	if ( (scalar( grep { $_ eq $witem->{name} } @channels ) >0 ||
+			($witem->{type} eq 'QUERY' && $query))
+			&& $msg !~ m/^\s/ ) {
 		for (my $c=0; $c <= $#results; $c++) {
-            if ( $msg=~s/(^|\s)#$c(\s|$)/\1$results[$c]->{url}\2/g ){
-                putlast($results[$c]);
-            }
+			if ($msg=~s/(^|\s)#$c(\s|$)/\1$results[$c]->{url}\2/g) {
+				putlast($results[$c]);
+			}
 		}
 	}
-	Irssi::signal_continue($server, $msg, $target);
-}
-
-sub sig_message_own_private {
-	my ($server, $msg, $target, $orig_target)= @_;
-	for (my $c=0; $c <= $#results; $c++) {
-		if ($msg=~s/(^|\s)#$c(\s|$)/\1$results[$c]->{url}\2/g) {
-            putlast($results[$c]);
-        }
+	if ( $omsg ne $msg ) {
+		Irssi::signal_continue($msg, $server, $witem);
 	}
-	Irssi::signal_continue($server, $msg, $target);
 }
 
 sub sig_setup_changed {
 	$pmax= Irssi::settings_get_int($IRSSI{name}.'_pmax');
 	$lmax= Irssi::settings_get_int($IRSSI{name}.'_lmax');
 	@channels= split(/\s+/,Irssi::settings_get_str($IRSSI{name}.'_channels'));
-	my $qu=Irssi::settings_get_bool($IRSSI{name}.'_query');
-	if ( $qu && !$query ) {
-		Irssi::signal_add("message own_private", \&sig_message_own_private);
-		$query=1;
-	} 
-	if ( !$qu && $query ) {
-		Irssi::signal_remove("message own_private", \&sig_message_own_private);
-		$query=undef;
-	}
+	$query=Irssi::settings_get_bool($IRSSI{name}.'_query');
 }
 
 sub UNLOAD {
@@ -414,7 +401,7 @@ Irssi::theme_register([
 
 Irssi::signal_add('setup changed', \&sig_setup_changed);
 Irssi::signal_add_first('complete word',  \&do_complete);
-Irssi::signal_add("message own_public", \&sig_message_own_public);
+Irssi::signal_add('send text', \&sig_send_text);
 
 Irssi::settings_add_int($IRSSI{name} ,$IRSSI{name}.'_pmax', 3);
 Irssi::settings_add_int($IRSSI{name} ,$IRSSI{name}.'_lmax', 5);
