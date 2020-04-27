@@ -3,7 +3,7 @@ See [the testing read-me](../master/_testing/) for details.
 ## Irssi Scripts Test Report
 \                                | LOAD | HDR | CRIT | SCORE | PASS
 ----: | :--: | :-: | :--: | ----: | :---:
-[                           0x0st ](Test/0x0st/)|  ✔   |  ✔   |  ✔   |  4   |  ✔   
+[                           0x0st ](Test/0x0st/)|  ✔   |  ✔   |  ✔   |  4   |  ✔   | (c)
 [                          8-ball ](Test/8-ball/)|  ✔   |  ✔   |  ✔   |  9   |  ✔   | (c)
 [                          accent ](Test/accent/)|  ✔   |  ✔   |  ✔   | 11   |  ✔   | (c)
 [                     accountname ](Test/accountname/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   | (c)
@@ -186,7 +186,7 @@ See [the testing read-me](../master/_testing/) for details.
 [                       fullwidth ](Test/fullwidth/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   | (c)
 [                           getop ](Test/getop/)|  ✔   |  ✔   |  ✔   | 16   |  ✔   | (c)
 [                          gimmie ](Test/gimmie/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   | (c)
-[                 gitscriptassist ](Test/gitscriptassist/)|  ✔   |  ✔   |  ✔   | 24   |  ✔   
+[                 gitscriptassist ](Test/gitscriptassist/)|  ✔   |  ✔   |  ✔   | 24   |  ✔   | (c)
 [                             go2 ](Test/go2/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   | (c)
 [                          google ](Test/google/)|  ✔   |  ✔   |  ✔   | 26   |  ✔   | (c)
 [                              go ](Test/go/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   | (c)
@@ -366,7 +366,7 @@ See [the testing read-me](../master/_testing/) for details.
 [                   paste_kimmoke ](Test/paste_kimmoke/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   | (c)
 [                           pelix ](Test/pelix/)|  ✔   |  ✔   |  ✔   | 25   |  ✔   | (c)
 [                          people ](Test/people/)|  ✔   |  ✔   |  ✔   | 75   |  ✔   | (c)
-[                       perlalias ](Test/perlalias/)|  ✔   |  ✔   |  ✔   |  8   |  ✔   
+[                       perlalias ](Test/perlalias/)|  ✔   |  ✔   |  ✔   |  8   |  ✔   | (c)
 [               per_window_prompt ](Test/per_window_prompt/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   | (c)
 [                      pggb_sound ](Test/pggb_sound/)|  ✔   |  ✔   |  ✔   | 33   |  ✔   | (c)
 [                          poison ](Test/poison/)|  ✔   |  ✔   |  ✔   | 12   |  ✔   | (c)
@@ -411,7 +411,7 @@ See [the testing read-me](../master/_testing/) for details.
 [                       sb_search ](Test/sb_search/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   | (c)
 [                     schwaebisch ](Test/schwaebisch/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   | (c)
 [                     screen_away ](Test/screen_away/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   | (c)
-[                    scriptassist ](Test/scriptassist/)|  ✔   |  ✔   |  ✔   | 54   |  ✔   
+[                    scriptassist ](Test/scriptassist/)|  ✔   |  ✔   |  ✔   | 60   |  ✔   
 [                      scripthelp ](Test/scripthelp/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   | (c)
 [                      scriptinfo ](Test/scriptinfo/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   | (c)
 [                      scriptsave ](Test/scriptsave/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   | (c)
@@ -451,11 +451,11 @@ See [the testing read-me](../master/_testing/) for details.
 [                      sysinfo_dg ](Test/sysinfo_dg/)|  ✔   |  ✔   |  ✔   | 40   |  ✔   | (c)
 [                     sysinfoplus ](Test/sysinfoplus/)|  ✔   |  ✔   |  ✔   | 15   |  ✔   | (c)
 [                 tabcompletenick ](Test/tabcompletenick/)|  ✔   |  ✔   |  ✔   |  0   |  ✔   | (c)
-[                        tab_stop ](Test/tab_stop/)|  ✔   |  ✔   |  ✔   |  0   |  ✔   
+[                        tab_stop ](Test/tab_stop/)|  ✔   |  ✔   |  ✔   |  0   |  ✔   | (c)
 [                            talk ](Test/talk/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   | (c)
 [                          target ](Test/target/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   | (c)
 [                         thankop ](Test/thankop/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   | (c)
-[                           theme ](Test/theme/)|  ✔   |  ✔   |  ✔   | 20   |  ✔   
+[                           theme ](Test/theme/)|  ✔   |  ✔   |  ✔   | 20   |  ✔   | (c)
 [                        thistory ](Test/thistory/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   | (c)
 [                       tictactoe ](Test/tictactoe/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   | (c)
 [                           timer ](Test/timer/)|  ✔   |  ✔   |  ✔   |  0   |  ✔   | (c)
@@ -465,7 +465,7 @@ See [the testing read-me](../master/_testing/) for details.
 [                           tlock ](Test/tlock/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   | (c)
 [                       tmux_away ](Test/tmux_away/)|  ✔   |  ✔   |  ✔   |  6   |  ✔   | (c)
 [          tmux-nicklist-portable ](Test/tmux-nicklist-portable/)|  ✔   |  ✔   |  ✔   |  8   |  ✔   | (c)
-[                toggle_hidelevel ](Test/toggle_hidelevel/)|  ✔   |  ✔   |  ✔   |  2   |  ✔   
+[                toggle_hidelevel ](Test/toggle_hidelevel/)|  ✔   |  ✔   |  ✔   |  2   |  ✔   | (c)
 [                          toilet ](Test/toilet/)|  ✔   |  ✔   |  ✔   |  4   |  ✔   | (c)
 [                        topicsed ](Test/topicsed/)|  ✔   |  ✔   |  ✔   |  7   |  ✔   | (c)
 [                          topics ](Test/topics/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   | (c)
@@ -475,7 +475,7 @@ See [the testing read-me](../master/_testing/) for details.
 [                       tracknick ](Test/tracknick/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   | (c)
 [                           track ](Test/track/)|  ✔   |  ✔   |  ✔   | 39   |  ✔   | (c)
 [                        translit ](Test/translit/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   | (c)
-[                         trigger ](Test/trigger/)|  ✔   |  ✔   |  ✔   | 16   |  ✔   
+[                         trigger ](Test/trigger/)|  ✔   |  ✔   |  ✔   | 16   |  ✔   | (c)
 [                        trustweb ](Test/trustweb/)|  ✔   |  ✔   |  ✔   | 20   |  ✔   | (c)
 [                         tvmusor ](Test/tvmusor/)|  ✔   |  ✘   |  ✔   | 17   |  ☡   | (c)
 [                   twitter_theme ](Test/twitter_theme/)|  ✔   |  ✔   |  ✔   |  0   |  ✔   | (c)
@@ -486,7 +486,7 @@ See [the testing read-me](../master/_testing/) for details.
 [                      uberprompt ](Test/uberprompt/)|  ✔   |  ✔   |  ✔   |  0   |  ✔   | (c)
 [                 UNIBG-autoident ](Test/UNIBG-autoident/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   | (c)
 [                         unicode ](Test/unicode/)|  ✔   |  ✔   |  ✔   |  7   |  ✔   | (c)
-[                          unread ](Test/unread/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   
+[                          unread ](Test/unread/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   | (c)
 [                     upgradeinfo ](Test/upgradeinfo/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   | (c)
 [                               u ](Test/u/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   | (c)
 [                      upsidedown ](Test/upsidedown/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   | (c)
@@ -533,4 +533,4 @@ See [the testing read-me](../master/_testing/) for details.
 [                             xqf ](Test/xqf/)|  ✔   |  ✔   |  ✔   |  6   |  ✔   | (c)
 [                            ziew ](Test/ziew/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   | (c)
 
-3e8a697faf5bc28e57e3f2d3aef3bdd7a4534e2c | 84
+b82d07aeb0eb21d389a1beec9e4b413f12a610a9 | 85
