@@ -14,7 +14,7 @@ See [the testing read-me](../master/_testing/) for details.
 [                   active_notify ](Test/active_notify/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   | (c)
 [                   activity_file ](Test/activity_file/)|  ✔   |  ✔   |  ✔   |  4   |  ✔   | (c)
 [                             act ](Test/act/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   | (c)
-[                  adv_windowlist ](Test/adv_windowlist/)|  ✔   |  ✔   |  ✔   | 36   |  ✔   | (c)
+[                  adv_windowlist ](Test/adv_windowlist/)|  ✔   |  ✔   |  ✔   | 36   |  ✔   
 [                           aidle ](Test/aidle/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   | (c)
 [                              ai ](Test/ai/)|  ✔   |  ✔   |  ✔   |  4   |  ✔   | (c)
 [                           akftp ](Test/akftp/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   | (c)
@@ -62,7 +62,7 @@ See [the testing read-me](../master/_testing/) for details.
 [                      banaffects ](Test/banaffects/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   | (c)
 [                       bandwidth ](Test/bandwidth/)|  ✔   |  ✔   |  ✔   |  4   |  ✔   | (c)
 [                             ban ](Test/ban/)|  ✔   |  ✔   |  ✔   | 38   |  ✔   | (c)
-[                       bansearch ](Test/bansearch/)|  ✔   |  ✔   |  ✔   |  6   |  ✔   
+[                       bansearch ](Test/bansearch/)|  ✔   |  ✔   |  ✔   |  6   |  ✔   | (c)
 [                         bantime ](Test/bantime/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   | (c)
 [                        beepaway ](Test/beepaway/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   | (c)
 [                       beep_beep ](Test/beep_beep/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   | (c)
@@ -117,7 +117,7 @@ See [the testing read-me](../master/_testing/) for details.
 [                     complete_at ](Test/complete_at/)|  ✔   |  ✔   |  ✔   |  4   |  ✔   | (c)
 [              complete_lastspoke ](Test/complete_lastspoke/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   | (c)
 [                      connectcmd ](Test/connectcmd/)|  ✔   |  ✔   |  ✔   | 19   |  ✔   | (c)
-[                            copy ](Test/copy/)|  ✔   |  ✔   |  ✔   | 23   |  ✔   | (c)
+[                            copy ](Test/copy/)|  ✔   |  ✔   |  ✔   | 23   |  ✔   
 [                       countdown ](Test/countdown/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   | (c)
 [                         country ](Test/country/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   | (c)
 [                     cp1250_kick ](Test/cp1250_kick/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   | (c)
@@ -143,8 +143,8 @@ See [the testing read-me](../master/_testing/) for details.
 [                            dice ](Test/dice/)|  ✔   |  ✔   |  ✔   |  7   |  ✔   | (c)
 [                    dictcomplete ](Test/dictcomplete/)|  ✔   |  ✔   |  ✔   |  6   |  ✔   | (c)
 [                       dim_nicks ](Test/dim_nicks/)|  ✔   |  ✔   |  ✔   |  4   |  ✔   | (c)
-[                            ding ](Test/ding/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   
-[                discord_unbridge ](Test/discord_unbridge/)|  ✔   |  ✔   |  ✔   |  0   |  ✔   
+[                            ding ](Test/ding/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   | (c)
+[                discord_unbridge ](Test/discord_unbridge/)|  ✔   |  ✔   |  ✔   |  0   |  ✔   | (c)
 [               discord_unhilight ](Test/discord_unhilight/)|  ✔   |  ✔   |  ✔   |  0   |  ✔   | (c)
 [                        dispatch ](Test/dispatch/)|  ✔   |  ✔   |  ✔   |  0   |  ✔   | (c)
 [                             dns ](Test/dns/)|  ✔   |  ✔   |  ✔   |  8   |  ✔   | (c)
@@ -164,6 +164,7 @@ See [the testing read-me](../master/_testing/) for details.
 [                      exec_clean ](Test/exec_clean/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   | (c)
 [                         execcmd ](Test/execcmd/)|  ✔   |  ✔   |  ✔   |  0   |  ✔   | (c)
 [                         extaway ](Test/extaway/)|  ✔   |  ✔   |  ✔   |  6   |  ✔   | (c)
+[                        ez_color ](Test/ez_color/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   
 [                        fakectcp ](Test/fakectcp/)|  ✔   |  ✔   |  ✔   | 10   |  ✔   | (c)
 [                        fcountry ](Test/fcountry/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   | (c)
 [                          figlet ](Test/figlet/)|  ✔   |  ✔   |  ✔   |  4   |  ✔   | (c)
@@ -261,7 +262,7 @@ See [the testing read-me](../master/_testing/) for details.
 [                   kline_warning ](Test/kline_warning/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   | (c)
 [                       l33tmusic ](Test/l33tmusic/)|  ✘   |  ✔   |  ✔   |  6   |  ☡   | (c)
 [                          lastfm ](Test/lastfm/)|  ✔   |  ✔   |  ✔   |  9   |  ✔   | (c)
-[                       lastspoke ](Test/lastspoke/)|  ✔   |  ✔   |  ✔   |  9   |  ✔   
+[                       lastspoke ](Test/lastspoke/)|  ✔   |  ✔   |  ✔   |  9   |  ✔   | (c)
 [                             len ](Test/len/)|  ✔   |  ✔   |  ✔   |  0   |  ✔   | (c)
 [                         leodict ](Test/leodict/)|  ✔   |  ✔   |  ✔   |  6   |  ✔   | (c)
 [                      levelclear ](Test/levelclear/)|  ✔   |  ✔   |  ✔   |  0   |  ✔   | (c)
@@ -269,7 +270,7 @@ See [the testing read-me](../master/_testing/) for details.
 [                      linebuffer ](Test/linebuffer/)|  ✔   |  ✔   |  ✔   |  2   |  ✔   | (c)
 [                        linkchan ](Test/linkchan/)|  ✔   |  ✔   |  ✔   | 32   |  ✔   | (c)
 [                          listen ](Test/listen/)|  ✔   |  ✔   |  ✔   | 11   |  ✔   | (c)
-[                        listsort ](Test/listsort/)|  ✔   |  ✔   |  ✔   |  0   |  ✔   
+[                        listsort ](Test/listsort/)|  ✔   |  ✔   |  ✔   |  0   |  ✔   | (c)
 [                         loadavg ](Test/loadavg/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   | (c)
 [                        localize ](Test/localize/)|  ✔   |  ✔   |  ✔   | 25   |  ✔   | (c)
 [                        log2ansi ](Test/log2ansi/)|  ✘   |  ✘   |  ✔   | 15   |  ☡   | (c)
@@ -383,7 +384,7 @@ See [the testing read-me](../master/_testing/) for details.
 [                           query ](Test/query/)|  ✔   |  ✔   |  ✔   | 22   |  ✔   | (c)
 [                     queryresume ](Test/queryresume/)|  ✔   |  ✔   |  ✔   |  5   |  ✔   | (c)
 [                     query_whois ](Test/query_whois/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   | (c)
-[                         quitmsg ](Test/quitmsg/)|  ✔   |  ✔   |  ✔   |  4   |  ✔   
+[                         quitmsg ](Test/quitmsg/)|  ✔   |  ✔   |  ✔   |  4   |  ✔   | (c)
 [                        quitrand ](Test/quitrand/)|  ✔   |  ✔   |  ✔   |  6   |  ✔   | (c)
 [                          quizgr ](Test/quizgr/)|  ✔   |  ✔   |  ✔   |  6   |  ✔   | (c)
 [                   quizmaster-fr ](Test/quizmaster-fr/)|  ✔   |  ✔   |  ✔   | 15   |  ✔   | (c)
@@ -457,7 +458,7 @@ See [the testing read-me](../master/_testing/) for details.
 [                        tab_stop ](Test/tab_stop/)|  ✔   |  ✔   |  ✔   |  0   |  ✔   | (c)
 [                            talk ](Test/talk/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   | (c)
 [                          target ](Test/target/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   | (c)
-[                 telegram-notify ](Test/telegram-notify/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   
+[                 telegram-notify ](Test/telegram-notify/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   | (c)
 [                         thankop ](Test/thankop/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   | (c)
 [                           theme ](Test/theme/)|  ✔   |  ✔   |  ✔   | 20   |  ✔   | (c)
 [                        thistory ](Test/thistory/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   | (c)
@@ -482,6 +483,7 @@ See [the testing read-me](../master/_testing/) for details.
 [                         trigger ](Test/trigger/)|  ✔   |  ✔   |  ✔   | 16   |  ✔   | (c)
 [                        trustweb ](Test/trustweb/)|  ✔   |  ✔   |  ✔   | 20   |  ✔   | (c)
 [                         tvmusor ](Test/tvmusor/)|  ✔   |  ✘   |  ✔   | 17   |  ☡   | (c)
+[                   twitch_notify ](Test/twitch_notify/)|  ✔   |  ✔   |  ✔   |  0   |  ✔   
 [                   twitter_theme ](Test/twitter_theme/)|  ✔   |  ✔   |  ✔   |  0   |  ✔   | (c)
 [                        twprompt ](Test/twprompt/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   | (c)
 [                       twsocials ](Test/twsocials/)|  ✔   |  ✔   |  ✔   | 16   |  ✔   | (c)
@@ -500,7 +502,7 @@ See [the testing read-me](../master/_testing/) for details.
 [                         urlinfo ](Test/urlinfo/)|  ✔   |  ✔   |  ✔   |  8   |  ✔   | (c)
 [                         url_log ](Test/url_log/)|  ✔   |  ✔   |  ✔   | 12   |  ✔   | (c)
 [                         urlplot ](Test/urlplot/)|  ✔   |  ✔   |  ✔   | 86   |  ✔   | (c)
-[                       urlwindow ](Test/urlwindow/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   
+[                       urlwindow ](Test/urlwindow/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   | (c)
 [                       usercount ](Test/usercount/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   | (c)
 [                        userhost ](Test/userhost/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   | (c)
 [                           users ](Test/users/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   | (c)
@@ -537,4 +539,4 @@ See [the testing read-me](../master/_testing/) for details.
 [                             xqf ](Test/xqf/)|  ✔   |  ✔   |  ✔   |  6   |  ✔   | (c)
 [                            ziew ](Test/ziew/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   | (c)
 
-19d15cf36b15eafb9202de9c8e7b2ea4935ed7b3 | 90
+e560b26dc8030de89dd72c4955e389da2241e706 | 91
