@@ -155,7 +155,7 @@ sub cmd {
 			$cmd->{cmd}=\&shorten;
 			$cmd->{args}=['https://scripts.irssi.org/'];
 			$cmd->{last}=[\&self_check];
-			$self_check_timer= Irssi::timeout_add_once(2000, \&self_check, '');
+			$self_check_timer= Irssi::timeout_add_once(20000, \&self_check, '');
 			background( $cmd );
 		} else {
 			$cmd->{cmd}=\&upload;
@@ -186,8 +186,8 @@ sub self_check {
 		}
 	}
 	Irssi::print("0x0st: selfckeck $s", MSGLEVEL_CLIENTCRAP);
-	my $schs_version = $Irssi::Script::selfcheckhelperscript::VERSION;
-	Irssi::command("selfcheckhelperscript $s") if (defined $schs_version);
+	my $schs =  exists $Irssi::Script::{'selfcheckhelperscript::'};
+	Irssi::command("selfcheckhelperscript $s") if ( $schs );
 }
 
 sub cmd_help {
