@@ -37,7 +37,7 @@ my $help = << "END";
   https://github.com/irssi/irssi/blob/master/docs/formats.txt
 END
 
-my $test_str;
+my $networktag;
 my $data;
 
 my $data->{last}=time();
@@ -90,7 +90,8 @@ sub cmd {
 	my @args= split /\s+/,$args;
 	my $a= shift @args;
 	if ($a eq 'keep') {
-		$server->command('/^msg -Freenode xinfo !keep senn');
+		#$server->command('/^msg -Freenode xinfo !keep senn');
+		$server->command("/^msg -$networktag xinfo !keep senn");
 		#$server->command('/echo xinfo !keep senn');
 		$data->{last}= time();
 		save();
@@ -122,7 +123,7 @@ sub sig_update {
 }
 
 sub sig_setup_changed {
-	$test_str= Irssi::settings_get_str($IRSSI{name}.'_test_str');
+	$networktag= Irssi::settings_get_str($IRSSI{name}.'_networktag');
 }
 
 sub sb_xshellz_credit {
@@ -150,7 +151,7 @@ Irssi::theme_register([
 
 Irssi::signal_add('setup changed', \&sig_setup_changed);
 
-Irssi::settings_add_str($IRSSI{name} ,$IRSSI{name}.'_test_str', 'hello world!');
+Irssi::settings_add_str($IRSSI{name} ,$IRSSI{name}.'_networktag', 'libera');
 
 Irssi::command_bind($IRSSI{name}, \&cmd);
 foreach ( qw/keep stat save start/) {
