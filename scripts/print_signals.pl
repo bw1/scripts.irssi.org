@@ -271,8 +271,10 @@ my $signals = <<_END;
 _END
 
 foreach my $sigline (split(/\n/, $signals)) {
+	next if ( $sigline =~ m/^#/ );
 	my ($sig, @args) = split(/, /, $sigline);
 	$sig =~ y/"//d;
+	next if ( $sig =~ m/<.*>/ );
 	Irssi::signal_add_first($sig, sub {
 			signal_handler($sig, \@args, \@_);
 		}
