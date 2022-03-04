@@ -135,11 +135,11 @@
   description: 'Adds a permanent advanced window list on the right or in a status bar.'
   filename: adv_windowlist.pl
   license: 'GNU GPLv2 or later'
-  modified: '2020-10-08 13:41:57'
+  modified: '2022-01-04 08:49:42'
   modules: Text::CharWidth
   name: adv_windowlist
   url: http://anti.teamidiot.de/
-  version: 1.9.1
+  version: '1.10'
 -
   authors: BC-bd
   commands: ai
@@ -324,14 +324,14 @@
   version: '0.5'
 -
   authors: 'Peder Stray'
-  contact: peder@ninja.no
+  contact: peder.stray@gmail.com
   description: 'Auto add channels to channel list on join'
   filename: autochannel.pl
   license: GPL
-  modified: '2007-09-20 08:58:11'
+  modified: '2021-08-21 10:40:50'
   name: autochannel
-  url: http://ninja.no/irssi/autochannel.pl
-  version: '1.2'
+  url: https://github.com/pstray/irssi-autochannel
+  version: 1.3.1
 -
   authors: 'Trevor "tee" Slocum'
   commands: 'autocleared cleared'
@@ -960,6 +960,16 @@
   url: ''
   version: '0.1'
 -
+  authors: 'martin f. krafft'
+  commands: chankeys
+  contact: madduck@madduck.net
+  description: 'manage channel keyboard shortcuts'
+  filename: chankeys.pl
+  license: MIT
+  modified: '2021-11-03 02:02:45'
+  name: chankeys
+  version: '0.4'
+-
   authors: "Bjoern 'fuchs' Krombholz"
   contact: bjkro@gmx.de
   description: 'Log maximum number of people ever been in a channel'
@@ -994,14 +1004,14 @@
 -
   authors: 'Peder Stray'
   commands: chansort
-  contact: peder@ninja.no
+  contact: peder.stray@gmail.com
   description: 'Sort all channel and query windows'
   filename: chansort.pl
   license: GPL
-  modified: '2008-05-17 17:39:09'
+  modified: '2021-08-21 10:40:50'
   name: chansort
-  url: http://ninja.no/irssi/chansort.pl
-  version: '1.4'
+  url: https://github.com/pstray/irssi-chansort
+  version: 1.5.1
 -
   authors: 'Ævar Arnfjörð Bjarmason'
   commands: chansort_configurable
@@ -1125,10 +1135,10 @@
   description: 'Colourise mention of nicks in the message body.'
   filename: colorize_nicks.pl
   license: 'GNU GPLv2 or later'
-  modified: '2020-05-14 02:17:44'
+  modified: '2021-11-29 15:16:31'
   name: colorize_nicks
   url: http://anti.teamidiot.de/
-  version: 0.4.0
+  version: 0.4.1
 -
   authors: 'Gabor Nyeki'
   contact: bigmac@vim.hu
@@ -1265,9 +1275,10 @@
   description: 'allows per-channel control over activity indication'
   filename: ctrlact.pl
   license: MIT
-  modified: '2017-02-24 07:41:29'
+  modified: '2021-09-20 04:35:50'
   name: ctrlact
-  version: '1.2'
+  url: https://github.com/irssi/scripts.irssi.org/blob/master/scripts/ctrlact.pl
+  version: '1.5'
 -
   authors: 'Irssi staff'
   commands: cubes
@@ -1322,14 +1333,14 @@
   version: '0.6'
 -
   authors: 'Peder Stray'
-  contact: peder@ninja.no
+  contact: peder.stray@gmail.com
   description: 'Move completed dcc gets to the subfolder done'
   filename: dccmove.pl
   license: GPL
-  modified: '2014-10-17 20:34:00'
+  modified: '2021-08-21 10:40:50'
   name: dccmove
-  url: http://ninja.no/irssi/dccmove.pl
-  version: '1.4'
+  url: https://github.com/pstray/irssi-dccmove
+  version: 1.4.1
 -
   authors: Nei
   commands: dccrel
@@ -1551,11 +1562,11 @@
   description: 'search by https://duckduckgo.com/html/'
   filename: duckduckgo.pl
   license: lgplv3
-  modified: '2021-01-23 16:28:49'
+  modified: '2021-10-09 17:30:32'
   modules: 'HTML::Entities LWP::UserAgent URI::Escape'
   name: duckduckgo
   url: http://scripts.irssi.org
-  version: '0.02'
+  version: '0.03'
 -
   authors: 'Espen Holm Nilsen'
   contact: holm@blackedge.org
@@ -1840,14 +1851,14 @@
 -
   authors: 'Peder Stray'
   commands: 'addfriend friends'
-  contact: peder@ninja.no
-  description: 'Basicly an autoop script with a nice interface and nick coloring ;)'
+  contact: peder.stray@gmail.com
+  description: 'Basically an autoop script with a nice interface and nick coloring ;)'
   filename: friends_peder.pl
   license: GPL
-  modified: '2014-10-17 22:54:13'
+  modified: '2021-08-21 10:40:50'
   name: friends
-  url: http://ninja.no/irssi/friends.pl
-  version: '1.34'
+  url: https://github.com/pstray/irssi-friends
+  version: 1.34.1
 -
   authors: 'Jakub Jankowski'
   commands: 'addfriend addhost chdelay chflags chhandle chpass comment delchanrec delfriend delhost findfriends flushlearnt friendsversion isfriend listfriends loadfriends opfriends oppingtree queue savefriends'
@@ -2335,11 +2346,11 @@
   description: 'Automatically lookup IMDB-numbers in nicknames'
   filename: imdb.pl
   license: GPL
-  modified: '2021-01-08 17:12:41'
+  modified: '2021-10-09 23:05:22'
   modules: 'HTML::Entities LWP::UserAgent'
   name: imdb
   url: http://xyrion.org/irssi/
-  version: '1.03'
+  version: '1.04'
 -
   authors: 'Jari Matilainen'
   commands: prompt
@@ -2599,14 +2610,14 @@
 -
   authors: 'Peder Stray'
   commands: 'keepnick listnick unkeepnick'
-  contact: peder@ninja.no
+  contact: peder.stray@gmail.com
   description: 'Try to get your nick back when it becomes available.'
   filename: keepnick.pl
   license: GPL
-  modified: '2019-05-04 20:18:06'
+  modified: '2021-08-21 10:40:50'
   name: keepnick
-  url: http://ninja.no/irssi/keepnick.pl
-  version: '1.19'
+  url: https://github.com/pstray/irssi-keepnick
+  version: 1.19.1
 -
   authors: 'Gerfried Fuchs'
   commands: 'dekenny kenny'
@@ -2726,11 +2737,11 @@
   description: 'translates via dict.leo.org'
   filename: leodict.pl
   license: GPLv2
-  modified: '2021-01-26 16:18:20'
+  modified: '2022-01-06 17:24:38'
   modules: 'Mojo::DOM Mojo::UserAgent'
   name: leodict
   url: http://irssi.org/scripts/
-  version: '20210126'
+  version: '20220104'
 -
   authors: 'Nico R. Wohlgemuth'
   commands: levelclear
@@ -2817,14 +2828,14 @@
   version: '2017040101'
 -
   authors: 'Peder Stray'
-  contact: peder@ninja.no
-  description: 'convert mirc color and irssi interal formatting to ansi colors, useful for log filtering'
+  contact: peder.stray@gmail.com
+  description: 'Convert various color codes to ANSI colors, useful for log filtering and viewing.'
   filename: log2ansi.pl
   license: GPL
-  modified: '2010-02-13 13:59:47'
+  modified: '2021-08-23 12:37:45'
   name: log2ansi
-  url: http://ninja.no/irssi/log2ansi
-  version: '1.9'
+  url: https://github.com/pstray/irssi-log2ansi
+  version: 1.11.1
 -
   authors: "Timo 'cras' Sirainen"
   contact: tss@iki.fi
@@ -2841,10 +2852,10 @@
   description: "compress logfiles then they're rotated, modified from original logcompress.pl to use perl modules instead"
   filename: logcompress_perl.pl
   license: 'Public Domain'
-  modified: '2021-04-10 11:12:52'
+  modified: '2021-04-10 11:44:52'
   name: logcompress_perl
   url: http://irssi.org/
-  version: '0.03'
+  version: '0.04'
 -
   authors: ferret
   commands: 'logtail logview'
@@ -3639,11 +3650,11 @@
   description: 'turns irssi into a tv program guide'
   filename: ontv2.pl
   license: GPLv2
-  modified: '2021-01-11 16:49:10'
+  modified: '2021-02-07 13:56:06'
   modules: 'DateTime DateTime::Format::Strptime XML::LibXML::Simple YAML::XS'
   name: ontv2
   url: https://scripts.irssi.org/
-  version: '0.01'
+  version: '0.02'
 -
   authors: 'bw1 and others'
   contact: bw1@aol.at
@@ -3879,9 +3890,9 @@
   description: 'Quickly create commands from short perl blocks'
   filename: perlalias.pl
   license: 'public domain'
-  modified: '2020-04-03 18:04:40'
+  modified: '2022-02-14 07:27:10'
   name: perlalias
-  version: '1.3'
+  version: 2.0.1
 -
   authors: 'Adam Duck'
   commands: sound
@@ -3928,12 +3939,12 @@
 -
   authors: 'martin f. krafft'
   contact: madduck@madduck.net
-  description: 'hooks into every signal and writes the information provided to a file'
+  description: 'hooks into almost every signal and writes the information provided to a file'
   filename: print_signals.pl
   license: MIT
-  modified: '2017-02-03 11:47:17'
+  modified: '2021-11-03 22:37:24'
   name: 'print signals debugger'
-  version: '1.0'
+  version: '1.2'
 -
   authors: 'Cyprien Debu'
   commands: procmaillog
@@ -3977,14 +3988,14 @@
   version: '1.0'
 -
   authors: 'Peder Stray'
-  contact: peder@ninja.no
+  contact: peder.stray@gmail.com
   description: 'Give you more control over when to jump to query windows and when to just tell you one has been created. Enhanced autoclose.'
   filename: query.pl
   license: GPL
-  modified: '2017-03-20 20:22:57'
+  modified: '2021-08-21 10:40:50'
   name: query
-  url: http://ninja.no/irssi/query.pl
-  version: '1.25'
+  url: https://github.com/pstray/irssi-query
+  version: 1.26.1
 -
   authors: ferret
   contact: 'ferret(tA)explodingferret(moCtoD), ferret on irc.freenode.net'
@@ -4395,9 +4406,9 @@
   description: 'An irssi adaptation of securequery.mrc found in the Acidmax mIRC script. :), now with multiserver support'
   filename: securemsg.pl
   license: GPLv2
-  modified: '2021-03-08 18:32:46'
+  modified: '2021-05-18 14:48:18'
   name: securemsg
-  version: 2.2.1
+  version: 2.3.0
 -
   authors: "Marcin 'Qrczak' Kowalczyk"
   commands: 'forget listen say_seen seen'
@@ -4442,13 +4453,12 @@
 -
   authors: 'Rocco Caputo (dngor), Nei'
   contact: 'rcaputo@cpan.org, Nei @ anti@conference.jabber.teamidiot.de'
-  description: 'Irssi 1.3 settings notes and documentation'
+  description: 'Irssi settings notes and documentation'
   filename: settingshelp.pl
   license: 'CC BY-SA 2.5, http://creativecommons.org/licenses/by-sa/2.5/'
-  modified: '2019-06-25 11:25:28'
-  modules: LWP::Simple
+  modified: '2021-10-23 02:26:53'
   name: settingshelp
-  version: '1.3'
+  version: 1.4.0
 -
   authors: 'Marcin Rozycki'
   commands: '42.pl shortenurl'
@@ -4627,16 +4637,16 @@
   url: http://home.cc.umanitoba.ca/~umkowa17/
   version: '1.1'
 -
-  authors: 'Jakub Jankowski'
-  contact: shasta@toxcorp.com
-  description: 'Checks for spelling errors using Aspell.'
+  authors: 'Jakub Wilk, Jakub Jankowski, Gabriel Pettier, Nei'
+  commands: spellcheck_add
+  description: 'checks for spelling errors using Aspell'
   filename: spellcheck.pl
   license: GPLv2
-  modified: '2015-02-01 12:23:25'
+  modified: '2020-09-25 20:38:34'
   modules: Text::Aspell
-  name: Spellcheck
-  url: http://toxcorp.com/irc/irssi/spellcheck/
-  version: '0.4'
+  name: spellcheck
+  url: http://jwilk.net/software/irssi-spellcheck
+  version: 0.9.1
 -
   authors: "Maciek 'fahren' Freudenheim, David Leadbeater"
   commands: sping
@@ -4726,12 +4736,12 @@
 -
   authors: "Stefan 'tommie' Tomanek, shabble"
   contact: 'stefan@pico.ruhr.de, shabble@#irssi/Freenode'
-  description: 'Replaces \t TAB characters with contents of /set tabstop_replacement'
+  description: 'Replaces \t TAB characters to line up with tab stops (default 8) or to contents of /set tabstop_replacement if tabstop_interval is set to 0'
   filename: tab_stop.pl
   license: GPLv2
-  modified: '2020-03-22 18:15:22'
+  modified: '2022-01-19 12:27:21'
   name: tab_stop
-  version: '2011052400'
+  version: '2022011900'
 -
   authors: vague
   contact: 'vague!#irssi@freenode on irc'
@@ -4846,7 +4856,7 @@
   description: 'create a tinyurl from a long one'
   filename: tinyurl.pl
   license: GPL
-  modified: '2016-06-16 10:07:39'
+  modified: '2017-05-08 11:41:48'
   modules: 'WWW::Shorten WWW::Shorten::TinyURL'
   name: tinyurl
   version: '1.1'
@@ -4996,10 +5006,10 @@
   description: 'execute a command or replace text, triggered by an event in irssi'
   filename: trigger.pl
   license: 'GPLv2 or later'
-  modified: '2020-03-24 17:19:55'
+  modified: '2022-01-02 04:15:35'
   name: trigger
   url: http://wouter.coekaerts.be/irssi/
-  version: 1.2.4
+  version: 1.2.5
 -
   authors: "Stefan 'tommie' Tomanek"
   commands: trustweb
@@ -5116,14 +5126,14 @@
 -
   authors: 'Peder Stray'
   commands: upgradeinfo
-  contact: peder@ninja.no
-  description: 'Statusbaritem notifying you about updated binary'
+  contact: peder.stray@gmail.com
+  description: 'Statusbar item notifying you about updated binary'
   filename: upgradeinfo.pl
   license: GPL
-  modified: '2008-05-17 17:39:09'
+  modified: '2021-08-21 23:56:51'
   name: upgradeinfo
-  url: http://ninja.no/irssi/upgradeinfo.pl
-  version: '1.7'
+  url: https://github.com/pstray/irssi-upgradeinfo
+  version: 1.7.1
 -
   authors: 'Ivo Schooneman'
   commands: 'ume usay'
@@ -5138,14 +5148,14 @@
   version: '0.3'
 -
   authors: 'Peder Stray'
-  contact: peder@ninja.no
+  contact: peder.stray@gmail.com
   description: 'Try a little harder to figure out client uptime'
   filename: uptime.pl
   license: GPL
-  modified: '2014-10-24 23:01:30'
+  modified: '2021-08-21 10:40:50'
   name: uptime
-  url: http://ninja.no/irssi/uptime.pl
-  version: '1.6'
+  url: https://github.com/pstray/irssi-uptime
+  version: 1.6.1
 -
   authors: 'Thomas Graf'
   commands: 'head url'
