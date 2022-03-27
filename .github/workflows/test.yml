@@ -36,6 +36,7 @@ jobs:
       - name: prepare required software
         run: |
           RELEASE=$(lsb_release -rs)
+          echo $RELEASE
           echo "deb http://download.opensuse.org/repositories/home:/ailin_nemui:/irssi-git/xUbuntu_$RELEASE/ /" | sudo tee /etc/apt/sources.list.d/home:ailin_nemui:irssi-git.list
           curl -fsSL https://download.opensuse.org/repositories/home:ailin_nemui:irssi-git/xUbuntu_$RELEASE/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/home_ailin_nemui_irssi-git.gpg > /dev/null
           sudo apt -q update
