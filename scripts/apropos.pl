@@ -1,4 +1,5 @@
 use strict;
+use warnings;
 use vars qw($VERSION %IRSSI);
 
 use Irssi;
@@ -10,7 +11,7 @@ use Storable qw/dclone/;
 
 #use debug;
 
-$VERSION = '0.01';
+$VERSION = '0.02';
 %IRSSI = (
     authors	=> 'bw1',
     contact	=> 'bw1@aol.at',
@@ -18,7 +19,7 @@ $VERSION = '0.01';
     description	=> 'tag search in markdown',
     license	=> 'Public Domain',
     url		=> 'https://scripts.irssi.org/',
-    changed	=> '2020-01-02',
+    changed	=> '2022-09-18',
     modules => 'File::Fetch File::Basename Text::Wrap CPAN::Meta::YAML',
     commands=> 'apropos',
 );
@@ -53,6 +54,9 @@ my $fnconfig='config.yaml';
 my (@results, $resp);
 my $data;
 # ->{links}
+#   ->{type}
+#   		md1  markdown tags from header lines
+#   		md1s markdown tags from (.*)=
 # ->{own}
 # ->{tags}
 # ->{last}
@@ -64,14 +68,15 @@ sub defaultdata {
 		#src  => 'https://raw.githubusercontent.com/irssi/irssi.github.io/master/documentation/settings.markdown',
 		url  => 'https://irssi.org/documentation/settings/',
 		src  => 'https://github.com/irssi/irssi.github.io/raw/main/sphinx/documentation/settings.md',
-		type => 'markdown',
+		type => 'md1s',
 	};
 	$data->{links}->{faq}={
-		url  => 'https://irssi.org/documentation/qna/',
 		#src  => 'https://github.com/irssi/irssi.github.io/raw/master/documentation/faq.markdown',
 		#src  => 'https://raw.githubusercontent.com/irssi/irssi.github.io/master/documentation/faq.markdown',
-		src  => 'https://github.com/irssi/irssi.github.io/raw/main/sphinx/documentation/qna/index.md', # !!
-		type => 'markdown',
+		url  => 'https://irssi.org/documentation/qna/',
+		#src  => 'https://github.com/irssi/irssi.github.io/raw/main/sphinx/documentation/qna/', # !!
+		src =>  'https://api.github.com/repos/irssi/irssi.github.io/contents/sphinx/documentation/qna',
+		type => 'dir1',
 	};
 	$data->{own}->{startup}=[
 		{ url  => 'https://irssi.org/New-users/', },
@@ -247,6 +252,7 @@ sub putyamlfile {
 
 sub writetag {
 	my ($tag, $long, $url)= @_;
+	return unless (defined $long && length($long) >2 );
 	if (! exists ($data->{tags}->{$tag})) {
 		$data->{tags}->{$tag}=[];
 	}
@@ -275,7 +281,7 @@ sub writeowntags {
 	}
 }
 
-sub maketags {
+sub maketags_md1 {
 	my ( $fn, $burl ) = @_;
 	my $fi;
 	if ( -e $fn ) {
@@ -320,9 +326,47 @@ sub maketags {
 			}
 			$s .=$r if (defined $t);
 		}
-		writetag($t, $s, $burl.$t);
+		if (defined $t && length($s) >2) {
+			writetag($t, $s, $burl.$t);
+		}
 		close $fi;
 	}
+}
+
+sub maketags_md1s {
+	my ( $fn, $burl ) = @_;
+	my $fi;
+	return unless ( -e $fn ) ;
+	my $s;
+	my $t;
+	my $u;
+	open($fi, '<', $fn)
+		or printerror("cannot open < $fn: $!");
+	while ( my $r = <$fi> ) {
+		if ($r =~ m/^\((.*)\)=/) {
+			if (defined $t && defined $s && length($s) >2 ) {
+				writetag($t, $s, $u);
+				$t=undef;
+				$s=undef;
+				$u=undef
+			}
+			$t= $1;
+			$u= $1;
+			$u=~ s/_/-/g;
+			$u="$burl\#$u";
+		} elsif ( $r =~ m/`(.*?)` \*\*`(.*?)`\*\*/ ) {
+			$s= "$1 $2\n";
+		} elsif ( $r =~ m/^: (.*)/ ) {
+			$s.=$1;
+		}
+	}
+	writetag($t, $s, $u);
+	close $fi;
+}
+
+sub maketags_dir1 {
+	my ( $n ) = @_;
+	my $fi;
 }
 
 sub init {
@@ -336,12 +380,24 @@ sub init {
 		mkdir $path;
 	}
 	foreach my $link ( keys %{$data->{links}} ) {
+		my $type=$data->{links}->{$link}->{type};
+		my $url=$data->{links}->{$link}->{url};
 		my $src= $data->{links}->{$link}->{src};
-		my $bn = basename($src);
-		if (! -e $path.$bn) {
-			getfile( $src );
+		if ( $type =~ m/^md/ ) {
+			my $bn = basename($src);
+			if (! -e $path.$bn) {
+				getfile( $src );
+			}
+			if ( $type eq 'md1' ) {
+				maketags_md1( $path.$bn, $url );
+			} elsif ( $type eq 'md1s' ) {
+				maketags_md1s( $path.$bn, $url );
+			} 
+		} else {
+			if ( $type eq 'dir1' ) {
+				maketags_dir1($data->{links}->{$link});
+			}
 		}
-		maketags( $path.$bn, $data->{links}->{$link}->{url} );
 	}
 	writeowntags();
 	Irssi::print("Tags:".scalar keys %{$data->{tags}} , MSGLEVEL_CLIENTCRAP);
@@ -375,7 +431,7 @@ sub sig_send_text {
 			($witem->{type} eq 'QUERY' && $query))
 			&& $msg !~ m/^\s/ ) {
 		for (my $c=0; $c <= $#results; $c++) {
-			if ($msg=~s/(^|\s)#$c(\s|$)/\1$results[$c]->{url}\2/g) {
+			if ($msg=~s/(^|\s)#$c(\s|$)/$1$results[$c]->{url}$2/g) {
 				putlast($results[$c]);
 			}
 		}
