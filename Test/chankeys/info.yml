@@ -1,0 +1,20 @@
+---
+-
+  authors: 'martin f. krafft'
+  changed: 2022-11-18
+  commands:
+    - chankeys
+    - 'chankeys add'
+    - 'chankeys goto'
+    - 'chankeys help'
+    - 'chankeys list'
+    - 'chankeys reload'
+    - 'chankeys remove'
+    - 'chankeys save'
+  contact: madduck@madduck.net
+  default_package: chankeys
+  description: 'manage channel keyboard shortcuts'
+  license: MIT
+  modified: '2022-11-18 13:48:34'
+  name: chankeys
+  version: 0.4.1
