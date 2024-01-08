@@ -427,17 +427,19 @@ sub putlast {
 sub sig_send_text {
 	my ($msg, $server, $witem) = @_;
 	my $omsg= $msg;
-	if ( (scalar( grep { $_ eq $witem->{name} } @channels ) >0 ||
-			($witem->{type} eq 'QUERY' && $query))
-			&& $msg !~ m/^\s/ ) {
-		for (my $c=0; $c <= $#results; $c++) {
-			if ($msg=~s/(^|\s)#$c(\s|$)/$1$results[$c]->{url}$2/g) {
-				putlast($results[$c]);
+	if ( defined $witem ) {
+		if ( (scalar( grep { $_ eq $witem->{name} } @channels ) >0 ||
+				($witem->{type} eq 'QUERY' && $query))
+				&& $msg !~ m/^\s/ ) {
+			for (my $c=0; $c <= $#results; $c++) {
+				if ($msg=~s/(^|\s)#$c(\s|$)/$1$results[$c]->{url}$2/g) {
+					putlast($results[$c]);
+				}
 			}
 		}
-	}
-	if ( $omsg ne $msg ) {
-		Irssi::signal_continue($msg, $server, $witem);
+		if ( $omsg ne $msg ) {
+			Irssi::signal_continue($msg, $server, $witem);
+		}
 	}
 }
 
