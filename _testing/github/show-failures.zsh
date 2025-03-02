@@ -28,6 +28,7 @@ if [[ $GITHUB_REF != refs/heads/master ]] {
             cat "Test/${scriptfile:t:r}/info.yml"
         }
     }
+	echo
 } \
 else {
     echo '============= DETAILED FAILURE REPORTS ============='
