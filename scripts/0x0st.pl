@@ -195,7 +195,7 @@ sub self_check {
 			$s = "Error: HTTP status code ($res[1])";
 		} elsif ( $res[0] < 2900  ) {
 			$s = "Error: result length ($res[0])";
-		} elsif ( $res[2] ne '6c6c0ea80554f86b41596d2ecdac3482' ) {
+		} elsif ( $res[2] ne '00a9460d23d4ddcf6813f483fdfb5f63' ) {
 			$s = "Warning: website changed";
 		}
 	}
