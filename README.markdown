@@ -3,6 +3,7 @@ See [the testing read-me](../master/_testing/) for details.
 ## Irssi Scripts Test Report
 \                                | LOAD | HDR | CRIT | SCORE | PASS
 ----: | :--: | :-: | :--: | ----: | :---:
+[                           0x0st ](Test/0x0st/)|  ✔   |  ✔   |  ✔   |  4   |  ✔   
 [                          8-ball ](Test/8-ball/)|  ✔   |  ✔   |  ✔   |  9   |  ✔   
 [                          Cirssi ](Test/Cirssi/)|  ✔   |  ✔   |  ✔   | 31   |  ✔   
 [                 UNIBG-autoident ](Test/UNIBG-autoident/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   
@@ -565,4 +566,4 @@ See [the testing read-me](../master/_testing/) for details.
 [                            ziew ](Test/ziew/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   
 [                     zmartfilter ](Test/zmartfilter/)|  ✔   |  ✔   |  ✔   |  3   |  ✔   
 
-9dc32319ab330762174cfefa36f0b617b88777a4 | 2026-08-05T07:51:29,122694529+00:00
+6ec7b4467be2d44069264acb01b5b222292832d3 | 2026-08-05T10:07:28,500665777+00:00
